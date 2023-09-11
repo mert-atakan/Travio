@@ -164,13 +164,17 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         let labelsAtRow = viewModel.getLabelForRow(indexpath: indexPath)
-        if labelsAtRow == "Security Settings" {
+        
+        switch labelsAtRow {
+        case "Security Settings":
             let nav = SecuritySettingsVC()
-            navigationController?.pushViewController(nav, animated: true)
-        } else if labelsAtRow == "Help&Support" {
+            self.present(nav, animated: true)
+        case "Help&Support":
             self.present(HelpAndSupportVC(), animated: true)
+        case "About":
+            self.present(AboutUsVC(), animated: true)
+        default: return
         }
-     
     }
     
     

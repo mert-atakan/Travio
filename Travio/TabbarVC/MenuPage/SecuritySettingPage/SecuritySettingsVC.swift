@@ -81,7 +81,7 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
     
     
     @objc func backButtonTapped() {
-       dismiss(animated: true)
+        self.dismiss(animated: true)
     }
     
     

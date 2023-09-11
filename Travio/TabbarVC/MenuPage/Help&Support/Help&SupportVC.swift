@@ -74,8 +74,7 @@ class HelpAndSupportVC: UIViewController {
     }
     
     @objc func backToSettings() {
-        
-//        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true)
     }
 
     func setupView() {
