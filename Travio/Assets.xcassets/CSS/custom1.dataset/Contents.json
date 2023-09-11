@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "custom1.css",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
