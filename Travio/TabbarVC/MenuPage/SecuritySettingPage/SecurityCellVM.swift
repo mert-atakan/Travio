@@ -13,8 +13,6 @@ import CoreLocation
 class SecurityCellVM {
     let locationManager = CLLocationManager()
     
-    //MARK: - İzinlerin durumunu öğrenme ve userDefaults'a kaydetme.
-    
     func checkAllPermissions() {
         checkCameraPermission()
         checkLocationPermission()
@@ -41,7 +39,7 @@ class SecurityCellVM {
         }
 
         UserDefaults.standard.set(isLibraryPermissionGranted, forKey: "LibraryPermission")
-        //setLibraryPermissionToggle()
+       
     }
     
    
@@ -68,7 +66,6 @@ class SecurityCellVM {
         }
         UserDefaults.standard.set(isLocationPermissionGranted, forKey: "LocationPermission")
     
-       // setLocationPermissionToggle()
     }
   
 
@@ -95,8 +92,6 @@ class SecurityCellVM {
         UserDefaults.standard.set(isCameraPermissionGranted, forKey: "CameraPermission")
      
     }
-    
-    //MARK: - Switchlerin off/on statülerini ayarlama
     
     func setPermissionToggle(forKey: String) -> Bool {
         let isPermissionGranted = UserDefaults.standard.bool(forKey: forKey)

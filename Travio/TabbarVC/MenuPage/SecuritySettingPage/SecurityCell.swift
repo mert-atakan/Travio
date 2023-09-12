@@ -38,7 +38,7 @@ class SecurityCell: UITableViewCell {
     
     @objc func switchValueChanged(_ sender: CustomSwitchView ) {
         openAppSettings()
-        switch switchView.Lbl.text {
+        switch switchView.titleLabel.text {
         case "Camera"  :
             self.viewModal.checkCameraPermission()
             switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "Camera")
@@ -55,8 +55,7 @@ class SecurityCell: UITableViewCell {
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-            // Ekranın herhangi bir yerine tıklandığında çalışır
-        passwordView.textField.resignFirstResponder() // Klavyeyi kapat
+        passwordView.textField.resignFirstResponder()
         }
     
     func openAppSettings() {
@@ -69,16 +68,17 @@ class SecurityCell: UITableViewCell {
     
     func configure(section: Int,data:String ) {
         if section == 0 {
-            passwordView.edgesToSuperview(excluding: [.bottom])
-            passwordView.height(72)
+//            passwordView.edgesToSuperview(excluding: [.bottom])
+//            passwordView.height(72)
+            switchView.isHidden = true
             passwordView.titleLabel.text = data
-          
             passwordView.textField.attributedPlaceholder = NSAttributedString(string: "******", attributes: passwordView.attributes)
         } else if section == 1 {
-            switchView.edgesToSuperview(excluding: [.bottom])
-            switchView.height(72)
-            switchView.Lbl.text = data
+//            switchView.edgesToSuperview(excluding: [.bottom])
+//            switchView.height(72)
+            switchView.titleLabel.text = data
             setToggles(data: data)
+            passwordView.isHidden = true
         }
     }
     
@@ -99,7 +99,15 @@ class SecurityCell: UITableViewCell {
         contentView.addGestureRecognizer(tapGesture)
         contentView.backgroundColor = Color.systemWhite.chooseColor
         contentView.addSubviews(passwordView,switchView)
-//        setupLayout()
+        setupLayout()
+    }
+    
+    func setupLayout() {
+        switchView.edgesToSuperview(insets: .right(24) + .left(24) + .top(4) + .bottom(5))
+        switchView.height(72)
+        
+        passwordView.edgesToSuperview(insets: .right(24) + .left(24) + .top(4) + .bottom(5))
+        passwordView.height(72)
     }
     
     

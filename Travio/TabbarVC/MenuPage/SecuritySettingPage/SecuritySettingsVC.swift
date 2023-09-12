@@ -89,7 +89,6 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
     
     func textFieldFunctions(text: String,number:Int) {
         passwords[number] = text
-        print(passwords)
     }
     
     func checkForEqual() {
@@ -145,7 +144,7 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
         view1.edgesToSuperview(excluding: [.top])
         view1.topToBottom(of: titleLbl, offset: 58)
         
-        tableView.edgesToSuperview(excluding:[.bottom,.top] ,insets: .right(24) + .left(24))
+        tableView.edgesToSuperview(excluding:[.bottom,.top])
         tableView.bottomToTop(of: saveBtn, offset: -20)
         tableView.top(to: view1, offset: 20)
         
