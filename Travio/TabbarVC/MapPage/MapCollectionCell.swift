@@ -17,19 +17,6 @@ class MapCollectionCell: UICollectionViewCell {
         return iv
     }()
     
-    private lazy var visitedView: UIView = {
-        let v = UIView()
-        v.backgroundColor = Color.systemGreen.chooseColor
-        return v
-    }()
-    
-    private lazy var visitedIcon: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(named: "visited")
-        return iv
-    }()
-    
     private lazy var iconView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -61,7 +48,6 @@ class MapCollectionCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.contentView.roundCorners(corners: [.topLeft , .topRight, .bottomLeft ], radius: 16)
-        self.visitedView.roundCorners(corners: [.topRight, .bottomLeft], radius: 16)
     }
     
     required init?(coder: NSCoder) {
@@ -81,8 +67,7 @@ class MapCollectionCell: UICollectionViewCell {
     private func setupView() {
         self.contentView.backgroundColor = .clear
         self.contentView.addSubViews(imageview)
-        imageview.addSubViews(cityLbl,titleLbl,iconView,visitedView)
-        visitedView.addSubViews(visitedIcon)
+        imageview.addSubViews(cityLbl,titleLbl,iconView)
         
         setupLayout()
     }
@@ -106,12 +91,5 @@ class MapCollectionCell: UICollectionViewCell {
         cityLbl.height(21)
         cityLbl.width(200)
         
-        visitedView.edgesToSuperview(excluding: [.left, .bottom])
-        visitedView.height(40)
-        visitedView.width(45)
-        
-        visitedIcon.centerInSuperview()
-        visitedIcon.height(20)
-        visitedIcon.width(25)
     }
 }

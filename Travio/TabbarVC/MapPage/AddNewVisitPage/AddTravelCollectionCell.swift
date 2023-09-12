@@ -9,11 +9,18 @@ import UIKit
 import TinyConstraints
 class AddTravelCollectionCell: UICollectionViewCell {
     
-    private lazy var imageview: UIImageView = {
+    private lazy var defaultImageview: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.image = UIImage(named: "addPhoto")
         iv.backgroundColor = Color.white.chooseColor
+        return iv
+    }()
+    
+    private lazy var choosenImageview: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.addCornerRadius(corners: [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner], radius: 16)
         return iv
     }()
     
@@ -31,20 +38,21 @@ class AddTravelCollectionCell: UICollectionViewCell {
     }
     
     func configure(image: UIImage) {
-        imageview.image = image
-        imageview.edgesToSuperview()
+        choosenImageview.image = image
     }
     
     private func setupView() {
         self.contentView.backgroundColor = Color.white.chooseColor
-        self.contentView.addSubViews(imageview)
+        self.contentView.addSubViews(defaultImageview,choosenImageview)
         
         setupLayout()
     }
     private func setupLayout() {
-        imageview.centerInSuperview()
-        imageview.width(62)
-        imageview.height(58)
+        defaultImageview.centerInSuperview()
+        defaultImageview.width(62)
+        defaultImageview.height(58)
+        
+        choosenImageview.edgesToSuperview()
     }
     
 }

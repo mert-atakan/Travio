@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import TinyConstraints
 import CoreLocation
-
+import NVActivityIndicatorView
 protocol Reloader: AnyObject {
     func reloadMap()
 }
@@ -22,6 +22,10 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     
     let locationManager = CLLocationManager()
 
+    private lazy var activity: NVActivityIndicatorView = {
+        let activity = NVActivityIndicatorView(frame: .zero, type: .pacman, color: Color.systemGreen.chooseColor, padding: 0)
+        return activity
+    }()
     
     private lazy var mapView: MKMapView = {
         let mv = MKMapView()
@@ -38,6 +42,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 18
         flowLayout.minimumInteritemSpacing = 18
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         let cv = UICollectionView(frame: .zero,collectionViewLayout: flowLayout)
         cv.register(MapCollectionCell.self, forCellWithReuseIdentifier: "map")
         cv.delegate = self
@@ -64,17 +69,40 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     }
     
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
+//        if sender.state == .began {
+//            let touchPoint = sender.location(in: mapView)
+//            let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+//
+//            let userLocation = mapView.userLocation.coordinate
+//            //MARK: - Print'i sil
+//            print(userLocation)
+//
+//            let location1 = CLLocation(latitude: touchCoordinate.latitude, longitude: touchCoordinate.longitude)
+//            let location2 = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
+//
+//            let distance = location1.distance(from: location2)
+//
+//            if distance < 500 {
+//                let vc = AddTravelVC()
+//                vc.latitude = touchCoordinate.latitude
+//                vc.longitude = touchCoordinate.longitude
+//                vc.delegate = self
+//                present(vc, animated: true)
+//            }
+//        }
+        
         if sender.state == .began {
-            let touchPoint = sender.location(in: mapView)
-            let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-            
-            let vc = AddTravelVC()
-            vc.latitude = touchCoordinate.latitude
-            vc.longitude = touchCoordinate.longitude
-            vc.delegate = self
-            present(vc, animated: true)
-        }
+                   let touchPoint = sender.location(in: mapView)
+                   let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+                   
+                   let vc = AddTravelVC()
+                   vc.latitude = touchCoordinate.latitude
+                   vc.longitude = touchCoordinate.longitude
+                   vc.delegate = self
+                   present(vc, animated: true)
+               }
     }
+
     
     func locationAdjustment() {
         locationManager.delegate = self
@@ -87,7 +115,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     }
     
     func initVM() {
-        
+        activity.startAnimating()
         viewModal.getLocations()
         
         viewModal.fillMapp = { locations in
@@ -97,6 +125,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
         viewModal.reloadCell = {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
+                self.activity.stopAnimating()
             }
         }
         
@@ -113,15 +142,19 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     
     private func setupView() {
         self.view.backgroundColor = Color.systemGreen.chooseColor
-        view.addSubViews(mapView,collectionView)
+        view.addSubViews(mapView,collectionView, activity)
         setupLayout()
     }
     
     private func setupLayout() {
         mapView.edgesToSuperview()
         
-        collectionView.edgesToSuperview(excluding: [.top], insets: .left(18) + .bottom(101))
+        collectionView.edgesToSuperview(excluding: [.top], insets: .bottom(101))
         collectionView.height(178)
+        
+        activity.centerInSuperview()
+        activity.height(40)
+        activity.width(40)
     }
     
     func pushNav(item: PlaceItem) {
@@ -157,11 +190,9 @@ extension MapVC: MKMapViewDelegate {
             dequeuedView.annotation = annotation
             annotationView = dequeuedView
         } else {
-            // Use MKAnnotationView instead of MKPinAnnotationView
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView.canShowCallout = true
             
-            // Set the custom annotation image
             annotationView.image = UIImage(named: "mapIcon")
         }
         
@@ -177,6 +208,7 @@ extension MapVC: UICollectionViewDelegateFlowLayout {
         let size = CGSize(width: 309, height: (collectionView.frame.height))
         return size
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = viewModal.getObjectForRow(indexpath: indexPath) else {return}
         pushNav(item: item)
