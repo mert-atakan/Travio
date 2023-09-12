@@ -13,6 +13,21 @@ class MenuVC: UIViewController {
     
     let menuVM = MenuVM()
     
+    private lazy var headerLabel:UILabel = {
+        let label = UILabel()
+        label.text = "Settings"
+        label.textColor = .white
+        label.font = UIFont(name: Font.semibold32.chooseFont.fontName, size: Font.bold30.chooseFont.pointSize)
+        return label
+    }()
+    
+    private lazy var logoutButton:UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "logoutButton"), for: .normal)
+        button.backgroundColor = .clear
+        return button
+    }()
+    
     private lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.backgroundColor = Color.systemWhite.chooseColor
@@ -36,13 +51,12 @@ class MenuVC: UIViewController {
     }()
     
     private lazy var editProfileButton:UIButton = {
-        let editProfile = UIButton()
-        editProfile.setTitleColor(#colorLiteral(red: 0, green: 0.7960889935, blue: 0.9382097721, alpha: 1), for: .normal)
-        editProfile.setTitle("Edit Profile", for: .normal)
-        editProfile.titleLabel?.font = Font.regular12.chooseFont
-        editProfile.addTarget(self, action: #selector(editProfilePage), for: .touchUpInside)
-    
-        return editProfile
+        let button = UIButton()
+        button.setTitleColor(#colorLiteral(red: 0, green: 0.7960889935, blue: 0.9382097721, alpha: 1), for: .normal)
+        button.setTitle("Edit Profile", for: .normal)
+        button.titleLabel?.font = Font.regular12.chooseFont
+        button.addTarget(self, action: #selector(editProfilePage), for: .touchUpInside)
+        return button
     }()
     
     private lazy var collectionView:UICollectionView = {
@@ -59,13 +73,7 @@ class MenuVC: UIViewController {
         return collectionView
     }()
     
-    private lazy var headerLabel:UILabel = {
-        let label = UILabel()
-        label.text = "Settings"
-        label.textColor = .white
-        label.font = UIFont(name: Font.bold30.chooseFont.fontName, size: Font.bold30.chooseFont.pointSize)
-        return label
-    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,16 +88,18 @@ class MenuVC: UIViewController {
     
     func setupView() {
         
-        self.view.addSubviews(headerLabel,contentView)
+        self.view.addSubviews(headerLabel,logoutButton,contentView)
         contentView.addSubviews(profileImage, fullNameLabel, editProfileButton, collectionView)
         setupLayout()
     }
 
     func setupLayout() {
         
-        headerLabel.edgesToSuperview(excluding: [.bottom, .right], insets: .left(20) + .top(23), usingSafeArea: true)
-        headerLabel.height(48)
-        headerLabel.width(134)
+        headerLabel.edgesToSuperview(excluding: [.bottom, .right], insets: .left(20) + .top(24), usingSafeArea: true)
+        
+        logoutButton.edgesToSuperview(excluding: [.left, .bottom], insets: .top(34) + .right(24))
+        logoutButton.height(30)
+        logoutButton.width(30)
         
         contentView.edgesToSuperview(insets: .top(170))
         contentView.topToBottom(of: headerLabel, offset: 54)
