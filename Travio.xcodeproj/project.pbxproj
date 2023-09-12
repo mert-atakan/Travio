@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		79E095852AB0646B004276D3 /* TermsOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E095842AB0646B004276D3 /* TermsOfUseVC.swift */; };
+		792B68812AB08DB900DD7834 /* TermsOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B68802AB08DB900DD7834 /* TermsOfUseVC.swift */; };
 		A3A54B3D2AAF388E0015F767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54B3C2AAF388E0015F767 /* AppDelegate.swift */; };
 		A3A54B3F2AAF388E0015F767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54B3E2AAF388E0015F767 /* SceneDelegate.swift */; };
 		A3A54B542AAF392F0015F767 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54B512AAF392F0015F767 /* LoginVC.swift */; };
@@ -100,7 +100,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		79E095842AB0646B004276D3 /* TermsOfUseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseVC.swift; sourceTree = "<group>"; };
+		792B68802AB08DB900DD7834 /* TermsOfUseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseVC.swift; sourceTree = "<group>"; };
 		A3A54B392AAF388E0015F767 /* Travio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3A54B3C2AAF388E0015F767 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3A54B3E2AAF388E0015F767 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,10 +205,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		79E095832AB0644E004276D3 /* TermsOfUse */ = {
+		792B687F2AB08D9600DD7834 /* TermsOfUse */ = {
 			isa = PBXGroup;
 			children = (
-				79E095842AB0646B004276D3 /* TermsOfUseVC.swift */,
+				792B68802AB08DB900DD7834 /* TermsOfUseVC.swift */,
 			);
 			path = TermsOfUse;
 			sourceTree = "<group>";
@@ -237,7 +237,6 @@
 				A3A54B502AAF392F0015F767 /* LoginPage */,
 				A3A54B572AAF393F0015F767 /* SignUpPage */,
 				A3A54CAA2AAF398E0015F767 /* TabbarVC */,
-				79E095832AB0644E004276D3 /* TermsOfUse */,
 				A3A54CE32AAF3ACC0015F767 /* ApiService */,
 				A3A54CEA2AAF3AD40015F767 /* Extensions Enums */,
 				A3A54CF32AAF3ADA0015F767 /* CustomClasses */,
@@ -278,6 +277,7 @@
 				A3A54CAD2AAF3A750015F767 /* HomePage */,
 				A3A54CBD2AAF3A960015F767 /* VisitPage */,
 				A3A54D2E2AAF3B570015F767 /* MenuPage */,
+				792B687F2AB08D9600DD7834 /* TermsOfUse */,
 			);
 			path = TabbarVC;
 			sourceTree = "<group>";
@@ -620,7 +620,7 @@
 				A3A54D2B2AAF3B120015F767 /* NavigationHelper.swift in Sources */,
 				A3A54CDD2AAF3AC10015F767 /* AddTravelCollectionCell.swift in Sources */,
 				A3A54D3A2AAF3BD00015F767 /* EditProfileVM.swift in Sources */,
-				79E095852AB0646B004276D3 /* TermsOfUseVC.swift in Sources */,
+				792B68812AB08DB900DD7834 /* TermsOfUseVC.swift in Sources */,
 				A3A54CFD2AAF3ADA0015F767 /* CustomLabel.swift in Sources */,
 				A3A54CB82AAF3A750015F767 /* SeeAllPlacesVC.swift in Sources */,
 				A3A54CB62AAF3A750015F767 /* HomeCollectionViewCell.swift in Sources */,
