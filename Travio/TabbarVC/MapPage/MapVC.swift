@@ -69,38 +69,38 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     }
     
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
-//        if sender.state == .began {
-//            let touchPoint = sender.location(in: mapView)
-//            let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-//
-//            let userLocation = mapView.userLocation.coordinate
-//            //MARK: - Print'i sil
-//            print(userLocation)
-//
-//            let location1 = CLLocation(latitude: touchCoordinate.latitude, longitude: touchCoordinate.longitude)
-//            let location2 = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
-//
-//            let distance = location1.distance(from: location2)
-//
-//            if distance < 500 {
-//                let vc = AddTravelVC()
-//                vc.latitude = touchCoordinate.latitude
-//                vc.longitude = touchCoordinate.longitude
-//                vc.delegate = self
-//                present(vc, animated: true)
-//            }
-//        }
-        
         if sender.state == .began {
-                   let touchPoint = sender.location(in: mapView)
-                   let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-                   
-                   let vc = AddTravelVC()
-                   vc.latitude = touchCoordinate.latitude
-                   vc.longitude = touchCoordinate.longitude
-                   vc.delegate = self
-                   present(vc, animated: true)
-               }
+            let touchPoint = sender.location(in: mapView)
+            let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+
+            let userLocation = mapView.userLocation.coordinate
+            //MARK: - Print'i sil
+            print(userLocation)
+
+            let location1 = CLLocation(latitude: touchCoordinate.latitude, longitude: touchCoordinate.longitude)
+            let location2 = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
+
+            let distance = location1.distance(from: location2)
+
+            if distance < 500 {
+                let vc = AddTravelVC()
+                vc.latitude = touchCoordinate.latitude
+                vc.longitude = touchCoordinate.longitude
+                vc.delegate = self
+                present(vc, animated: true)
+            }
+        }
+//        
+//        if sender.state == .began {
+//                   let touchPoint = sender.location(in: mapView)
+//                   let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+//                   
+//                   let vc = AddTravelVC()
+//                   vc.latitude = touchCoordinate.latitude
+//                   vc.longitude = touchCoordinate.longitude
+//                   vc.delegate = self
+//                   present(vc, animated: true)
+//               }
     }
 
     
