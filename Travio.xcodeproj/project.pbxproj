@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		792B687E2AB07DC100DD7834 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B687D2AB07DC100DD7834 /* ViewController.swift */; };
 		A3A54B3D2AAF388E0015F767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54B3C2AAF388E0015F767 /* AppDelegate.swift */; };
 		A3A54B3F2AAF388E0015F767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54B3E2AAF388E0015F767 /* SceneDelegate.swift */; };
 		A3A54B542AAF392F0015F767 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54B512AAF392F0015F767 /* LoginVC.swift */; };
@@ -99,6 +100,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		792B687D2AB07DC100DD7834 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A3A54B392AAF388E0015F767 /* Travio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3A54B3C2AAF388E0015F767 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3A54B3E2AAF388E0015F767 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			children = (
 				A3A54B3C2AAF388E0015F767 /* AppDelegate.swift */,
 				A3A54B3E2AAF388E0015F767 /* SceneDelegate.swift */,
+				792B687D2AB07DC100DD7834 /* ViewController.swift */,
 				A3A54B502AAF392F0015F767 /* LoginPage */,
 				A3A54B572AAF393F0015F767 /* SignUpPage */,
 				A3A54CAA2AAF398E0015F767 /* TabbarVC */,
@@ -604,6 +607,7 @@
 				A3A54CEF2AAF3AD40015F767 /* AlertHelper.swift in Sources */,
 				A3A54B3F2AAF388E0015F767 /* SceneDelegate.swift in Sources */,
 				A3A54CCF2AAF3A960015F767 /* VisitCell.swift in Sources */,
+				792B687E2AB07DC100DD7834 /* ViewController.swift in Sources */,
 				A3A54CDF2AAF3AC10015F767 /* AddTravelVM.swift in Sources */,
 				A3A54D4B2AAF3C640015F767 /* Help&SupportVM.swift in Sources */,
 				A3A54D2B2AAF3B120015F767 /* NavigationHelper.swift in Sources */,
