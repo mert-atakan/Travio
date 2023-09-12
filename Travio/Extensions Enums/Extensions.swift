@@ -353,13 +353,3 @@ extension UIApplication {
         return base
     }
 }
-
-extension UIImageView {
-    
-    
-    func addCornerRadius(corners: CACornerMask, radius: CGFloat) {
-            layer.cornerRadius = radius
-            layer.maskedCorners = corners
-            layer.masksToBounds = true
-        }
-}

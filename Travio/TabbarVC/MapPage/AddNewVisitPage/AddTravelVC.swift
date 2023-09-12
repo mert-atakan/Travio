@@ -174,7 +174,6 @@ extension AddTravelVC: UICollectionViewDelegateFlowLayout {
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
         vc.delegate = self
-        vc.allowsEditing = true
         currentIndex = indexPath
         if tempImage.count < 4 {
             present(vc, animated: true)
@@ -204,16 +203,16 @@ extension AddTravelVC: UICollectionViewDataSource {
 
 extension AddTravelVC: UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print(info)
-        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage?  {
-            guard let image = image else {return}
-            let data = image.jpegData(compressionQuality: 0.5)
-            tempImage.append(image)
+        
+//        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage?  {
+//            guard let image = image else {return}
+//           // let data = image.jpegData(compressionQuality: 0.5)
+//            tempImage.append(image)
+            if let image = info[.originalImage] as? UIImage {
+                   tempImage.append(image)
             
             guard let cell = collectionView.cellForItem(at: currentIndex!) as? AddTravelCollectionCell else { return }
             cell.configure(image: tempImage.last!)
-            
-            
             
         }
         

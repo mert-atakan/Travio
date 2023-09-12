@@ -19,18 +19,15 @@ class AddTravelCollectionCell: UICollectionViewCell {
     
     private lazy var choosenImageview: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.addCornerRadius(corners: [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner], radius: 16)
+        iv.contentMode = .scaleAspectFill
         return iv
     }()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupView()
-    }
-    
-    override func layoutSubviews() {
-        self.contentView.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
+        layoutIfNeeded()
+       
     }
     
     required init?(coder: NSCoder) {
@@ -38,10 +35,13 @@ class AddTravelCollectionCell: UICollectionViewCell {
     }
     
     func configure(image: UIImage) {
+        choosenImageview.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
         choosenImageview.image = image
+        contentView.backgroundColor = .clear
     }
     
     private func setupView() {
+        self.contentView.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
         self.contentView.backgroundColor = Color.white.chooseColor
         self.contentView.addSubViews(defaultImageview,choosenImageview)
         
@@ -51,7 +51,7 @@ class AddTravelCollectionCell: UICollectionViewCell {
         defaultImageview.centerInSuperview()
         defaultImageview.width(62)
         defaultImageview.height(58)
-        
+
         choosenImageview.edgesToSuperview()
     }
     
