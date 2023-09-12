@@ -11,30 +11,28 @@ import Kingfisher
 
 class MenuVC: UIViewController {
     
-    let viewModel = MenuVM()
+    let menuVM = MenuVM()
     
-    private lazy var InsideWhiteView: UIView = {
-        let WhiteView = UIView()
-        WhiteView.backgroundColor = Color.systemWhite.chooseColor
-        return WhiteView
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        contentView.backgroundColor = Color.systemWhite.chooseColor
+        return contentView
     }()
     
-    private lazy var BrucesImage:UIImageView = {
-        let BruceWillsImage = UIImageView(frame: CGRect(x: 135, y: 149, width: 120, height: 120))
-        BruceWillsImage.layer.cornerRadius = BruceWillsImage.frame.size.width / 2
-        BruceWillsImage.layer.masksToBounds = true
-        BruceWillsImage.contentMode = .scaleAspectFill
-        BruceWillsImage.kf.setImage(with: URL(string: "https://cdn.britannica.com/48/194248-050-4EE825CF/Bruce-Willis-2013.jpg"))
-        
-        return BruceWillsImage
+    private lazy var profileImage:UIImageView = {
+        let profileImage = UIImageView(frame: CGRect(x: 135, y: 149, width: 120, height: 120))
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.layer.masksToBounds = true
+        profileImage.contentMode = .scaleAspectFill
+        profileImage.kf.setImage(with: URL(string: "https://cdn.britannica.com/48/194248-050-4EE825CF/Bruce-Willis-2013.jpg"))
+        return profileImage
     }()
     
-    private lazy var BrucesName:CustomLabel = {
-        let BrucesNameSurname = CustomLabel()
-        BrucesNameSurname.text = "Bruce Wills"
-        BrucesNameSurname.font = Font.semibold16.chooseFont
-        
-        return BrucesNameSurname
+    private lazy var fullNameLabel:CustomLabel = {
+        let fullName = CustomLabel()
+        fullName.text = "Bruce Wills"
+        fullName.font = Font.semibold16.chooseFont
+        return fullName
     }()
     
     private lazy var editProfileButton:UIButton = {
@@ -50,75 +48,63 @@ class MenuVC: UIViewController {
     private lazy var collectionView:UICollectionView = {
        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-
         layout.minimumLineSpacing = 1
         layout.minimumInteritemSpacing = 1
 
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.delegate = self
-        cv.dataSource = self
-        cv.backgroundColor = .clear
-        cv.register(CustomCvCell.self, forCellWithReuseIdentifier: "CustomCell")
-        
-        return cv
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.register(CustomCvCell.self, forCellWithReuseIdentifier: "CustomCell")
+        return collectionView
     }()
     
-    private lazy var settingsLabel:UILabel = {
-        let settings = UILabel()
-        settings.text = "Settings"
-        settings.textColor = .white
-        settings.font = UIFont(name: Font.bold30.chooseFont.fontName, size: Font.bold30.chooseFont.pointSize)
-        
-        return settings
+    private lazy var headerLabel:UILabel = {
+        let label = UILabel()
+        label.text = "Settings"
+        label.textColor = .white
+        label.font = UIFont(name: Font.bold30.chooseFont.fontName, size: Font.bold30.chooseFont.pointSize)
+        return label
     }()
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-        self.navigationController?.isNavigationBarHidden = true
-        
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Color.systemGreen.chooseColor
         setupView()
-        
-            }
+    }
     
     override func viewDidLayoutSubviews() {
-        
-        InsideWhiteView.roundCorners(corners: .topLeft, radius: 80)
-        
+        contentView.roundCorners(corners: .topLeft, radius: 80)
     }
     
     func setupView() {
         
-        self.view.addSubviews(settingsLabel,InsideWhiteView)
-        InsideWhiteView.addSubviews(BrucesImage, BrucesName, editProfileButton, collectionView)
+        self.view.addSubviews(headerLabel,contentView)
+        contentView.addSubviews(profileImage, fullNameLabel, editProfileButton, collectionView)
         setupLayout()
     }
 
     func setupLayout() {
         
-        settingsLabel.edgesToSuperview(excluding: [.bottom, .right], insets: .left(20) + .top(23), usingSafeArea: true)
-        settingsLabel.height(48)
-        settingsLabel.width(134)
+        headerLabel.edgesToSuperview(excluding: [.bottom, .right], insets: .left(20) + .top(23), usingSafeArea: true)
+        headerLabel.height(48)
+        headerLabel.width(134)
         
-        InsideWhiteView.edgesToSuperview(insets: .top(170))
-        InsideWhiteView.topToBottom(of: settingsLabel, offset: 54)
+        contentView.edgesToSuperview(insets: .top(170))
+        contentView.topToBottom(of: headerLabel, offset: 54)
         
-        BrucesImage.top(to: InsideWhiteView, offset: 24)
-        BrucesImage.height(120)
-        BrucesImage.width(120)
-        BrucesImage.centerXToSuperview()
+        profileImage.top(to: contentView, offset: 24)
+        profileImage.height(120)
+        profileImage.width(120)
+        profileImage.centerXToSuperview()
         
-        BrucesName.topToBottom(of: BrucesImage, offset: 8)
-        BrucesName.centerXToSuperview()
-        BrucesName.height(24)
-        BrucesName.width(94)
+        fullNameLabel.topToBottom(of: profileImage, offset: 8)
+        fullNameLabel.centerXToSuperview()
+        fullNameLabel.height(24)
+        fullNameLabel.width(94)
         
-        editProfileButton.topToBottom(of: BrucesName)
+        editProfileButton.topToBottom(of: fullNameLabel)
         editProfileButton.centerXToSuperview()
         editProfileButton.height(18)
         editProfileButton.width(62)
@@ -140,16 +126,16 @@ class MenuVC: UIViewController {
 extension MenuVC:UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.collectionViewCellsLabels.count
+        return menuVM.collectionViewCellsLabels.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCvCell else  {return UICollectionViewCell()}
         
-        let leftImagesAtRow = viewModel.getLeftImageForRow(indexpath: indexPath)
-        let labelsAtRow = viewModel.getLabelForRow(indexpath: indexPath)
-        let rightImagesAtRow = viewModel.getRightImageForRow(indexpath: indexPath)
+        let leftImagesAtRow = menuVM.getLeftImageForRow(indexpath: indexPath)
+        let labelsAtRow = menuVM.getLabelForRow(indexpath: indexPath)
+        let rightImagesAtRow = menuVM.getRightImageForRow(indexpath: indexPath)
         
         cell.configure(cellLeftImage: leftImagesAtRow, cellLabel: labelsAtRow, cellRightImage: rightImagesAtRow)
         
@@ -163,7 +149,7 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let labelsAtRow = viewModel.getLabelForRow(indexpath: indexPath)
+        let labelsAtRow = menuVM.getLabelForRow(indexpath: indexPath)
         
         switch labelsAtRow {
         case "Security Settings":
