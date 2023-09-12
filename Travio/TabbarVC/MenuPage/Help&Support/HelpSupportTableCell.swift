@@ -101,7 +101,6 @@ class HelpSupportTableCell:UITableViewCell {
     }
     
     func setupLayout() {
-        
         stackView.top(to: contentView, offset:6)
         stackView.bottom(to: contentView, offset:-6)
         stackView.leading(to: contentView, offset: 24)

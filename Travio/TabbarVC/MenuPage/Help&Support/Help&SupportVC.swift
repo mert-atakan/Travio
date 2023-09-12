@@ -70,7 +70,6 @@ class HelpAndSupportVC: UIViewController {
     }
     
     func setupLayout() {
-        
         backBtn.edgesToSuperview(excluding: [.right, .bottom], insets: .top(32) + .left(24), usingSafeArea: true)
         
         titleLbl.leadingToTrailing(of: backBtn, offset: 24)
