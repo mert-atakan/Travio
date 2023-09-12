@@ -30,7 +30,7 @@ enum Router: URLRequestConvertible {
     // seeAllPlaces
     case getPopularPlaces(limit:Int?)
     case getLastPlaces(limit:Int?)
-    
+    case getAddedPlaces
     
     var baseURL: URL {
            return URL(string: "https://api.iosclass.live/")!
@@ -72,6 +72,8 @@ enum Router: URLRequestConvertible {
             return "v1/places/popular"
         case .getLastPlaces:
             return "v1/places/last"
+        case .getAddedPlaces:
+            return "v1/places/user"
         }
     }
    
@@ -79,7 +81,7 @@ enum Router: URLRequestConvertible {
           switch self {
           case .login, .register, .upload,.postPlace, .postGallery, .postVisit :
               return .post
-          case .me,.myAllVisits,.places , .galleryID,.getVisitInfo, .getPopularPlaces , .getLastPlaces, .checkVisit :
+          case .me,.myAllVisits,.places , .galleryID,.getVisitInfo, .getPopularPlaces , .getLastPlaces, .checkVisit, .getAddedPlaces :
               return .get
           case .deletePlace:
               return .delete

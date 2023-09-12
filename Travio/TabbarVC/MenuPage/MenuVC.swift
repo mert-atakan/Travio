@@ -173,6 +173,10 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
             self.present(HelpAndSupportVC(), animated: true)
         case "About":
             self.present(AboutUsVC(), animated: true)
+        case "My Added Places":
+            let vc = SeeAllPlacesVC()
+            vc.fromWhere = "myAddedPlaces"
+            navigationController?.pushViewController(vc, animated: true)
         default: return
         }
     }
