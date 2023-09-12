@@ -78,14 +78,9 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
         }
     }
 
-    
-    
     @objc func backButtonTapped() {
         self.dismiss(animated: true)
     }
-    
-    
-
     
     func textFieldFunctions(text: String,number:Int) {
         passwords[number] = text
@@ -161,9 +156,9 @@ extension SecuritySettingsVC: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
-        headerView.backgroundColor = .clear // Başlık arkaplan rengi
+        headerView.backgroundColor = .clear
         
-        let label = UILabel(frame: CGRect(x: 10, y: 5, width: tableView.frame.size.width - 20, height: 20))
+        let label = UILabel(frame: CGRect(x: 24, y: 5, width: tableView.frame.size.width - 20, height: 20))
         label.font = Font.bold16.chooseFont
         label.textColor = Color.systemGreen.chooseColor
         if section == 0 {
@@ -176,7 +171,7 @@ extension SecuritySettingsVC: UITableViewDelegate {
         return headerView
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30.0 // Başlık yüksekliği
+        return 30.0
     }
 }
 

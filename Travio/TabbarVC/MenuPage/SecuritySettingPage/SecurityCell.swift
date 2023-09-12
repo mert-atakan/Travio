@@ -86,10 +86,13 @@ class SecurityCell: UITableViewCell {
         switch data {
         case "Camera":
             self.viewModal.checkCameraPermission()
+            switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "CameraPermission")
         case "Photo Library":
             self.viewModal.checkLibraryPermission()
+            switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "LibraryPermission")
         case "Location":
             self.viewModal.checkLocationPermission()
+            switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "LocationPermission")
         default:
             break
         }

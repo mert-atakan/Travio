@@ -57,11 +57,13 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationAdjustment()
         setupView()
         initVM()
         
         longPress()
-        locationAdjustment()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,6 +108,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     
     func locationAdjustment() {
         locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
     }
     
