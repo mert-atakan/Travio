@@ -17,7 +17,7 @@ class MenuVC: UIViewController {
         let label = UILabel()
         label.text = "Settings"
         label.textColor = .white
-        label.font = UIFont(name: Font.semibold32.chooseFont.fontName, size: Font.bold30.chooseFont.pointSize)
+        label.font = UIFont(name: Font.semibold32.chooseFont.fontName, size: Font.semibold32.chooseFont.pointSize)
         return label
     }()
     
@@ -61,9 +61,10 @@ class MenuVC: UIViewController {
     
     private lazy var collectionView:UICollectionView = {
        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 1
-        layout.minimumInteritemSpacing = 1
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 8
+        layout.minimumInteritemSpacing = 8
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16)
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
@@ -88,7 +89,7 @@ class MenuVC: UIViewController {
     
     func setupView() {
         
-        self.view.addSubviews(headerLabel,logoutButton,contentView)
+        self.view.addSubviews(logoutButton,contentView,headerLabel)
         contentView.addSubviews(profileImage, fullNameLabel, editProfileButton, collectionView)
         setupLayout()
     }
@@ -97,11 +98,11 @@ class MenuVC: UIViewController {
         
         headerLabel.edgesToSuperview(excluding: [.bottom, .right], insets: .left(20) + .top(24), usingSafeArea: true)
         
-        logoutButton.edgesToSuperview(excluding: [.left, .bottom], insets: .top(34) + .right(24))
+        logoutButton.edgesToSuperview(excluding: [.left, .bottom], insets: .top(34) + .right(24), usingSafeArea: true)
         logoutButton.height(30)
         logoutButton.width(30)
         
-        contentView.edgesToSuperview(insets: .top(170))
+        contentView.edgesToSuperview(excluding: [.top])
         contentView.topToBottom(of: headerLabel, offset: 54)
         
         profileImage.top(to: contentView, offset: 24)
@@ -111,23 +112,21 @@ class MenuVC: UIViewController {
         
         fullNameLabel.topToBottom(of: profileImage, offset: 8)
         fullNameLabel.centerXToSuperview()
-        fullNameLabel.height(24)
-        fullNameLabel.width(94)
         
         editProfileButton.topToBottom(of: fullNameLabel)
         editProfileButton.centerXToSuperview()
         editProfileButton.height(18)
         editProfileButton.width(62)
         
-        collectionView.topToBottom(of: editProfileButton, offset: 16)
-        collectionView.bottomToSuperview(offset: -48)
-        collectionView.leftToSuperview(offset:16)
-        collectionView.trailingToSuperview(offset: -16)
+        collectionView.topToBottom(of: editProfileButton, offset: 6)
+        collectionView.bottomToSuperview(usingSafeArea: true)
+        collectionView.leftToSuperview()
+        collectionView.trailingToSuperview()
     }
     
     @objc func editProfilePage() {
-        
         let vc = EditProfileVC()
+        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }
 
@@ -175,7 +174,7 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 354, height:58)
+        return CGSize(width: collectionView.frame.width-32, height:54)
         }
     
 }
