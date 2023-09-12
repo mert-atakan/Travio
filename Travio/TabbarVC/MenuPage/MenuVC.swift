@@ -74,8 +74,6 @@ class MenuVC: UIViewController {
         return collectionView
     }()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true

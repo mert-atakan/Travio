@@ -27,6 +27,10 @@ class MenuVM {
     func getRightImageForRow(indexpath: IndexPath) -> UIImage {
         return collectionViewCellsRightImages[indexpath.row]
     }
+    
+    
+    
+    
 
     
 }
