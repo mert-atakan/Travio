@@ -8,10 +8,16 @@
 import UIKit
 import TinyConstraints
 import Kingfisher
+import NVActivityIndicatorView
 
 class MenuVC: UIViewController {
     
-    let menuVM = MenuVM()
+    let viewModal = MenuVM()
+    
+    private lazy var activity: NVActivityIndicatorView = {
+        let activity = NVActivityIndicatorView(frame: .zero, type: .pacman, color: Color.systemGreen.chooseColor, padding: 0)
+        return activity
+    }()
     
     private lazy var headerLabel:UILabel = {
         let label = UILabel()
@@ -40,13 +46,11 @@ class MenuVC: UIViewController {
         profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
         profileImage.layer.masksToBounds = true
         profileImage.contentMode = .scaleAspectFill
-        profileImage.kf.setImage(with: URL(string: "https://cdn.britannica.com/48/194248-050-4EE825CF/Bruce-Willis-2013.jpg"))
         return profileImage
     }()
     
     private lazy var fullNameLabel:CustomLabel = {
         let fullName = CustomLabel()
-        fullName.text = "Bruce Wills"
         fullName.font = Font.semibold16.chooseFont
         return fullName
     }()
@@ -80,6 +84,7 @@ class MenuVC: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Color.systemGreen.chooseColor
         setupView()
+        initVM()
     }
     
     override func viewDidLayoutSubviews() {
@@ -89,11 +94,38 @@ class MenuVC: UIViewController {
     @objc func editProfilePage() {
         let vc = EditProfileVC()
         vc.modalPresentationStyle = .fullScreen
+        vc.delegate = self
         self.present(vc, animated: true)
     }
     
     @objc func logoutTapped() {
         showAlert()
+    }
+    
+    func initVM() {
+        viewModal.onDataFetch = { [weak self] isLoading in
+        DispatchQueue.main.async {
+            if isLoading {
+                self?.activity.startAnimating()
+            } else {
+                self?.activity.stopAnimating()
+            }
+        }
+    }
+        viewModal.getUserInfo() { user in
+            self.configure(data: user)
+        }
+        
+    }
+    
+    func configure(data: User) {
+        self.fullNameLabel.text = data.full_name
+        if data.pp_url != "" {
+            let url = URL(string: data.pp_url)
+            self.profileImage.kf.setImage(with: url)
+        } else {
+            self.profileImage.image = UIImage(systemName: "person.fill")
+        }
     }
     
     func showAlert() {
@@ -113,7 +145,7 @@ class MenuVC: UIViewController {
     
     func setupView() {
         
-        self.view.addSubviews(logoutButton,contentView,headerLabel)
+        self.view.addSubviews(logoutButton,contentView,headerLabel,activity)
         contentView.addSubviews(profileImage, fullNameLabel, editProfileButton, collectionView)
         setupLayout()
     }
@@ -146,6 +178,10 @@ class MenuVC: UIViewController {
         collectionView.bottomToSuperview(usingSafeArea: true)
         collectionView.leftToSuperview()
         collectionView.trailingToSuperview()
+        
+        activity.centerInSuperview()
+        activity.height(50)
+        activity.width(50)
     }
     
 
@@ -154,16 +190,16 @@ class MenuVC: UIViewController {
 extension MenuVC:UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return menuVM.collectionViewCellsLabels.count
+        return viewModal.collectionViewCellsLabels.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCvCell else  {return UICollectionViewCell()}
         
-        let leftImagesAtRow = menuVM.getLeftImageForRow(indexpath: indexPath)
-        let labelsAtRow = menuVM.getLabelForRow(indexpath: indexPath)
-        let rightImagesAtRow = menuVM.getRightImageForRow(indexpath: indexPath)
+        let leftImagesAtRow = viewModal.getLeftImageForRow(indexpath: indexPath)
+        let labelsAtRow = viewModal.getLabelForRow(indexpath: indexPath)
+        let rightImagesAtRow = viewModal.getRightImageForRow(indexpath: indexPath)
         
         cell.configure(cellLeftImage: leftImagesAtRow, cellLabel: labelsAtRow, cellRightImage: rightImagesAtRow)
         
@@ -177,7 +213,7 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let labelsAtRow = menuVM.getLabelForRow(indexpath: indexPath)
+        let labelsAtRow = viewModal.getLabelForRow(indexpath: indexPath)
         
         switch labelsAtRow {
         case "Security Settings":
@@ -200,3 +236,10 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
     
 }
 
+extension MenuVC:Reloader {
+    func reloadMap() {
+        viewModal.getUserInfo(){ user in
+            self.configure(data: user)
+        }
+    }
+}

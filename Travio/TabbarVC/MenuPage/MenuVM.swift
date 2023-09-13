@@ -16,6 +16,14 @@ class MenuVM {
     
     let collectionViewCellsRightImages = [#imageLiteral(resourceName: "Vector-5"), #imageLiteral(resourceName: "Vector-5"), #imageLiteral(resourceName: "Vector-5"), #imageLiteral(resourceName: "Vector-5"), #imageLiteral(resourceName: "Vector-5"), #imageLiteral(resourceName: "Vector-5")]
     
+    let apiService: ApiServiceProtocol
+
+    init(apiService: ApiServiceProtocol = ApiService()){
+        self.apiService = apiService
+    }
+    
+    var onDataFetch: ((Bool) -> Void)?
+    
     func getLabelForRow(indexpath: IndexPath) -> String {
         return collectionViewCellsLabels[indexpath.row]
     }
@@ -28,7 +36,19 @@ class MenuVM {
         return collectionViewCellsRightImages[indexpath.row]
     }
     
-    
+    func getUserInfo(handler: @escaping ((User)->())) {
+        self.onDataFetch?(true)
+        apiService.makeRequest(urlConvertible: Router.me) { (result:Result<User,Error>) in
+            switch result {
+            case .success(let success):
+              handler(success)
+                self.onDataFetch?(false)
+            case .failure(let failure):
+                print(failure.localizedDescription)
+                self.onDataFetch?(false)
+            }
+        }
+    }
     
     
 
