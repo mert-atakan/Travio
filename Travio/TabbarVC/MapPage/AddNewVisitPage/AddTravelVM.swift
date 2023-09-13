@@ -25,7 +25,6 @@ class AddTravelVM {
             switch result {
             case .success(let success):
                 self.urlArrays = success.urls
-                //url geldi. ilk görseli post place olarak atayacagız.
                 guard let urlArrays = self.urlArrays else { return}
 
                 self.body?["cover_image_url"] = urlArrays.first
@@ -44,7 +43,6 @@ class AddTravelVM {
             switch result {
             case .success(let success):
                 let id = success.message
-                //message ile id geldi. çünkü id message içine kaydedilmiş. url arrayinin geri kalan değerlerini for döngüsüyle gallery'e atayacagız.
                 guard let urlArrays = self.urlArrays else {return}
                 
                 for url in urlArrays {
@@ -64,7 +62,6 @@ class AddTravelVM {
     }
     
     func addGallery(body:[String:Any]) {
-        print(body)
         apiService.makeRequest(urlConvertible: Router.postGallery(params: body)) { (result:Result<GalleryResponse,Error>) in
             switch result {
             case .success(let success):

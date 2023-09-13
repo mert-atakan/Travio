@@ -10,11 +10,9 @@ import TinyConstraints
 
 class HelpAndSupportVC: UIViewController {
     
-    var dataSource = CellDataModel.mockedData
+    let viewModel = HelpAndSupportVM()
     
-//    let viewModel = HelpAndSupportVM()
-    
-    private lazy var helpAndSupportBackButton:UIButton = {
+    private lazy var backBtn:UIButton = {
         let backButton = UIButton()
         let backButtonImage = UIImage(named: "vector.png")
         backButton.setImage(backButtonImage, for: .normal)
@@ -23,7 +21,7 @@ class HelpAndSupportVC: UIViewController {
         return backButton
     }()
     
-    private lazy var helpAndSupportLabel:CustomLabel = {
+    private lazy var titleLbl:CustomLabel = {
         let topTitle = CustomLabel()
         topTitle.text = "Help&Support"
         topTitle.font = Font.semibold32.chooseFont
@@ -39,34 +37,21 @@ class HelpAndSupportVC: UIViewController {
         return whiteView
     }()
     
-    private lazy var faqLabel:UILabel = {
-        let faq = UILabel()
-        faq.text = "FAQ"
-        faq.textColor = Color.systemGreen.chooseColor
-        faq.font = Font.semibold24.chooseFont
-        
-        return faq
+    private lazy var faqTableView:UITableView = {
+        let faqTableView = UITableView(frame: .zero, style: .plain)
+        faqTableView.dataSource = self
+        faqTableView.delegate = self
+        faqTableView.register(HelpSupportTableCell.self, forCellReuseIdentifier: "customCell")
+        faqTableView.isScrollEnabled = true
+        faqTableView.separatorStyle = .none
+        faqTableView.backgroundColor = .clear
+        faqTableView.translatesAutoresizingMaskIntoConstraints = false
+        return faqTableView
     }()
-    
-        private lazy var faqTableView:UITableView = {
-            let faqTableView = UITableView(frame: .zero, style: .plain)
-            faqTableView.dataSource = self
-            faqTableView.delegate = self
-            faqTableView.register(HelpSupportTableCell.self, forCellReuseIdentifier: "customCell")
-            faqTableView.isScrollEnabled = false
-//            faqTableView.estimatedRowHeight = 100
-//            faqTableView.rowHeight = UITableView.automaticDimension
-            faqTableView.separatorStyle = .none
-            faqTableView.backgroundColor = .clear
-            faqTableView.translatesAutoresizingMaskIntoConstraints = false
-            return faqTableView
-        }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Color.systemGreen.chooseColor
         setupView()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -76,69 +61,77 @@ class HelpAndSupportVC: UIViewController {
     @objc func backToSettings() {
         self.dismiss(animated: true)
     }
-
+    
     func setupView() {
-        view.addSubviews(helpAndSupportBackButton, helpAndSupportLabel, whiteView)
-        whiteView.addSubviews(faqLabel, faqTableView)
+        view.backgroundColor = Color.systemGreen.chooseColor
+        view.addSubviews(backBtn, titleLbl, whiteView)
+        whiteView.addSubviews(faqTableView)
         setupLayout()
     }
-  
+    
     func setupLayout() {
+        backBtn.edgesToSuperview(excluding: [.right, .bottom], insets: .top(32) + .left(24), usingSafeArea: true)
         
-        helpAndSupportBackButton.edgesToSuperview(excluding: [.right, .bottom], insets: .top(32) + .left(24), usingSafeArea: true)
+        titleLbl.leadingToTrailing(of: backBtn, offset: 24)
+        titleLbl.topToSuperview(offset:19, usingSafeArea: true)
         
-        helpAndSupportLabel.leadingToTrailing(of: helpAndSupportBackButton, offset: 24)
-        helpAndSupportLabel.topToSuperview(offset:19, usingSafeArea: true)
+        whiteView.topToBottom(of: titleLbl, offset: 58)
+        whiteView.edgesToSuperview(excluding: [.top])
         
-        whiteView.edgesToSuperview(insets: .top(125),usingSafeArea: true)
-        whiteView.bottomToSuperview()
-        
-        faqLabel.top(to: whiteView, offset: 44)
-        faqLabel.leadingToSuperview(offset:24)
-        
-        faqTableView.leadingToSuperview(offset:24)
-        faqTableView.topToBottom(of: faqLabel, offset: 1)
-        faqTableView.centerXToSuperview()
-        faqTableView.bottomToSuperview(offset:-75)
+        faqTableView.topToSuperview(offset: 44)
+        faqTableView.edgesToSuperview(excluding: [.top])
     }
-
+    
+    private func headerLabel(section:Int, headerView:UIView) -> UILabel {
+        let label = UILabel()
+        label.frame = CGRect.init(x: 24, y: 0, width: headerView.frame.width-10, height: 21)
+        label.text = "FAQ"
+        label.font = Font.semibold24.chooseFont
+        label.textColor = Color.systemGreen.chooseColor
+        return label
+    }
+    
 }
 
 extension HelpAndSupportVC:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+        return viewModel.getCellForSection()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as? HelpSupportTableCell else { return UITableViewCell() }
-            cell.set(dataSource[indexPath.row])
-                return cell
+        cell.set(viewModel.getObject(indexPath: indexPath))
+        return cell
     }
     
 }
 
 extension HelpAndSupportVC:UITableViewDelegate {
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 0
-//    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//        return UITableView.automaticDimension
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.mockedData[indexPath.row].isExpanded.toggle()
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
     
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            UITableView.automaticDimension
-        }
-    
-    
-    
-     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         dataSource[indexPath.row].isExpanded.toggle()
-         tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 21))
+        headerView.backgroundColor = Color.systemWhite.chooseColor
+        
+        let label = headerLabel(section: section,headerView: headerView)
+        
+        headerView.addSubview(label)
+        
+        return headerView
+    }
 
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 25
+    }
+    
 }

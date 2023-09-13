@@ -9,39 +9,24 @@ import Foundation
 import AVFoundation
 import Photos
 import CoreLocation
+import UIKit
 
 class SecurityCellVM {
     let locationManager = CLLocationManager()
-    
-    //MARK: - İzinlerin durumunu öğrenme ve userDefaults'a kaydetme.
-    
-    func checkAllPermissions() {
-        checkCameraPermission()
-        checkLocationPermission()
-        checkLibraryPermission()
-    }
+   
     
     func checkLibraryPermission() {
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-        
         var isLibraryPermissionGranted = false
-
         switch authorizationStatus {
         case .authorized:
-            print("Kullanıcı fotoğraf kitaplığı izni verdi.")
             isLibraryPermissionGranted = true
-        case .denied:
-            print("Kullanıcı fotoğraf kitaplığı izni vermedi.")
-        case .restricted:
-            print("Fotoğraf kitaplığı izni kısıtlandı.")
-        case .notDetermined:
-            print("Fotoğraf kitaplığı izni henüz seçilmedi.")
-        @unknown default:
-            print("Bilinmeyen izin durumu.")
+        default:
+            break
         }
 
         UserDefaults.standard.set(isLibraryPermissionGranted, forKey: "LibraryPermission")
-        //setLibraryPermissionToggle()
+       
     }
     
    
@@ -51,24 +36,12 @@ class SecurityCellVM {
         var isLocationPermissionGranted = false
         switch authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
-            print("Kullanıcı konum izni verdi.")
             isLocationPermissionGranted = true
-        case .denied:
-            print("Kullanıcı konum izni vermedi.")
-            isLocationPermissionGranted = false
-        case .restricted:
-            print("Konum izni kısıtlandı.")
-            isLocationPermissionGranted = false
-        case .notDetermined:
-            print("Konum izni henüz seçilmedi.")
-            isLocationPermissionGranted = false
-        @unknown default:
-            print("Bilinmeyen izin durumu.")
-            isLocationPermissionGranted = false
+        default:
+            break
         }
         UserDefaults.standard.set(isLocationPermissionGranted, forKey: "LocationPermission")
     
-       // setLocationPermissionToggle()
     }
   
 
@@ -77,29 +50,24 @@ class SecurityCellVM {
         var isCameraPermissionGranted = false
         switch authorizationStatus {
         case .authorized:
-            print("Kullanıcı kamera izni verdi.")
             isCameraPermissionGranted = true
-        case .denied:
-            print("Kullanıcı kamera izni vermedi.")
-            isCameraPermissionGranted = false
-        case .restricted:
-            print("Kamera izni kısıtlandı.")
-            isCameraPermissionGranted = false
-        case .notDetermined:
-            print("Kamera izni henüz seçilmedi.")
-            isCameraPermissionGranted = false
-        @unknown default:
-            print("Bilinmeyen izin durumu.")
-            isCameraPermissionGranted = false
+        default:
+            break
         }
         UserDefaults.standard.set(isCameraPermissionGranted, forKey: "CameraPermission")
      
     }
     
-    //MARK: - Switchlerin off/on statülerini ayarlama
-    
     func setPermissionToggle(forKey: String) -> Bool {
         let isPermissionGranted = UserDefaults.standard.bool(forKey: forKey)
         return isPermissionGranted
+    }
+    
+    func openAppSettings() {
+        if let appSettingsURL = URL(string: UIApplication.openSettingsURLString) {
+            if UIApplication.shared.canOpenURL(appSettingsURL) {
+                UIApplication.shared.open(appSettingsURL, options: [:], completionHandler: nil)
+            }
+        }
     }
 }

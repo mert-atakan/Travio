@@ -53,7 +53,8 @@ class MainTabBarController: UITabBarController {
         visit.navigationController?.isNavigationBarHidden = true
         visit.tabBarItem = UITabBarItem(title: "Visit", image: UIImage(named: "visit"), tag: 1)
        
-        let map = MapVC()
+        let map = UINavigationController(rootViewController: MapVC())
+        map.navigationController?.isNavigationBarHidden = true
         map.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "map"), tag: 2)
                                      
         let menu = MenuVC()

@@ -8,6 +8,9 @@
 import UIKit
 import TinyConstraints
 import CoreLocation
+import AVFoundation
+import Photos
+
 class AddTravelVC: UIViewController{
     
     var imageClosure: (()->())?
@@ -36,7 +39,7 @@ class AddTravelVC: UIViewController{
     
     private lazy var descView: CustomView = {
         let v = CustomView()
-        v.textField.attributedPlaceholder = NSAttributedString(string: "Lorem ipsum blah blah", attributes: v.attributes)
+        v.textField.attributedPlaceholder = NSAttributedString(string: "Lorem ipsum ", attributes: v.attributes)
         v.titleLabel.text = "Visit Description"
         return v
     }()
@@ -52,6 +55,7 @@ class AddTravelVC: UIViewController{
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 16
         flowLayout.minimumInteritemSpacing = 16
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         let cv = UICollectionView(frame: .zero,collectionViewLayout: flowLayout)
         cv.register(AddTravelCollectionCell.self, forCellWithReuseIdentifier: "addTravel")
         cv.delegate = self
@@ -60,22 +64,24 @@ class AddTravelVC: UIViewController{
         cv.backgroundColor = .clear
         return cv
     }()
-
     
-        private lazy var addBtn: CustomButton = {
-            let btn = CustomButton()
-            btn.setTitle("Add Place", for: .normal)
-            btn.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
-            return btn
-        }()
+    
+    private lazy var addBtn: CustomButton = {
+        let btn = CustomButton()
+        btn.setTitle("Add Place", for: .normal)
+        btn.addTarget(self, action: #selector(addTapped), for: .touchUpInside)
+        return btn
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        requestPermission()
+        
         setupView()
         
         guard let latitude = latitude, let longitude = longitude else { return}
-
+        
         getCityAndCountryName(latitude: latitude, longitude: longitude)
         
         iniVM()
@@ -87,20 +93,19 @@ class AddTravelVC: UIViewController{
     }
     
     @objc func addTapped() {
-        // resimleri secerken tempImage arrayine image tipinde attık. CollectionCell'lerini doldurabilmek için. burada da tek satır kodla hızlıca data tipinde bir array'e dönüştürdük.  ve uploadImage fonksiyonuna data tipinde atmış olduk.
         let imageData = tempImage.compactMap { $0.jpegData(compressionQuality:0.5)}
         
         viewModal.uploadImage(images: imageData)
         var body = [String:Any]()
         guard let place = countryView.textField.text, let title = placeView.textField.text, let desc = descView.textField.text else {return}
-
+        
         body["place"] = place
         body["title"] = title
         body["description"] = desc
-        body["cover_image_url"] = "https://i2.milimaj.com/i/milliyet/75/0x0/5c8e330a45d2a097ac0f94ae.jpg"
+        //body["cover_image_url"] = "https://i2.milimaj.com/i/milliyet/75/0x0/5c8e330a45d2a097ac0f94ae.jpg"
         body["latitude"] = latitude
         body["longitude"] = longitude
-
+        
         viewModal.body = body
         
     }
@@ -116,23 +121,25 @@ class AddTravelVC: UIViewController{
     func getCityAndCountryName(latitude: Double, longitude: Double) {
         let location = CLLocation(latitude: latitude, longitude: longitude)
         let geocoder = CLGeocoder()
-
+        
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
             if let error = error {
             } else if let placemark = placemarks?.first {
                 
-                let city = placemark.locality ?? ""
+                let city = placemark.administrativeArea ?? ""
                 let country = placemark.country ?? ""
                 self.countryView.textField.text = city + ", " + country
-               
+                
             } else {
             }
         }
     }
     private func setupView() {
+        
         view.backgroundColor = Color.systemWhite.chooseColor
         view.addSubViews(placeView,descView,countryView,addBtn,collectionView)
         setupLayout()
+        
     }
     
     private func setupLayout() {
@@ -149,7 +156,7 @@ class AddTravelVC: UIViewController{
         
         collectionView.topToBottom(of: countryView, offset: 16)
         collectionView.bottomToTop(of: addBtn, offset: -16)
-        collectionView.edgesToSuperview(excluding: [.bottom,.top],insets: .left(8) + .right(0))
+        collectionView.edgesToSuperview(excluding: [.bottom,.top])
         
         addBtn.edgesToSuperview(excluding: [.top], insets: .bottom(24) + .right(24) + .left(24))
         addBtn.height(54)
@@ -163,9 +170,24 @@ class AddTravelVC: UIViewController{
         
         present(alert, animated: true)
     }
-
-
-
+    
+    func requestPermission() {
+        requestLibraryPermission()
+        requestCameraPermission()
+    }
+    
+    func requestCameraPermission() {
+          AVCaptureDevice.requestAccess(for: .video) { (granted) in }
+      }
+    
+    func requestLibraryPermission() {
+          PHPhotoLibrary.requestAuthorization { (status) in }
+      }
+    
+    
+    
+    
+    
 }
 
 
@@ -174,7 +196,6 @@ extension AddTravelVC: UICollectionViewDelegateFlowLayout {
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
         vc.delegate = self
-        vc.allowsEditing = true
         currentIndex = indexPath
         if tempImage.count < 4 {
             present(vc, animated: true)
@@ -196,7 +217,7 @@ extension AddTravelVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addTravel", for: indexPath) as? AddTravelCollectionCell else {return UICollectionViewCell()}
-
+        
         return cell
     }
 }
@@ -204,23 +225,23 @@ extension AddTravelVC: UICollectionViewDataSource {
 
 extension AddTravelVC: UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print(info)
-        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage?  {
-            guard let image = image else {return}
-            let data = image.jpegData(compressionQuality: 0.5)
-            tempImage.append(image)
+        
+//        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage?  {
+//            guard let image = image else {return}
+//           // let data = image.jpegData(compressionQuality: 0.5)
+//            tempImage.append(image)
+            if let image = info[.originalImage] as? UIImage {
+                   tempImage.append(image)
             
             guard let cell = collectionView.cellForItem(at: currentIndex!) as? AddTravelCollectionCell else { return }
             cell.configure(image: tempImage.last!)
             
-            
-
         }
-
+        
         picker.dismiss(animated: true, completion: nil)
-
+        
     }
-
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
