@@ -217,14 +217,13 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
         
         switch labelsAtRow {
         case "Security Settings":
-            let nav = SecuritySettingsVC()
-            self.present(nav, animated: true)
+            self.present(SecuritySettingsVC(), animated: true)
         case "Help&Support":
             self.present(HelpAndSupportVC(), animated: true)
         case "About":
             self.present(AboutUsVC(), animated: true)
-//        case "Terms of Use":
-//            self.present(TermOfUseVC(), animated: true)
+        case "Terms of Use":
+            self.present(TermOfUseVC(), animated: true)
         default: return
         }
     }
