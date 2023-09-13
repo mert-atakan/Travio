@@ -16,27 +16,23 @@ class CustomCvCell:UICollectionViewCell {
         shadowView.backgroundColor = .white
         shadowView.layer.shadowColor = UIColor.black.cgColor
         shadowView.layer.shadowOffset = CGSize(width: 0, height: 0) // Gölge yönü ve boyutu
-        shadowView.layer.shadowOpacity = 0.2 // Gölge opaklığı
-        shadowView.layer.shadowRadius = 4 // Gölge yarıçapı
-        shadowView.layer.cornerRadius = 12 // Hücrenin köşe yuvarlama miktarı
+        shadowView.layer.shadowOpacity = 0.15 // Gölge opaklığı
+        shadowView.layer.shadowRadius = 3 // Gölge yarıçapı
+        shadowView.layer.cornerRadius = 16
         shadowView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
-        
         return shadowView
     }()
     
     
     private lazy var cellsLeftImageView:UIImageView = {
-       let cellsLeftImage = UIImageView()
-        
-        
+        let cellsLeftImage = UIImageView()
         return cellsLeftImage
     }()
     
     private lazy var cellsLabel:UILabel = {
       let cellLabel = UILabel()
-        cellLabel.font = Font.regular14.chooseFont
+        cellLabel.font = Font.light14.chooseFont
         cellLabel.textColor = Color.systemblack.chooseColor
-        
         return cellLabel
     }()
     
@@ -72,10 +68,7 @@ class CustomCvCell:UICollectionViewCell {
     
     func setupLayout() {
         
-        shadowView.topToSuperview(offset:3)
-        shadowView.leadingToSuperview(offset:3)
-        shadowView.trailingToSuperview(offset:-3)
-        shadowView.bottomToSuperview(offset:-3)
+        shadowView.edgesToSuperview()
         
         cellsLeftImageView.leadingToSuperview(offset:16)
         cellsLeftImageView.height(17.5)

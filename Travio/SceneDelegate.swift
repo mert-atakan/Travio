@@ -17,7 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
 
 
+<<<<<<< HEAD
         let vc = TermsOfUseVC()
+=======
+        let vc = LoginVC()
+>>>>>>> Sprint3/MenuVc_Backend
 
         let nav = UINavigationController(rootViewController: vc)
         window.rootViewController = nav

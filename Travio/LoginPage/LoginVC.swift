@@ -53,7 +53,7 @@ class LoginVC: UIViewController {
     private lazy var passwordView: CustomView = {
         let v = CustomView()
         v.titleLabel.text = "Password"
-        v.textField.text = "123456"
+        v.textField.text = "123456q"
         v.textField.isSecureTextEntry = true
         v.textField.attributedPlaceholder = NSAttributedString(string: "******", attributes: v.attributes)
         return v

@@ -25,6 +25,7 @@
 		<string>Poppins-Regular.ttf</string>
 		<string>Poppins-Medium.ttf</string>
 		<string>Poppins-SemiBold.ttf</string>
+		<string>Poppins-Light.ttf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please allow to access your library.</string>

@@ -13,6 +13,8 @@ class EditProfileVC: UIViewController {
     
     let viewModal = EditProfileVM()
     
+    weak var delegate:(Reloader)?
+    
     private lazy var activity: NVActivityIndicatorView = {
         let activity = NVActivityIndicatorView(frame: .zero, type: .pacman, color: Color.systemGreen.chooseColor, padding: 0)
         return activity
@@ -24,10 +26,11 @@ class EditProfileVC: UIViewController {
         return v
     }()
     
-    private lazy var backButton: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(named: "vector")
+    private lazy var backButton: UIButton = {
+        let iv = UIButton()
+//        iv.contentMode = .scaleAspectFit
+        iv.setImage(UIImage(named: "vector"), for: .normal)
+        iv.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         return iv
     }()
     
@@ -127,7 +130,31 @@ class EditProfileVC: UIViewController {
         guard let name = nameView.textField.text, let email = emailView.textField.text else {return}
         let imageUrl = viewModal.getImageUrl()
         let body = ["full_name":name, "email": email, "pp_url": imageUrl]
-        viewModal.editProfile(body: body)
+        viewModal.editProfile(body: body) { status in
+            self.statusAlert(status: status)
+            
+        }
+    }
+    @objc func backTapped() {
+        self.dismiss(animated: true)
+    }
+    
+    func statusAlert(status:String) {
+        var alert = UIAlertController()
+        var action = UIAlertAction()
+        if status == "success" {
+            alert = UIAlertController(title: "Tebrikler", message: "Bilgileriniz başarıyla değiştirildi.", preferredStyle: .alert)
+             action = UIAlertAction(title: "Tamam", style: .default) {action in
+                 self.delegate?.reloadMap()
+                self.dismiss(animated: true, completion: nil)
+            }
+        } else {
+            alert = UIAlertController(title: "Üzgünüz", message: "Bilgileriniz değiştirilemedi.", preferredStyle: .alert)
+             action = UIAlertAction(title: "Tamam", style: .default)
+        }
+       
+        alert.addAction(action)
+        present(alert, animated: true)
     }
     
     func initVM() {
@@ -142,20 +169,23 @@ class EditProfileVC: UIViewController {
                 }
             }
         }
-        viewModal.getUserInfo()
-        viewModal.configureUserInfo = {user in
-            self.nameLbl.text = user.full_name
-            self.positionView.Lbl.text = user.role
-           self.dateView.Lbl.text = self.dateFormat(date: user.created_at)
-            self.nameView.textField.text = user.full_name
-            self.emailView.textField.text = user.email
-            if user.pp_url != "" {
-                let url = URL(string: user.pp_url)
-                self.imageview.kf.setImage(with: url)
-            } else {
-                self.imageview.image = UIImage(systemName: "person.fill")
-            }
-           
+        viewModal.getUserInfo() { user in
+            self.configure(data:user)
+        }
+      
+    }
+    
+    func configure(data: User) {
+        self.nameLbl.text = data.full_name
+        self.positionView.Lbl.text = data.role
+       self.dateView.Lbl.text = self.dateFormat(date: data.created_at)
+        self.nameView.textField.text = data.full_name
+        self.emailView.textField.text = data.email
+        if data.pp_url != "" {
+            let url = URL(string: data.pp_url)
+            self.imageview.kf.setImage(with: url)
+        } else {
+            self.imageview.image = UIImage(systemName: "person.fill")
         }
     }
     
@@ -234,7 +264,6 @@ class EditProfileVC: UIViewController {
 
 extension EditProfileVC: UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print(info)
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage?  {
             guard let image = image else {return}
             imageview.image = image

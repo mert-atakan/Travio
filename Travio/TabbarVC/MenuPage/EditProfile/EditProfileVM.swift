@@ -20,18 +20,14 @@ class EditProfileVM {
     var imageUrl: String?
     var userInfos: [String:String]?
     
-    var statusAlert: ((String)->())?
-    var configureUserInfo: ((User)->())?
     var onDataFetch: ((Bool) -> Void)?
     
-    func getUserInfo() {
+    func getUserInfo(handler: @escaping ((User))->()) {
         self.onDataFetch?(true)
         apiService.makeRequest(urlConvertible: Router.me) { (result:Result<User,Error>) in
             switch result {
             case .success(let success):
-                guard let configureUserInfo = self.configureUserInfo else { return }
-                configureUserInfo(success)
-                print(success)
+                handler(success)
                 self.onDataFetch?(false)
             case .failure(let failure):
                 print(failure.localizedDescription)
@@ -47,21 +43,17 @@ class EditProfileVM {
             case .success(let success):
                 guard let url = success.urls.first else {return}
                 self.imageUrl = url
-                print(url)
             case .failure(let failure):
                 print(failure.localizedDescription)
             }
         }
     }
     
-    func editProfile(body: [String:String]) {
-        print(body)
+    func editProfile(body: [String:String], handler: @escaping ((String)->())) {
         apiService.makeRequest(urlConvertible: Router.editProfile(params: body)) { (result:Result<ProfileResponse,Error>) in
             switch result {
             case .success(let success):
-                print(success)
-                guard let statusAlert = self.statusAlert else {return}
-                statusAlert(success.status)
+                handler(success.status)
             case .failure(let failure):
                 print(failure)
             }

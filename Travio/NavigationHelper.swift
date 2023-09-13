@@ -39,5 +39,4 @@ class NavigationHelper: UIViewController {
         return tokenstr
     }
     
-
 }
