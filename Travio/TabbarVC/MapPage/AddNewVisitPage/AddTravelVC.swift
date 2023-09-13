@@ -91,6 +91,7 @@ class AddTravelVC: UIViewController{
     override func viewDidLayoutSubviews() {
         collectionView.roundCornersWithShadow([.topLeft, .bottomLeft], radius: 16)
     }
+
     
     @objc func addTapped() {
         let imageData = tempImage.compactMap { $0.jpegData(compressionQuality:0.5)}
@@ -134,8 +135,8 @@ class AddTravelVC: UIViewController{
             }
         }
     }
+    
     private func setupView() {
-        
         view.backgroundColor = Color.systemWhite.chooseColor
         view.addSubViews(placeView,descView,countryView,addBtn,collectionView)
         setupLayout()
