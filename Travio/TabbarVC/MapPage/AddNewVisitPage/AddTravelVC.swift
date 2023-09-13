@@ -8,6 +8,9 @@
 import UIKit
 import TinyConstraints
 import CoreLocation
+import AVFoundation
+import Photos
+
 class AddTravelVC: UIViewController{
     
     var imageClosure: (()->())?
@@ -73,6 +76,8 @@ class AddTravelVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        requestPermission()
+        
         setupView()
         
         guard let latitude = latitude, let longitude = longitude else { return}
@@ -97,7 +102,7 @@ class AddTravelVC: UIViewController{
         body["place"] = place
         body["title"] = title
         body["description"] = desc
-        body["cover_image_url"] = "https://i2.milimaj.com/i/milliyet/75/0x0/5c8e330a45d2a097ac0f94ae.jpg"
+        //body["cover_image_url"] = "https://i2.milimaj.com/i/milliyet/75/0x0/5c8e330a45d2a097ac0f94ae.jpg"
         body["latitude"] = latitude
         body["longitude"] = longitude
         
@@ -130,9 +135,11 @@ class AddTravelVC: UIViewController{
         }
     }
     private func setupView() {
+        
         view.backgroundColor = Color.systemWhite.chooseColor
         view.addSubViews(placeView,descView,countryView,addBtn,collectionView)
         setupLayout()
+        
     }
     
     private func setupLayout() {
@@ -163,6 +170,21 @@ class AddTravelVC: UIViewController{
         
         present(alert, animated: true)
     }
+    
+    func requestPermission() {
+        requestLibraryPermission()
+        requestCameraPermission()
+    }
+    
+    func requestCameraPermission() {
+          AVCaptureDevice.requestAccess(for: .video) { (granted) in }
+      }
+    
+    func requestLibraryPermission() {
+          PHPhotoLibrary.requestAuthorization { (status) in }
+      }
+    
+    
     
     
     

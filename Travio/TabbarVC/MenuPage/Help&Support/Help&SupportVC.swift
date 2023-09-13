@@ -135,9 +135,3 @@ extension HelpAndSupportVC:UITableViewDelegate {
     }
     
 }
-
-
-
-
-
-

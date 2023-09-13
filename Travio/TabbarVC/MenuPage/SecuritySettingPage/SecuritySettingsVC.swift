@@ -84,6 +84,7 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
     
     func textFieldFunctions(text: String,number:Int) {
         passwords[number] = text
+        print(passwords )
     }
     
     func checkForEqual() {

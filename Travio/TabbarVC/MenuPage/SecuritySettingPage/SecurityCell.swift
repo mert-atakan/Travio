@@ -7,29 +7,27 @@
 
 import UIKit
 import TinyConstraints
+
 class SecurityCell: UITableViewCell {
     
     let viewModal = SecurityCellVM()
     weak var delegate: CellFunctions?
     
-     lazy var switchView: CustomSwitchView = {
+    lazy var switchView: CustomSwitchView = {
         let v = CustomSwitchView()
-         v.switchView.addTarget(self, action: #selector(switchValueChanged(_ : )), for: .valueChanged)
+        v.switchView.addTarget(self, action: #selector(switchValueChanged(_ : )), for: .valueChanged)
         return v
     }()
     
-     lazy var passwordView: CustomView = {
+    lazy var passwordView: CustomView = {
         let v = CustomView()
-         v.textField.delegate = self
         return v
     }()
     
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupView()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -37,69 +35,57 @@ class SecurityCell: UITableViewCell {
     }
     
     @objc func switchValueChanged(_ sender: CustomSwitchView ) {
-        openAppSettings()
-        switch switchView.titleLabel.text {
-        case "Camera"  :
-            self.viewModal.checkCameraPermission()
-            switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "Camera")
-        case "Photo Library" :
-            self.viewModal.checkLibraryPermission()
-            switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "Photo Library")
-        case "Location" :
-            self.viewModal.checkLocationPermission()
-            switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "Location")
-        default:
-            break
-        }
-        
+        viewModal.openAppSettings()
     }
     
-    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-        passwordView.textField.resignFirstResponder()
-        }
-    
-    func openAppSettings() {
-        if let appSettingsURL = URL(string: UIApplication.openSettingsURLString) {
-            if UIApplication.shared.canOpenURL(appSettingsURL) {
-                UIApplication.shared.open(appSettingsURL, options: [:], completionHandler: nil)
+    @objc func textFieldDidChange() {
+        if passwordView.isPassword {
+            if passwordView.titleLabel.text == "New Password" {
+                delegate?.textFieldFunctions(text: passwordView.textField.text!, number: 1)
+            } else {
+                delegate?.textFieldFunctions(text: passwordView.textField.text!, number:2 )
             }
         }
     }
     
     func configure(section: Int,data:String ) {
         if section == 0 {
-//            passwordView.edgesToSuperview(excluding: [.bottom])
-//            passwordView.height(72)
             switchView.isHidden = true
-            passwordView.titleLabel.text = data
-            passwordView.textField.attributedPlaceholder = NSAttributedString(string: "******", attributes: passwordView.attributes)
+           setPasswordAttributes(view: passwordView, data: data)
         } else if section == 1 {
-//            switchView.edgesToSuperview(excluding: [.bottom])
-//            switchView.height(72)
             switchView.titleLabel.text = data
             setToggles(data: data)
             passwordView.isHidden = true
         }
     }
     
+    func setPasswordAttributes(view: CustomView,data:String) {
+       view.titleLabel.text = data
+       view.textField.isSecureTextEntry = true
+       view.textField.attributedPlaceholder = NSAttributedString(string: "******", attributes: passwordView.attributes)
+       view.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+    }
+    
     func setToggles(data: String) {
+        var permissionKey = String()
         switch data {
         case "Camera":
             self.viewModal.checkCameraPermission()
-            switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "CameraPermission")
+            permissionKey = "CameraPermission"
         case "Photo Library":
             self.viewModal.checkLibraryPermission()
-            switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "LibraryPermission")
+            permissionKey = "LibraryPermission"
         case "Location":
             self.viewModal.checkLocationPermission()
-            switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: "LocationPermission")
+            permissionKey = "LocationPermission"
+            
         default:
             break
         }
+        switchView.switchView.isOn = viewModal.setPermissionToggle(forKey: permissionKey)
     }
     
     private func setupView() {
-        contentView.addGestureRecognizer(tapGesture)
         contentView.backgroundColor = Color.systemWhite.chooseColor
         contentView.addSubviews(passwordView,switchView)
         setupLayout()
@@ -113,24 +99,11 @@ class SecurityCell: UITableViewCell {
         passwordView.height(72)
     }
     
-    
 }
 
 
-extension SecurityCell: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if passwordView.titleLabel.text == "New Password" {
-            textField.resignFirstResponder() // Klavyeyi kapat
-            if let text = textField.text {
-                delegate?.textFieldFunctions(text: text, number: 1)
-            }
-            return true
-        } else {
-           textField.resignFirstResponder() // Klavyeyi kapat
-           if let text = textField.text {
-               delegate?.textFieldFunctions(text: text, number:2 )
-           }
-           return true
-       }
-    }
-}
+//extension SecurityCell: UITextFieldDelegate {
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//
+//    }
+//}

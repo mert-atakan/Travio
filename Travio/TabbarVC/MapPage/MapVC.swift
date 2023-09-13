@@ -92,7 +92,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
                 present(vc, animated: true)
             }
         }
-//        
+        
 //        if sender.state == .began {
 //                   let touchPoint = sender.location(in: mapView)
 //                   let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
