@@ -8,148 +8,198 @@
 import UIKit
 import TinyConstraints
 import Kingfisher
+import NVActivityIndicatorView
 
 class MenuVC: UIViewController {
     
-    let viewModel = MenuVM()
+    let viewModal = MenuVM()
     
-    private lazy var InsideWhiteView: UIView = {
-        let WhiteView = UIView()
-        WhiteView.backgroundColor = Color.systemWhite.chooseColor
-        return WhiteView
+    private lazy var activity: NVActivityIndicatorView = {
+        let activity = NVActivityIndicatorView(frame: .zero, type: .pacman, color: Color.systemGreen.chooseColor, padding: 0)
+        return activity
     }()
     
-    private lazy var BrucesImage:UIImageView = {
-        let BruceWillsImage = UIImageView(frame: CGRect(x: 135, y: 149, width: 120, height: 120))
-        BruceWillsImage.layer.cornerRadius = BruceWillsImage.frame.size.width / 2
-        BruceWillsImage.layer.masksToBounds = true
-        BruceWillsImage.contentMode = .scaleAspectFill
-        BruceWillsImage.kf.setImage(with: URL(string: "https://cdn.britannica.com/48/194248-050-4EE825CF/Bruce-Willis-2013.jpg"))
-        
-        return BruceWillsImage
+    private lazy var headerLabel:UILabel = {
+        let label = UILabel()
+        label.text = "Settings"
+        label.textColor = .white
+        label.font = UIFont(name: Font.semibold32.chooseFont.fontName, size: Font.semibold32.chooseFont.pointSize)
+        return label
     }()
     
-    private lazy var BrucesName:CustomLabel = {
-        let BrucesNameSurname = CustomLabel()
-        BrucesNameSurname.text = "Bruce Wills"
-        BrucesNameSurname.font = Font.semibold16.chooseFont
-        
-        return BrucesNameSurname
+    private lazy var logoutButton:UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "logoutButton"), for: .normal)
+        button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(logoutTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        contentView.backgroundColor = Color.systemWhite.chooseColor
+        return contentView
+    }()
+    
+    private lazy var profileImage:UIImageView = {
+        let profileImage = UIImageView(frame: CGRect(x: 135, y: 149, width: 120, height: 120))
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.layer.masksToBounds = true
+        profileImage.contentMode = .scaleAspectFill
+        return profileImage
+    }()
+    
+    private lazy var fullNameLabel:CustomLabel = {
+        let fullName = CustomLabel()
+        fullName.font = Font.semibold16.chooseFont
+        return fullName
     }()
     
     private lazy var editProfileButton:UIButton = {
-        let editProfile = UIButton()
-        editProfile.setTitleColor(#colorLiteral(red: 0, green: 0.7960889935, blue: 0.9382097721, alpha: 1), for: .normal)
-        editProfile.setTitle("Edit Profile", for: .normal)
-        editProfile.titleLabel?.font = Font.regular12.chooseFont
-        editProfile.addTarget(self, action: #selector(editProfilePage), for: .touchUpInside)
-    
-        return editProfile
+        let button = UIButton()
+        button.setTitleColor(#colorLiteral(red: 0, green: 0.7960889935, blue: 0.9382097721, alpha: 1), for: .normal)
+        button.setTitle("Edit Profile", for: .normal)
+        button.titleLabel?.font = Font.regular12.chooseFont
+        button.addTarget(self, action: #selector(editProfilePage), for: .touchUpInside)
+        return button
     }()
     
     private lazy var collectionView:UICollectionView = {
        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 8
+        layout.minimumInteritemSpacing = 8
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16)
 
-        layout.minimumLineSpacing = 1
-        layout.minimumInteritemSpacing = 1
-
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.delegate = self
-        cv.dataSource = self
-        cv.backgroundColor = .clear
-        cv.register(CustomCvCell.self, forCellWithReuseIdentifier: "CustomCell")
-        
-        return cv
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.register(CustomCvCell.self, forCellWithReuseIdentifier: "CustomCell")
+        return collectionView
     }()
     
-    private lazy var settingsLabel:UILabel = {
-        let settings = UILabel()
-        settings.text = "Settings"
-        settings.textColor = .white
-        settings.font = UIFont(name: Font.bold30.chooseFont.fontName, size: Font.bold30.chooseFont.pointSize)
-        
-        return settings
-    }()
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        self.navigationController?.isNavigationBarHidden = true
-        
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Color.systemGreen.chooseColor
         setupView()
-        
-            }
+        initVM()
+    }
     
     override func viewDidLayoutSubviews() {
+        contentView.roundCorners(corners: .topLeft, radius: 80)
+    }
+    
+    @objc func editProfilePage() {
+        let vc = EditProfileVC()
+        vc.modalPresentationStyle = .fullScreen
+        vc.delegate = self
+        self.present(vc, animated: true)
+    }
+    
+    @objc func logoutTapped() {
+        showAlert()
+    }
+    
+    func initVM() {
+        viewModal.onDataFetch = { [weak self] isLoading in
+        DispatchQueue.main.async {
+            if isLoading {
+                self?.activity.startAnimating()
+            } else {
+                self?.activity.stopAnimating()
+            }
+        }
+    }
+        viewModal.getUserInfo() { user in
+            self.configure(data: user)
+        }
         
-        InsideWhiteView.roundCorners(corners: .topLeft, radius: 80)
+    }
+    
+    func configure(data: User) {
+        self.fullNameLabel.text = data.full_name
+        if data.pp_url != "" {
+            let url = URL(string: data.pp_url)
+            self.profileImage.kf.setImage(with: url)
+        } else {
+            self.profileImage.image = UIImage(systemName: "person.fill")
+        }
+    }
+    
+    func showAlert() {
         
+        let alert = UIAlertController(title: "UYARI!", message: "Uygulamadan çıkış yapmak istiyor musunuz?", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Evet", style: .destructive) { action in
+            KeychainHelper.shared.delete("access-token", account: "api.Iosclass")
+            self.navigationController?.pushViewController(LoginVC(), animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Hayır", style: .cancel)
+        
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
     }
     
     func setupView() {
         
-        self.view.addSubviews(settingsLabel,InsideWhiteView)
-        InsideWhiteView.addSubviews(BrucesImage, BrucesName, editProfileButton, collectionView)
+        self.view.addSubviews(logoutButton,contentView,headerLabel,activity)
+        contentView.addSubviews(profileImage, fullNameLabel, editProfileButton, collectionView)
         setupLayout()
     }
 
     func setupLayout() {
         
-        settingsLabel.edgesToSuperview(excluding: [.bottom, .right], insets: .left(20) + .top(23), usingSafeArea: true)
-        settingsLabel.height(48)
-        settingsLabel.width(134)
+        headerLabel.edgesToSuperview(excluding: [.bottom, .right], insets: .left(20) + .top(24), usingSafeArea: true)
         
-        InsideWhiteView.edgesToSuperview(insets: .top(170))
-        InsideWhiteView.topToBottom(of: settingsLabel, offset: 54)
+        logoutButton.edgesToSuperview(excluding: [.left, .bottom], insets: .top(34) + .right(24), usingSafeArea: true)
+        logoutButton.height(30)
+        logoutButton.width(30)
         
-        BrucesImage.top(to: InsideWhiteView, offset: 24)
-        BrucesImage.height(120)
-        BrucesImage.width(120)
-        BrucesImage.centerXToSuperview()
+        contentView.edgesToSuperview(excluding: [.top])
+        contentView.topToBottom(of: headerLabel, offset: 54)
         
-        BrucesName.topToBottom(of: BrucesImage, offset: 8)
-        BrucesName.centerXToSuperview()
-        BrucesName.height(24)
-        BrucesName.width(94)
+        profileImage.top(to: contentView, offset: 24)
+        profileImage.height(120)
+        profileImage.width(120)
+        profileImage.centerXToSuperview()
         
-        editProfileButton.topToBottom(of: BrucesName)
+        fullNameLabel.topToBottom(of: profileImage, offset: 8)
+        fullNameLabel.centerXToSuperview()
+        
+        editProfileButton.topToBottom(of: fullNameLabel)
         editProfileButton.centerXToSuperview()
         editProfileButton.height(18)
         editProfileButton.width(62)
         
-        collectionView.topToBottom(of: editProfileButton, offset: 16)
-        collectionView.bottomToSuperview(offset: -48)
-        collectionView.leftToSuperview(offset:16)
-        collectionView.trailingToSuperview(offset: -16)
+        collectionView.topToBottom(of: editProfileButton, offset: 6)
+        collectionView.bottomToSuperview(usingSafeArea: true)
+        collectionView.leftToSuperview()
+        collectionView.trailingToSuperview()
+        
+        activity.centerInSuperview()
+        activity.height(50)
+        activity.width(50)
     }
     
-    @objc func editProfilePage() {
-        
-        let vc = EditProfileVC()
-        self.present(vc, animated: true)
-    }
 
 }
 
 extension MenuVC:UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.collectionViewCellsLabels.count
+        return viewModal.collectionViewCellsLabels.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCvCell else  {return UICollectionViewCell()}
         
-        let leftImagesAtRow = viewModel.getLeftImageForRow(indexpath: indexPath)
-        let labelsAtRow = viewModel.getLabelForRow(indexpath: indexPath)
-        let rightImagesAtRow = viewModel.getRightImageForRow(indexpath: indexPath)
+        let leftImagesAtRow = viewModal.getLeftImageForRow(indexpath: indexPath)
+        let labelsAtRow = viewModal.getLabelForRow(indexpath: indexPath)
+        let rightImagesAtRow = viewModal.getRightImageForRow(indexpath: indexPath)
         
         cell.configure(cellLeftImage: leftImagesAtRow, cellLabel: labelsAtRow, cellRightImage: rightImagesAtRow)
         
@@ -163,7 +213,7 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let labelsAtRow = viewModel.getLabelForRow(indexpath: indexPath)
+        let labelsAtRow = viewModal.getLabelForRow(indexpath: indexPath)
         
         switch labelsAtRow {
         case "Security Settings":
@@ -184,8 +234,15 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 354, height:58)
+        return CGSize(width: collectionView.frame.width-32, height:54)
         }
     
 }
 
+extension MenuVC:Reloader {
+    func reloadMap() {
+        viewModal.getUserInfo(){ user in
+            self.configure(data: user)
+        }
+    }
+}

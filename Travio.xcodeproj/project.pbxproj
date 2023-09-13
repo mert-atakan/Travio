@@ -278,6 +278,7 @@
 				A3A54CBD2AAF3A960015F767 /* VisitPage */,
 				A3A54D2E2AAF3B570015F767 /* MenuPage */,
 				792B687F2AB08D9600DD7834 /* TermsOfUse */,
+				A3A54D572AAF3D0F0015F767 /* AboutUsVC.swift */,
 			);
 			path = TabbarVC;
 			sourceTree = "<group>";
@@ -421,12 +422,11 @@
 		A3A54D2E2AAF3B570015F767 /* MenuPage */ = {
 			isa = PBXGroup;
 			children = (
-				A3A54D4C2AAF3D020015F767 /* SecuritySettingPage */,
-				A3A54D432AAF3C640015F767 /* Help&Support */,
 				A3A54D2F2AAF3B6E0015F767 /* MenuVC.swift */,
 				A3A54D312AAF3B810015F767 /* MenuVM.swift */,
 				A3A54D332AAF3B950015F767 /* CustomCvCell.swift */,
-				A3A54D572AAF3D0F0015F767 /* AboutUsVC.swift */,
+				A3A54D4C2AAF3D020015F767 /* SecuritySettingPage */,
+				A3A54D432AAF3C640015F767 /* Help&Support */,
 				A3A54D352AAF3B9A0015F767 /* EditProfile */,
 			);
 			path = MenuPage;
