@@ -199,7 +199,7 @@ class DetailVC: UIViewController {
         
         detailViewModal.checkVisit { check in
             if check {
-                self.detailViewModal.deleteVisitItem {
+                self.detailViewModal.deleteVisitItem { 
                     
                     AlertHelper.showAlert(in: self, title: "Information", message: "Are you sure you delete your visit ?", primaryButtonTitle: "No", primaryButtonAction: {
                         self.dismiss(animated: true)
@@ -211,11 +211,14 @@ class DetailVC: UIViewController {
                     }
                 }
             } else {
-                self.detailViewModal.postVisit {
-                    
+                self.detailViewModal.postVisit { status, message in
+                    if status {
                     self.visitedButton.setImage(UIImage(named: "visited"), for: .normal)
                     NotificationCenterManager.shared.postNotification(name: Notification.Name("visitChanged"))
                     AlertHelper.showAlert(in: self, title: "Information", message: "Your visit was added successfully!", primaryButtonTitle: "Okay")
+                    } else {
+                        AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                    }
                 }
             }
         }
@@ -236,14 +239,25 @@ class DetailVC: UIViewController {
             }
         }
         
-        detailViewModal.getVisit { place in
-            self.configure(place: place)
+        detailViewModal.getVisit { place, status, message in
+            if status {
+                guard let place = place else {return}
+                self.configure(place: place)
+            } else {
+                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+            
         }
 
-        detailViewModal.getGalleryItems() {
-            let count = self.detailViewModal.getNumberOfRowsInSection()
-            self.pageControl.numberOfPages = count
-            self.collectionView.reloadData()
+        detailViewModal.getGalleryItems() { status, message in
+            if status {
+                let count = self.detailViewModal.getNumberOfRowsInSection()
+                self.pageControl.numberOfPages = count
+                self.collectionView.reloadData()
+            } else {
+                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+           
         }
         
         

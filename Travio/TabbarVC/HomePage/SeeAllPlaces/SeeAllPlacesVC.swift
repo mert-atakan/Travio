@@ -127,9 +127,14 @@ class SeeAllPlacesVC: UIViewController {
 
         seeAllPlacesVM.place = fromWhere
         
-        seeAllPlacesVM.getPlaces() {
-            self.headerLabel.text = self.seeAllPlacesVM.setTitle()
-            self.collectionView.reloadData()
+        seeAllPlacesVM.getPlaces() { status, message in
+            if status {
+                self.headerLabel.text = self.seeAllPlacesVM.setTitle()
+                self.collectionView.reloadData()
+            } else  {
+                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+           
         }
     }
 }

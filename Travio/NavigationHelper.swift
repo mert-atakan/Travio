@@ -29,7 +29,6 @@ class NavigationHelper: UIViewController {
             }
             return false
         } catch {
-            print("JWT decoding error: \(error)")
             return false
         }
     }

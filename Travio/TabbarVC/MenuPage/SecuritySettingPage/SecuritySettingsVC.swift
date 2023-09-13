@@ -73,9 +73,6 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
     
     @objc func saveTapped() {
         checkForEqual()
-        viewModal.statusAlert = {status in
-            self.statusAlert(status: status)
-        }
     }
 
     @objc func backButtonTapped() {
@@ -84,13 +81,16 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
     
     func textFieldFunctions(text: String,number:Int) {
         passwords[number] = text
-        print(passwords )
     }
     
     func checkForEqual() {
         if passwords[1] == passwords[2] && passwords[1] != "" || passwords[2] != "" {
             guard let password = passwords[1] else {return}
-            viewModal.changePassword(password: ["new_password": password])
+            viewModal.changePassword(password: ["new_password": password]) { status, message in
+                if !status {
+                    AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                }
+            }
         } else {
             showAlert()
         }

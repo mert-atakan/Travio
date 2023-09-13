@@ -72,9 +72,9 @@ final class KeychainHelper {
 
         let query: [String: Any] = [
             kSecClass as String : secClass,
-            kSecReturnData as String  : kCFBooleanTrue,
-            kSecReturnAttributes as String : kCFBooleanTrue,
-            kSecReturnRef as String : kCFBooleanTrue,
+            kSecReturnData as String  : kCFBooleanTrue as Any,
+            kSecReturnAttributes as String : kCFBooleanTrue as Any,
+            kSecReturnRef as String : kCFBooleanTrue as Any,
             kSecMatchLimit as String : kSecMatchLimitAll
         ]
 

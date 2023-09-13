@@ -112,8 +112,14 @@ class MenuVC: UIViewController {
             }
         }
     }
-        viewModal.getUserInfo() { user in
-            self.configure(data: user)
+        viewModal.getUserInfo() { user, status, message in
+            if status {
+                guard let user = user else {return}
+                self.configure(data: user)
+            } else {
+                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+            
         }
         
     }
@@ -241,8 +247,14 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
 
 extension MenuVC:Reloader {
     func reloadMap() {
-        viewModal.getUserInfo(){ user in
-            self.configure(data: user)
+        viewModal.getUserInfo(){ user, status, message in
+            if status {
+                guard let user = user else {return}
+                self.configure(data: user)
+            } else {
+                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+           
         }
     }
 }

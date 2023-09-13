@@ -24,28 +24,28 @@ class DetailVM {
     
     
     
-    func getVisit(callback: @escaping (Place)->Void) {
+    func getVisit(callback: @escaping (Place?,Bool,String?)->Void) {
         guard let placeId = placeId else { return }
         apiService.makeRequest(urlConvertible: Router.getVisitInfo(placeId: placeId)) { (result:Result<PlaceData,ErrorResponse>) in
             switch result {
             case .success(let data):
-                callback(data.data.place)
+                callback(data.data.place,true,nil)
             case .failure(let failure):
-                print(failure)
+                callback(nil,false,failure.message)
             }
         }
     }
     
-    func getGalleryItems(callback: @escaping () -> Void) {
+    func getGalleryItems(callback: @escaping (Bool,String?) -> Void) {
         guard let placeId = placeId else { return }
         
         self.apiService.makeRequest(urlConvertible: Router.galleryID(placeId: placeId)) { (result:Result<GalleryData,ErrorResponse>) in
             switch result {
             case .success(let success):
                 self.galleryImagesItem = success.data.images
-                callback()
+                callback(true,nil)
             case .failure(let failure):
-                print(failure)
+                callback(false,failure.message)
             }
         }
         
@@ -83,16 +83,16 @@ class DetailVM {
     }
     
     
-    func postVisit(callback: @escaping ()->Void) {
+    func postVisit(callback: @escaping (Bool, String?)->Void) {
         guard let placeId = placeId else { return }
         let param = ["place_id": placeId,
                      "visited_at": "2023-08-10T00:00:00Z"]
         apiService.makeRequest(urlConvertible: Router.postVisit(params: param)) { (result:Result<DefaultResponse,ErrorResponse>) in
             switch result {
             case .success(_):
-                callback()
+                callback(true,nil)
             case .failure(let failure):
-                print(failure)
+                callback(false,failure.message)
             }
         }
     }

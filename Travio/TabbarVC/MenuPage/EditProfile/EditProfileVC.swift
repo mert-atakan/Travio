@@ -130,9 +130,12 @@ class EditProfileVC: UIViewController {
         guard let name = nameView.textField.text, let email = emailView.textField.text else {return}
         let imageUrl = viewModal.getImageUrl()
         let body = ["full_name":name, "email": email, "pp_url": imageUrl]
-        viewModal.editProfile(body: body) { status in
-            self.statusAlert(status: status)
-            
+        viewModal.editProfile(body: body) { status, message in
+            if status {
+                AlertHelper.showAlert(in: self, title: "Profile Information Updated", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            } else {
+                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
         }
     }
     @objc func backTapped() {
@@ -169,8 +172,14 @@ class EditProfileVC: UIViewController {
                 }
             }
         }
-        viewModal.getUserInfo() { user in
-            self.configure(data:user)
+        viewModal.getUserInfo() { user, status, message in
+            if status {
+                guard let user = user else {return}
+                self.configure(data:user)
+            } else {
+                AlertHelper.showAlert(in: self, title: "We are sorry", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+           
         }
       
     }
@@ -270,7 +279,11 @@ extension EditProfileVC: UIImagePickerControllerDelegate & UINavigationControlle
             guard let data = image.jpegData(compressionQuality: 0.5) else {return}
             let dataArray = [data]
             
-            viewModal.uploadPhoto(images: dataArray )
+            viewModal.uploadPhoto(images: dataArray) { status, message in
+                if !status {
+                    AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                }
+            }
         }
 
         picker.dismiss(animated: true, completion: nil)

@@ -69,7 +69,7 @@ class AddTravelVM {
     func addGallery(body:[String:Any], callback: @escaping ((Bool,String?)->Void)) {
         apiService.makeRequest(urlConvertible: Router.postGallery(params: body)) { (result:Result<GalleryResponse,ErrorResponse>) in
             switch result {
-            case .success(let success):
+            case .success(_):
                 callback(true,nil)
             case .failure(let failure):
                 callback(false,failure.message)

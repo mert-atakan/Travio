@@ -83,18 +83,31 @@ class HomeVC: UIViewController,GoToDetail {
         let dispatchGroup = DispatchGroup()
 
         dispatchGroup.enter()
-        viewModal.getPopularPlaces {
-            dispatchGroup.leave()
+        viewModal.getPopularPlaces { status, message in
+            if status {
+                dispatchGroup.leave()
+            } else {
+                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+           
         }
 
         dispatchGroup.enter()
-        viewModal.getLastPlaces {
-            dispatchGroup.leave()
+        viewModal.getLastPlaces {status, message in
+            if status {
+                dispatchGroup.leave()
+            } else {
+                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
         }
 
         dispatchGroup.enter()
-        viewModal.getMyVisits {
-            dispatchGroup.leave()
+        viewModal.getMyVisits {status, message in
+            if status {
+                dispatchGroup.leave()
+            } else {
+                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
         }
         
         viewModal.closure = { array in

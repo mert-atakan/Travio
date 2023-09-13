@@ -15,7 +15,7 @@ class SeeAllPlacesVM {
     }
     
 
-func getPlaces (callback: @escaping ()->Void) {
+func getPlaces (callback: @escaping (Bool,String?)->Void) {
     DispatchQueue.global().async { [self] in
         let router: Router
         switch self.place {
@@ -35,9 +35,9 @@ func getPlaces (callback: @escaping ()->Void) {
             switch result {
             case .success(let data):
                 self.placeArray = data.data.places
-                    callback()
+                    callback(true,nil)
             case .failure(let failure):
-                print(failure)
+                callback(false,failure.message)
             }
         }
     }

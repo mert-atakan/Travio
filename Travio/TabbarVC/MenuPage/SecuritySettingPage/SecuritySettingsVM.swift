@@ -17,18 +17,16 @@ class SecuritySettingsVM {
     init(apiService: ApiServiceProtocol = ApiService()){
         self.apiService = apiService
     }
-    var statusAlert: ((String)->())?
+    
     let settingsArray = [["New Password", "New Password Confirm"], ["Camera","Photo Library","Location"]]
     
-    func changePassword(password:[String:String]) {
+    func changePassword(password:[String:String], handler: @escaping ((Bool,String?)-> Void)) {
         apiService.makeRequest(urlConvertible: Router.changePassword(params: password)) { (result:Result<PasswordResponse,ErrorResponse>) in
             switch result {
-            case .success(let success):
-                let value = success.status
-                guard let statusAlert = self.statusAlert else {  return }
-                statusAlert(value)
+            case .success(_):
+                handler(true,nil)
             case .failure(let failure):
-                print(failure.localizedDescription)
+                handler(false,failure.message)
             }
         }
     }

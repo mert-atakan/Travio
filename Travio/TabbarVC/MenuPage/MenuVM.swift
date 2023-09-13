@@ -36,15 +36,15 @@ class MenuVM {
         return collectionViewCellsRightImages[indexpath.row]
     }
     
-    func getUserInfo(handler: @escaping ((User)->())) {
+    func getUserInfo(handler: @escaping ((User?, Bool, String?)->())) {
         self.onDataFetch?(true)
         apiService.makeRequest(urlConvertible: Router.me) { (result:Result<User,ErrorResponse>) in
             switch result {
             case .success(let success):
-              handler(success)
+              handler(success,true,nil)
                 self.onDataFetch?(false)
             case .failure(let failure):
-                print(failure.localizedDescription)
+                handler(nil,false,failure.message)
                 self.onDataFetch?(false)
             }
         }
