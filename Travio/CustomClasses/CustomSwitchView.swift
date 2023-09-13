@@ -9,7 +9,7 @@ import UIKit
 import TinyConstraints
 class CustomSwitchView: UIView {
     
-     lazy var Lbl: UILabel = {
+     lazy var titleLabel: UILabel = {
         let l = UILabel()
         l.font = Font.semibold14.chooseFont
         l.textColor = Color.systemblack.chooseColor
@@ -36,12 +36,12 @@ class CustomSwitchView: UIView {
     
     private func setupView() {
         self.backgroundColor = Color.white.chooseColor
-        self.addSubviews(Lbl,switchView)
+        self.addSubviews(titleLabel,switchView)
         setupLayout()
     }
     
     private func setupLayout() {
-        Lbl.edgesToSuperview( insets: .top(25) + .left(16) + .bottom(27) + .right(200))
+        titleLabel.edgesToSuperview( insets: .top(25) + .left(16) + .bottom(27) + .right(200))
 
         switchView.edgesToSuperview( insets: .top(20) + .left(275) + .bottom(22) + .right(10))
     }

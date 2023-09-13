@@ -8,19 +8,7 @@
 import UIKit
 import TinyConstraints
 import WebKit
-import NVActivityIndicatorView
 class AboutUsVC: UIViewController, WKUIDelegate {
-    
-    var shouldStop: Bool? = false {
-        didSet {
-            activity.stopAnimating()
-        }
-    }
-    
-    private lazy var activity: NVActivityIndicatorView = {
-        let activity = NVActivityIndicatorView(frame: .zero, type: .pacman, color: Color.systemGreen.chooseColor, padding: 0)
-        return activity
-    }()
     
     private lazy var view1: UIView = {
         let v = UIView()
@@ -50,7 +38,6 @@ class AboutUsVC: UIViewController, WKUIDelegate {
            let url = URL(string: "https://api.iosclass.live/about")
            let request = URLRequest(url: url!)
            vw.load(request)
-           //shouldStop = true
            return vw
        }()
     
@@ -61,7 +48,6 @@ class AboutUsVC: UIViewController, WKUIDelegate {
     
     override func viewDidLayoutSubviews() {
         view1.roundCorners(corners: [.topLeft], radius: 80)
-        activity.startAnimating()
     }
     
     @objc func backButtonTapped() {
@@ -72,7 +58,7 @@ class AboutUsVC: UIViewController, WKUIDelegate {
     private func setupView() {
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = Color.systemGreen.chooseColor
-        view.addSubViews(view1,backButton,titleLbl,activity)
+        view.addSubViews(view1,backButton,titleLbl)
         view1.addSubviews(webView)
         setupLayout()
     }
@@ -90,21 +76,5 @@ class AboutUsVC: UIViewController, WKUIDelegate {
         
         webView.edgesToSuperview()
         
-        activity.centerInSuperview()
-        activity.height(50)
-        activity.width(50)
-        
     }
 }
-
-
-//extension AboutUsVC : WKNavigationDelegate {
-//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//        let changeFontFamilyScript = "document.getElementsByTagName('body')[0].style.fontFamily = 'Times New Roman, Times, serif';"
-//
-//
-//        webView.evaluateJavaScript(changeFontFamilyScript) { (response, error) in
-//            debugPrint("Am here")
-//        }
-//    }
-//}

@@ -9,7 +9,7 @@ import UIKit
 import TinyConstraints
 class AddTravelCollectionCell: UICollectionViewCell {
     
-    private lazy var imageview: UIImageView = {
+    private lazy var defaultImageview: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.image = UIImage(named: "addPhoto")
@@ -17,13 +17,17 @@ class AddTravelCollectionCell: UICollectionViewCell {
         return iv
     }()
     
+    private lazy var choosenImageview: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupView()
-    }
-    
-    override func layoutSubviews() {
-        self.contentView.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
+        layoutIfNeeded()
+       
     }
     
     required init?(coder: NSCoder) {
@@ -31,20 +35,24 @@ class AddTravelCollectionCell: UICollectionViewCell {
     }
     
     func configure(image: UIImage) {
-        imageview.image = image
-        imageview.edgesToSuperview()
+        choosenImageview.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
+        choosenImageview.image = image
+        contentView.backgroundColor = .clear
     }
     
     private func setupView() {
+        self.contentView.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
         self.contentView.backgroundColor = Color.white.chooseColor
-        self.contentView.addSubViews(imageview)
+        self.contentView.addSubViews(defaultImageview,choosenImageview)
         
         setupLayout()
     }
     private func setupLayout() {
-        imageview.centerInSuperview()
-        imageview.width(62)
-        imageview.height(58)
+        defaultImageview.centerInSuperview()
+        defaultImageview.width(62)
+        defaultImageview.height(58)
+
+        choosenImageview.edgesToSuperview()
     }
     
 }
