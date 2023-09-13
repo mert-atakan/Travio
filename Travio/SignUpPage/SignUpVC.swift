@@ -122,17 +122,20 @@ class SignUpVC: UIViewController {
         
         let body = ["full_name":name,"email":email,"password":password1]
         
-        viewModal.register(params: body, handler: { response in
-            if response.status == "fail" {
-                self.showErrorAlert(message: """
+        viewModal.register(params: body) { status,message in
+            if status {
+                AlertHelper.showAlert(in: self, title: "Tebrikler", message: message, primaryButtonTitle: "Go To Login Page", primaryButtonAction: {
+                    self.navigationController?.popViewController(animated: true)
+                }, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            } else {
+                AlertHelper.showAlert(in: self, title: "Hata", message: """
                                                 Username alanına sadece harf girmelisiniz.
                                                 Email alanına email formatı girmelisiniz.
                                                 Şifreniz en az 1 harf ve 1 sayı ve en az 6 karakterden oluşmalıdır.
-                                             """)
-            } else {
-                self.showPositiveAlert()
+                                             """
+                                      , primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             }
-        })
+        }
     }
     
     private func setupView() {

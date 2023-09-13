@@ -17,16 +17,16 @@ class VisitVM {
     var travelArray: [Visits]?
     var onDataFetch: ((Bool) -> Void)?
     
-    func fetchTravels(callback: @escaping ()->Void) {
+    func fetchTravels(callback: @escaping (Bool,String)->Void) {
         self.onDataFetch?(true)
-        apiService.makeRequest(urlConvertible: Router.myAllVisits(limit: nil)) { (result:Result<TravelData,Error>) in
+        apiService.makeRequest(urlConvertible: Router.myAllVisits(limit: nil)) { (result:Result<TravelData,ErrorResponse>) in
             switch result {
             case .success(let success):
                 self.travelArray = success.data.visits
-                callback()
+                callback(true,success.status)
                 self.onDataFetch?(false)
             case .failure(let failure):
-                print(failure)
+                callback(false,failure.message)
                 self.onDataFetch?(false)
             }
         }

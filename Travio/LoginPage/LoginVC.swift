@@ -93,9 +93,9 @@ class LoginVC: UIViewController {
         self.activity.startAnimating()
         guard let email = emailView.textField.text, let password = passwordView.textField.text else {return}
         let body = ["email":email,"password":password]
-        viewModal.login(params: body) { message in
-            if !message.isEmpty {
-                self.showAlert(message: message)
+        viewModal.login(params: body) { status,message in
+            if !status {
+                AlertHelper.showAlert(in: self, title: "Hata", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             }
             self.activity.stopAnimating()
             let vc = MainTabBarController()
@@ -105,14 +105,14 @@ class LoginVC: UIViewController {
     
     
     
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: "Üzgünüz", message: message, preferredStyle: .alert)
-        
-            let action = UIAlertAction(title: "Tamam", style: .default, handler: nil)
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-        
-    }
+//    private func showAlert(message: String) {
+//        let alert = UIAlertController(title: "Üzgünüz", message: message, preferredStyle: .alert)
+//        
+//            let action = UIAlertAction(title: "Tamam", style: .default, handler: nil)
+//            alert.addAction(action)
+//            present(alert, animated: true, completion: nil)
+//        
+//    }
     
     private func setupView() {
         view.backgroundColor = Color.systemGreen.chooseColor

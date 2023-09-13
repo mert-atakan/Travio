@@ -32,44 +32,6 @@ class HomeVM {
     }
     
     var closure: (([PlaceItem])->())?
-
-//    func getPopularPlaces() {
-//        apiService.makeRequest(urlConvertible: Router.getPopularPlaces(limit: 5)) { (result:Result<PlacesData,Error>) in
-//            switch result {
-//            case .success(let success):
-//
-//                self.popularPlaces = success.data.places
-//            case .failure(let failure):
-//                print(failure.localizedDescription)
-//            }
-//        }
-//    }
-//
-//    func getLastPlaces() {
-//        apiService.makeRequest(urlConvertible: Router.getLastPlaces(limit: 5)) { (result:Result<PlacesData,Error>) in
-//            switch result {
-//            case .success(let success):
-//
-//                self.newPlaces = success.data.places
-//            case .failure(let failure):
-//                print(failure.localizedDescription)
-//            }
-//        }
-//    }
-//
-//    func getMyVisits() {
-//        apiService.makeRequest(urlConvertible: Router.myAllVisits(limit: 5)) { (result:Result<TravelData,Error>) in
-//            switch result {
-//            case .success(let success):
-//
-//                let value = success.data.visits
-//                self.myTravels = value
-//            case .failure(let failure):
-//                print(failure.localizedDescription)
-//            }
-//        }
-//    }
-    
     
     func convertPlaceItemArray(visitsArray: [Visits]) -> [PlaceItem] {
        var array = [PlaceItem]()
@@ -80,7 +42,7 @@ class HomeVM {
     }
     
     func getPopularPlaces(handler: @escaping (()->())) {
-        apiService.makeRequest(urlConvertible: Router.getPopularPlaces(limit: 5)) { (result:Result<PlacesData,Error>) in
+        apiService.makeRequest(urlConvertible: Router.getPopularPlaces(limit: 5)) { (result:Result<PlacesData,ErrorResponse>) in
             switch result {
             case .success(let success):
                 self.popularPlaces = success.data.places
@@ -92,7 +54,7 @@ class HomeVM {
     }
 
     func getLastPlaces(handler: @escaping (()->())) {
-        apiService.makeRequest(urlConvertible: Router.getLastPlaces(limit: 5)) { (result:Result<PlacesData,Error>) in
+        apiService.makeRequest(urlConvertible: Router.getLastPlaces(limit: 5)) { (result:Result<PlacesData,ErrorResponse>) in
             switch result {
             case .success(let success):
                 self.newPlaces = success.data.places
@@ -104,7 +66,7 @@ class HomeVM {
     }
 
     func getMyVisits(handler: @escaping (()->())) {
-        apiService.makeRequest(urlConvertible: Router.myAllVisits(limit: 5)) { (result:Result<TravelData,Error>) in
+        apiService.makeRequest(urlConvertible: Router.myAllVisits(limit: 5)) { (result:Result<TravelData,ErrorResponse>) in
             switch result {
             case .success(let success):
                 self.myTravels = success.data.visits

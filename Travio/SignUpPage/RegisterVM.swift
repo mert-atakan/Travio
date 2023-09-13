@@ -16,14 +16,14 @@ class RegisterVM {
         self.apiService = apiService
     }
     
-    func register(params: [String:String], handler: @escaping ((RegisterResponse)->())  ) {
+    func register(params: [String:String], handler: @escaping ((Bool,String)->())  ) {
         apiService.objectRequest(urlConvertible: Router.register(params: params)) { (result:(Result<RegisterResponse,ErrorResponse>)) in
             
             switch result {
             case .success(let success):
-                handler(success)
+                handler(true,success.message)
             case .failure(let error):
-                print(error.localizedDescription)
+                handler(false,error.message)
             }
         }
     }

@@ -102,14 +102,19 @@ class VisitVC: UIViewController {
             }
         }
 
-        visitViewModal.fetchTravels {
-                self.tableView.reloadData()
+        visitViewModal.fetchTravels { status, message in
+          
+                
         }
     }
     
     @objc func visitChanged() {
-        visitViewModal.fetchTravels {
+        visitViewModal.fetchTravels { status, message in
+            if status {
                 self.tableView.reloadData()
+            } else {
+                AlertHelper.showAlert(in: self, title: "Information", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
         }
     }
         func pushNav(visitId:String, placeId: String) {
@@ -117,27 +122,6 @@ class VisitVC: UIViewController {
             detailVC.placeId = placeId
             navigationController?.pushViewController(detailVC, animated: true)
         }
-
-//     func setupView() {
-//        self.view.backgroundColor = Color.systemGreen.chooseColor
-//        view.addSubViews(containerView,headerLabel,activity)
-//        containerView.addSubViews(tableView)
-//        setupLayout()
-//    }
-//     func setupLayout() {
-//        headerLabel.edgesToSuperview(excluding:[.bottom,.right], insets: .left(24) + .top(24),usingSafeArea: true)
-//        headerLabel.height(52)
-//        headerLabel.width(165)
-//        
-//        activity.centerInSuperview()
-//        activity.height(40)
-//        activity.width(40)
-//        
-//        containerView.edgesToSuperview( insets: .top(129))
-//        
-//        tableView.edgesToSuperview( insets: .top(45), usingSafeArea: true)
-//
-//    }
     
   
 }

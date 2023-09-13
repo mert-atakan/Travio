@@ -25,8 +25,8 @@ class MapVM {
     
     var reloadCell: (()->Void)?
     
-    func getLocations() {
-        apiService.makeRequest(urlConvertible: Router.places) { (result:Result<PlacesData,Error>) in
+    func getLocations(callback: @escaping ((Bool,String?)-> Void)) {
+        apiService.makeRequest(urlConvertible: Router.places) { (result:Result<PlacesData,ErrorResponse>) in
             switch result {
             case .success(let success):
                 self.placeItems = success.data.places
@@ -34,9 +34,9 @@ class MapVM {
                guard let placeItems = self.placeItems else { return }
                 guard let fillMapp = self.fillMapp else { return }
                 fillMapp(placeItems)
-
+                callback(true,nil)
             case .failure(let failure):
-                print(failure.localizedDescription)
+                callback(false,failure.message)
             }
         }
     }

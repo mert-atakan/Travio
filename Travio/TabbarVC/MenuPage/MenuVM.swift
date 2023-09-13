@@ -38,7 +38,7 @@ class MenuVM {
     
     func getUserInfo(handler: @escaping ((User)->())) {
         self.onDataFetch?(true)
-        apiService.makeRequest(urlConvertible: Router.me) { (result:Result<User,Error>) in
+        apiService.makeRequest(urlConvertible: Router.me) { (result:Result<User,ErrorResponse>) in
             switch result {
             case .success(let success):
               handler(success)

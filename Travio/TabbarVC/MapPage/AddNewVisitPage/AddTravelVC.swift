@@ -96,7 +96,12 @@ class AddTravelVC: UIViewController{
     @objc func addTapped() {
         let imageData = tempImage.compactMap { $0.jpegData(compressionQuality:0.5)}
         
-        viewModal.uploadImage(images: imageData)
+        viewModal.uploadImage(images: imageData) { status,message in
+            if !status {
+                AlertHelper.showAlert(in: self, title: "Üzgünüz", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+            
+        }
         var body = [String:Any]()
         guard let place = countryView.textField.text, let title = placeView.textField.text, let desc = descView.textField.text else {return}
         

@@ -24,7 +24,7 @@ class EditProfileVM {
     
     func getUserInfo(handler: @escaping ((User))->()) {
         self.onDataFetch?(true)
-        apiService.makeRequest(urlConvertible: Router.me) { (result:Result<User,Error>) in
+        apiService.makeRequest(urlConvertible: Router.me) { (result:Result<User,ErrorResponse>) in
             switch result {
             case .success(let success):
                 handler(success)
@@ -38,7 +38,7 @@ class EditProfileVM {
     
     
     func uploadPhoto(images: [Data]) {
-        apiService.uploadImage(route: Router.upload(image: images)) { (result:Result<UploadResponse,Error>) in
+        apiService.uploadImage(route: Router.upload(image: images)) { (result:Result<UploadResponse,ErrorResponse>) in
             switch result {
             case .success(let success):
                 guard let url = success.urls.first else {return}
@@ -50,7 +50,7 @@ class EditProfileVM {
     }
     
     func editProfile(body: [String:String], handler: @escaping ((String)->())) {
-        apiService.makeRequest(urlConvertible: Router.editProfile(params: body)) { (result:Result<ProfileResponse,Error>) in
+        apiService.makeRequest(urlConvertible: Router.editProfile(params: body)) { (result:Result<ProfileResponse,ErrorResponse>) in
             switch result {
             case .success(let success):
                 handler(success.status)

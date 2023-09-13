@@ -119,7 +119,12 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     
     func initVM() {
         activity.startAnimating()
-        viewModal.getLocations()
+        viewModal.getLocations() { status, message in
+            if !status {
+                AlertHelper.showAlert(in: self, title: "Üzgünüz", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+            
+        }
         
         viewModal.fillMapp = { locations in
             self.configure(locations: locations)

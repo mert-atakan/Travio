@@ -20,25 +20,28 @@ class AddTravelVM {
     var urlArrays: [String]?
     
     var dismiss: (()->())?
-    func uploadImage(images: [Data]) {
-        apiService.uploadImage(route: Router.upload(image: images)) { (result:Result<UploadResponse,Error>) in
+    func uploadImage(images: [Data], callback: @escaping ((Bool,String?)->Void)) {
+        apiService.uploadImage(route: Router.upload(image: images)) { (result:Result<UploadResponse,ErrorResponse>) in
             switch result {
             case .success(let success):
                 self.urlArrays = success.urls
                 guard let urlArrays = self.urlArrays else { return}
 
                 self.body?["cover_image_url"] = urlArrays.first
-                self.addTravel(body: self.body ?? ["":""])
+                self.addTravel(body: self.body ?? ["":""]) { status, message in
+                    AlertHelper.showAlert(in: AddTravelVC(), title: "Üzgünüz", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                }
+                callback(true,nil)
             case .failure(let failure):
-                print(failure.localizedDescription)
+                callback(false,failure.message)
             }
         }
     }
     
     
-    func addTravel(body: [String:Any]) {
+    func addTravel(body: [String:Any], callback: @escaping ((Bool,String?)->Void)) {
         apiService.makeRequest(urlConvertible: Router.postPlace(params: body)) {
-            (result:Result<AddTravelResponse,Error>) in
+            (result:Result<AddTravelResponse,ErrorResponse>) in
           
             switch result {
             case .success(let success):
@@ -49,25 +52,27 @@ class AddTravelVM {
                     var body = [String:Any]()
                     body["place_id"] = id
                     body["image_url"] = url
-                    self.addGallery(body: body)
+                    self.addGallery(body: body) { status,message in
+                        AlertHelper.showAlert(in: AddTravelVC(), title: "Üzgünüz", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                    }
                 }
                 
                 guard let dismiss = self.dismiss else {return}
                 dismiss()
                 
             case .failure(let failure):
-                print(failure.localizedDescription)
+                callback(false,failure.message)
             }
         }
     }
     
-    func addGallery(body:[String:Any]) {
-        apiService.makeRequest(urlConvertible: Router.postGallery(params: body)) { (result:Result<GalleryResponse,Error>) in
+    func addGallery(body:[String:Any], callback: @escaping ((Bool,String?)->Void)) {
+        apiService.makeRequest(urlConvertible: Router.postGallery(params: body)) { (result:Result<GalleryResponse,ErrorResponse>) in
             switch result {
             case .success(let success):
-                print(success.message)
+                callback(true,nil)
             case .failure(let failure):
-                print(failure.localizedDescription)
+                callback(false,failure.message)
             }
         }
     }

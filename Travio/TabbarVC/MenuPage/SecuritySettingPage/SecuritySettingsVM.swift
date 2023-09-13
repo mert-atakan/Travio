@@ -21,7 +21,7 @@ class SecuritySettingsVM {
     let settingsArray = [["New Password", "New Password Confirm"], ["Camera","Photo Library","Location"]]
     
     func changePassword(password:[String:String]) {
-        apiService.makeRequest(urlConvertible: Router.changePassword(params: password)) { (result:Result<PasswordResponse,Error>) in
+        apiService.makeRequest(urlConvertible: Router.changePassword(params: password)) { (result:Result<PasswordResponse,ErrorResponse>) in
             switch result {
             case .success(let success):
                 let value = success.status

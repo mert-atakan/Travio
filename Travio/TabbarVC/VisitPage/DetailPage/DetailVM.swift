@@ -26,7 +26,7 @@ class DetailVM {
     
     func getVisit(callback: @escaping (Place)->Void) {
         guard let placeId = placeId else { return }
-        apiService.makeRequest(urlConvertible: Router.getVisitInfo(placeId: placeId)) { (result:Result<PlaceData,Error>) in
+        apiService.makeRequest(urlConvertible: Router.getVisitInfo(placeId: placeId)) { (result:Result<PlaceData,ErrorResponse>) in
             switch result {
             case .success(let data):
                 callback(data.data.place)
@@ -39,7 +39,7 @@ class DetailVM {
     func getGalleryItems(callback: @escaping () -> Void) {
         guard let placeId = placeId else { return }
         
-        self.apiService.makeRequest(urlConvertible: Router.galleryID(placeId: placeId)) { (result:Result<GalleryData,Error>) in
+        self.apiService.makeRequest(urlConvertible: Router.galleryID(placeId: placeId)) { (result:Result<GalleryData,ErrorResponse>) in
             switch result {
             case .success(let success):
                 self.galleryImagesItem = success.data.images
@@ -54,7 +54,7 @@ class DetailVM {
     func deleteVisitItem(callback: @escaping ()->Void) {
         guard let placeId = placeId else { return }
         
-        self.apiService.makeRequest(urlConvertible: Router.deletePlace(placeId: placeId)) { (result:Result<DefaultResponse,Error>) in
+        self.apiService.makeRequest(urlConvertible: Router.deletePlace(placeId: placeId)) { (result:Result<DefaultResponse,ErrorResponse>) in
             switch result {
             case .success(_):
                 callback()
@@ -68,7 +68,7 @@ class DetailVM {
     func checkVisit(callback: @escaping (Bool)->Void) {
         guard let placeId = placeId else { return }
         print(placeId)
-        self.apiService.makeRequest(urlConvertible: Router.checkVisit(placeId: placeId)) { (result:Result<DefaultResponse,Error>) in
+        self.apiService.makeRequest(urlConvertible: Router.checkVisit(placeId: placeId)) { (result:Result<DefaultResponse,ErrorResponse>) in
             switch result {
             case .success(let data):
                 if data.status == "success"{
@@ -87,7 +87,7 @@ class DetailVM {
         guard let placeId = placeId else { return }
         let param = ["place_id": placeId,
                      "visited_at": "2023-08-10T00:00:00Z"]
-        apiService.makeRequest(urlConvertible: Router.postVisit(params: param)) { (result:Result<DefaultResponse,Error>) in
+        apiService.makeRequest(urlConvertible: Router.postVisit(params: param)) { (result:Result<DefaultResponse,ErrorResponse>) in
             switch result {
             case .success(_):
                 callback()

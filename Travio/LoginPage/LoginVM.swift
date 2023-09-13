@@ -19,7 +19,7 @@ class LoginVM {
     
     var loginStatus: ((String)->())?
         
-    func login(params: [String:String],handler: @escaping ((String)->())) {
+    func login(params: [String:String],handler: @escaping ((Bool,String)->())) {
 
         apiService.objectRequest(urlConvertible: Router.login(params: params)) { 
             (result:Result<LoginResponse,ErrorResponse>) in
@@ -28,9 +28,9 @@ class LoginVM {
                 case .success(let success):
                     let data = Data(success.accessToken.utf8)
                     self.saveToken(data: data)
-                    handler("")
+                    handler(true,"")
                 case .failure(let err):
-                    handler(err.message)
+                    handler(false,err.message)
                 }
             
         }

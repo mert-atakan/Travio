@@ -31,7 +31,7 @@ func getPlaces (callback: @escaping ()->Void) {
             fatalError("Invalid place value")
         }
         
-        apiService.makeRequest(urlConvertible: router) { (result:Result<PlacesData,Error>) in
+        apiService.makeRequest(urlConvertible: router) { (result:Result<PlacesData,ErrorResponse>) in
             switch result {
             case .success(let data):
                 self.placeArray = data.data.places
