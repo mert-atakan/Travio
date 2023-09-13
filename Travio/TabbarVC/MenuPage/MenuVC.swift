@@ -25,6 +25,7 @@ class MenuVC: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "logoutButton"), for: .normal)
         button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(logoutTapped), for: .touchUpInside)
         return button
     }()
     
@@ -85,6 +86,31 @@ class MenuVC: UIViewController {
         contentView.roundCorners(corners: .topLeft, radius: 80)
     }
     
+    @objc func editProfilePage() {
+        let vc = EditProfileVC()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+    }
+    
+    @objc func logoutTapped() {
+        showAlert()
+    }
+    
+    func showAlert() {
+        
+        let alert = UIAlertController(title: "UYARI!", message: "Uygulamadan çıkış yapmak istiyor musunuz?", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Evet", style: .destructive) { action in
+            KeychainHelper.shared.delete("access-token", account: "api.Iosclass")
+            self.navigationController?.pushViewController(LoginVC(), animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Hayır", style: .cancel)
+        
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+    }
+    
     func setupView() {
         
         self.view.addSubviews(logoutButton,contentView,headerLabel)
@@ -122,11 +148,6 @@ class MenuVC: UIViewController {
         collectionView.trailingToSuperview()
     }
     
-    @objc func editProfilePage() {
-        let vc = EditProfileVC()
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
-    }
 
 }
 
@@ -166,6 +187,8 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
             self.present(HelpAndSupportVC(), animated: true)
         case "About":
             self.present(AboutUsVC(), animated: true)
+//        case "Terms of Use":
+//            self.present(TermOfUseVC(), animated: true)
         default: return
         }
     }

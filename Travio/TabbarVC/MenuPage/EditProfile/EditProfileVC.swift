@@ -24,10 +24,11 @@ class EditProfileVC: UIViewController {
         return v
     }()
     
-    private lazy var backButton: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(named: "vector")
+    private lazy var backButton: UIButton = {
+        let iv = UIButton()
+//        iv.contentMode = .scaleAspectFit
+        iv.setImage(UIImage(named: "vector"), for: .normal)
+        iv.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         return iv
     }()
     
@@ -128,6 +129,9 @@ class EditProfileVC: UIViewController {
         let imageUrl = viewModal.getImageUrl()
         let body = ["full_name":name, "email": email, "pp_url": imageUrl]
         viewModal.editProfile(body: body)
+    }
+    @objc func backTapped() {
+//        navigationController?.
     }
     
     func initVM() {
