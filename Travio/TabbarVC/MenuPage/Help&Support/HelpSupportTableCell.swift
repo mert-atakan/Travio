@@ -36,7 +36,7 @@ class HelpSupportTableCell:UITableViewCell {
     private lazy var topLabel:UILabel = {
         let topLabel = UILabel()
         topLabel.textColor = Color.systemblack.chooseColor
-        topLabel.font = Font.poppins(fontType: .semibold, size: 14).font
+        topLabel.font = Font.poppins(fontType: .medium, size: 14).font
         topLabel.numberOfLines = 0
         topLabel.lineBreakMode = .byWordWrapping
         topLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -62,7 +62,7 @@ class HelpSupportTableCell:UITableViewCell {
     private lazy var botLabel:UILabel = {
         let botLabel = UILabel()
         botLabel.textColor = Color.systemblack.chooseColor
-        botLabel.font = Font.poppins(fontType: .regular, size: 10).font
+        botLabel.font = Font.poppins(fontType: .light, size: 10).font
         botLabel.numberOfLines = 0
         botLabel.translatesAutoresizingMaskIntoConstraints = false
         return botLabel
@@ -118,12 +118,7 @@ class HelpSupportTableCell:UITableViewCell {
         botLabel.leading(to: extendView)
         botLabel.trailing(to: extendView, offset: -16)
     }
-    
-    
-    
-    
-    
-    
+
 }
 
 
