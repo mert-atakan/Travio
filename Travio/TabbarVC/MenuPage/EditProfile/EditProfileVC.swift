@@ -52,6 +52,7 @@ class EditProfileVC: UIViewController {
         let button = UIButton()
         button.setTitle("Change Photo", for: .normal)
         button.setTitleColor(Color.systemBlue.chooseColor, for: .normal)
+        button.titleLabel?.font = Font.regular12.chooseFont
         button.addTarget(self, action: #selector(changePhotoButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -68,7 +69,7 @@ class EditProfileVC: UIViewController {
         let view = InfoCustomView()
         view.layer.cornerRadius = 16
         view.backgroundColor = Color.white.chooseColor
-        view.imageview.image = UIImage(named: "dateIcon")
+        view.imageView.image = UIImage(named: "dateIcon")
         return view
     }()
     
@@ -76,8 +77,8 @@ class EditProfileVC: UIViewController {
         let view = InfoCustomView()
         view.layer.cornerRadius = 16
         view.backgroundColor = Color.white.chooseColor
-        view.imageview.image = UIImage(named: "positionIcon")
-        view.Lbl.text = "Admin"
+        view.imageView.image = UIImage(named: "positionIcon")
+        view.label.text = "Admin"
         return view
     }()
     
@@ -150,8 +151,8 @@ class EditProfileVC: UIViewController {
         viewModal.getUserInfo()
         viewModal.configureUserInfo = {user in
             self.fullNameLabel.text = user.full_name
-            self.roleView.Lbl.text = user.role
-           self.dateView.Lbl.text = self.dateFormat(date: user.created_at)
+            self.roleView.label.text = user.role
+           self.dateView.label.text = self.dateFormat(date: user.created_at)
             self.fullNameView.textField.text = user.full_name
             self.emailView.textField.text = user.email
             if user.pp_url != "" {
@@ -180,33 +181,37 @@ class EditProfileVC: UIViewController {
     private func setupView() {
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = Color.systemGreen.chooseColor
-        self.view.addSubViews(dissmissButton, headerLabel, containerView, profileImage, changePhotoButton, fullNameLabel, dateView, roleView, fullNameView, emailView, saveButton, activity)
+        containerView.addSubViews(profileImage, fullNameLabel, changePhotoButton, dateView, roleView, fullNameView, emailView, saveButton)
+        self.view.addSubViews(dissmissButton, headerLabel, containerView , activity)
         setupLayout()
     }
+    
     private func setupLayout() {
-        dissmissButton.edgesToSuperview(excluding: [.bottom,.right], insets: .top(32) + .left(23),usingSafeArea: true)
-        dissmissButton.height(21)
-        dissmissButton.width(24)
+        dissmissButton.edgesToSuperview(excluding: [.bottom,.left], insets: .top(24) + .right(24), usingSafeArea: true)
+        dissmissButton.height(20)
+        dissmissButton.width(20)
         
-        headerLabel.edgesToSuperview(excluding: [.bottom, .left], insets: .top(19) + .right(24),usingSafeArea: true)
-        headerLabel.leftToRight(of: dissmissButton, offset: 24)
+        headerLabel.leadingToSuperview(offset: 24)
+        headerLabel.topToSuperview(offset: 12, usingSafeArea: true)
         headerLabel.height(48)
         
-        containerView.edgesToSuperview(excluding: [.top])
         containerView.topToBottom(of: headerLabel, offset: 54)
+        containerView.leadingToSuperview()
+        containerView.trailingToSuperview()
+        containerView.bottomToSuperview()
         
-        profileImage.top(to: containerView, offset: 24)
-        profileImage.edgesToSuperview(excluding: [.bottom, .top], insets: .left(135) + .right(135))
+        profileImage.topToSuperview(offset: 24)
+        profileImage.centerXToSuperview()
         profileImage.height(120)
         profileImage.width(120)
         
         changePhotoButton.topToBottom(of: profileImage, offset: 7)
-        changePhotoButton.edgesToSuperview(excluding: [.bottom, .top], insets: .left(100) + .right(100))
+        changePhotoButton.centerXToSuperview()
         changePhotoButton.height(18)
+        changePhotoButton.width(86)
 
         fullNameLabel.topToBottom(of: changePhotoButton, offset: 7)
-        fullNameLabel.edgesToSuperview(excluding: [.bottom, .top], insets: .left(50) + .right(50))
-        fullNameLabel.height(36)
+        fullNameLabel.centerXToSuperview()
 
         dateView.topToBottom(of: fullNameLabel, offset: 21)
         dateView.leftToSuperview(offset: 24)
@@ -226,9 +231,8 @@ class EditProfileVC: UIViewController {
         emailView.edgesToSuperview(excluding: [.bottom, .top], insets: .left(24) + .right(24))
         emailView.height(74)
         
-        saveButton.edgesToSuperview(excluding: [.top], insets: .left(24) + .right(24) + .bottom(99))
+        saveButton.edgesToSuperview(excluding: [.top], insets: .left(24) + .right(24) + .bottom(50))
         saveButton.height(51)
-        
         
         activity.centerInSuperview()
         activity.height(50)

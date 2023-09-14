@@ -9,20 +9,18 @@ import UIKit
 import TinyConstraints
 
 class InfoCustomView: UIView {
-
-
     
-     lazy var Lbl: UILabel = {
-        let l = UILabel()
-        l.font = Font.semibold12.chooseFont
-        l.textColor = Color.systemblack.chooseColor
-        return l
+     lazy var label: UILabel = {
+        let label = UILabel()
+        label.font = Font.medium12.chooseFont
+        label.textColor = Color.systemblack.chooseColor
+        return label
     }()
     
-     lazy var imageview: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        return iv
+     lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
 
     override init(frame: CGRect) {
@@ -40,15 +38,20 @@ class InfoCustomView: UIView {
     
     private func setupView() {
         self.backgroundColor = Color.white.chooseColor
-        self.addSubviews(Lbl,imageview)
+        self.addSubviews(label,imageView)
         setupLayout()
     }
+    
+    
     private func setupLayout() {
-        imageview.edgesToSuperview(excluding: [.right], insets: .top(20) + .left(16) + .bottom(20))
+        imageView.leadingToSuperview(offset:16)
+        imageView.centerYToSuperview()
+        imageView.height(12)
+        imageView.width(20)
         
-        Lbl.edgesToSuperview(excluding: [.left, .right], insets: .top(18) + .bottom(16))
-        Lbl.leftToRight(of: imageview, offset: 8)
-        
+        label.leadingToTrailing(of: imageView, offset: 8)
+        label.centerYToSuperview()
+        label.trailingToSuperview(offset: 8)
     }
 
 }
