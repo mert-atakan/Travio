@@ -247,7 +247,7 @@ extension MenuVC:UICollectionViewDelegateFlowLayout {
 }
 
 extension MenuVC:Reloader {
-    func reloadMap() {
+    func reload() {
         viewModal.getUserInfo(){ user, status, message in
             if status {
                 guard let user = user else {return}

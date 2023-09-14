@@ -119,7 +119,7 @@ class AddTravelVC: UIViewController{
     func iniVM() {
         viewModal.dismiss = {
             self.dismiss(animated: true) {
-                self.delegate?.reloadMap()
+                self.delegate?.reload()
             }
         }
     }

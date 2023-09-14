@@ -11,7 +11,7 @@ import TinyConstraints
 import CoreLocation
 import NVActivityIndicatorView
 protocol Reloader: AnyObject {
-    func reloadMap()
+    func reload()
 }
 
 class MapVC: UIViewController, CLLocationManagerDelegate{
@@ -241,7 +241,7 @@ extension MapVC: UICollectionViewDataSource {
 }
 
 extension MapVC: Reloader {
-    func reloadMap() {
+    func reload() {
         initVM()
     }
 }

@@ -138,7 +138,7 @@ class EditProfileVC: UIViewController {
         viewModal.editProfile(body: body) { status, message in
             if status {
                 AlertHelper.showAlert(in: self, title: .congrats, message: message, primaryButtonTitle: .ok, primaryButtonAction: {
-                    self.delegate?.reloadMap()
+                    self.delegate?.reload()
                     self.dismiss(animated: true)
                 })
             } else {
