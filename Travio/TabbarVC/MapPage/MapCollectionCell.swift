@@ -78,9 +78,8 @@ class MapCollectionCell: UICollectionViewCell {
         iconView.height(12)
         iconView.width(9)
         
-        titleLbl.edgesToSuperview(excluding: [.bottom,.right], insets: .left(22) + .top(113))
+        titleLbl.edgesToSuperview(excluding: [.bottom], insets: .left(22) + .top(113) + .right(22))
         titleLbl.height(36)
-        titleLbl.width(200)
         
         iconView.edgesToSuperview(excluding: [.top, .right], insets: .left(22) + .bottom(14))
         iconView.height(12)

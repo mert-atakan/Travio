@@ -79,6 +79,7 @@ class DetailVC: UIViewController {
     private lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.font = Font.bold30.chooseFont
+        label.numberOfLines = 0
         return label
     }()
     
@@ -169,7 +170,7 @@ class DetailVC: UIViewController {
         contentView.edgesToSuperview()
         contentView.widthToSuperview()
         
-        cityLabel.edgesToSuperview(excluding: [.bottom,.right], insets: .top(24) + .left(24))
+        cityLabel.edgesToSuperview(excluding: [.bottom], insets: .top(24) + .left(24) + .right(24))
         
         dateLabel.topToBottom(of: cityLabel)
         dateLabel.left(to: cityLabel)
@@ -186,9 +187,7 @@ class DetailVC: UIViewController {
         descriptionLabel.edgesToSuperview(excluding: [.top,.bottom], insets: .left(16) + .right(16))
         descriptionLabel.bottomToSuperview()
         
-        contentView.layoutSubviews() // bu contentView'in subviewALrının layoutlarını bir daha çalıştırıyor. tableView'ın reload'u gibi düşün.
-        //ardından viewdidLayout subviews fonksiyonunda ben contentView içindeki componetnlerin özelliklerine erişebilirim.
-        // ve en alttaki componentin y değerini ve ve yüksekliğini toplayıp scrolview'a ekliyoruz. yani layoutlar kurulduktan soran viewdidlaoutfonksiyonunda scrollView'a tekrar boyut veriyoruz. bu sayede boyutu büyüyor. hem onun contentView'ın.
+        contentView.layoutSubviews()
     }
     
     @objc func backBtnTapped() {
@@ -201,9 +200,9 @@ class DetailVC: UIViewController {
             if check {
                 self.detailViewModal.deleteVisitItem { 
                     
-                    AlertHelper.showAlert(in: self, title: "Information", message: "Are you sure you delete your visit ?", primaryButtonTitle: "No", primaryButtonAction: {
+                    AlertHelper.showAlert(in: self, title: .information, message: "Are you sure you delete your visit ?", primaryButtonTitle: .no, primaryButtonAction: {
                         self.dismiss(animated: true)
-                    }, secondaryButtonTitle: "Yes") {
+                    }, secondaryButtonTitle: .yes) {
                         
                         self.visitedButton.setImage(UIImage(named: "unvisited"), for: .normal)
                         NotificationCenterManager.shared.postNotification(name: Notification.Name("visitChanged"))
@@ -215,9 +214,9 @@ class DetailVC: UIViewController {
                     if status {
                     self.visitedButton.setImage(UIImage(named: "visited"), for: .normal)
                     NotificationCenterManager.shared.postNotification(name: Notification.Name("visitChanged"))
-                    AlertHelper.showAlert(in: self, title: "Information", message: "Your visit was added successfully!", primaryButtonTitle: "Okay")
+                        AlertHelper.showAlert(in: self, title: .information, message: "Your visit was added successfully!", primaryButtonTitle: .ok)
                     } else {
-                        AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                        AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil)
                     }
                 }
             }
@@ -244,7 +243,7 @@ class DetailVC: UIViewController {
                 guard let place = place else {return}
                 self.configure(place: place)
             } else {
-                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             }
             
         }
@@ -255,7 +254,7 @@ class DetailVC: UIViewController {
                 self.pageControl.numberOfPages = count
                 self.collectionView.reloadData()
             } else {
-                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             }
            
         }

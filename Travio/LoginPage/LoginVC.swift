@@ -95,24 +95,13 @@ class LoginVC: UIViewController {
         let body = ["email":email,"password":password]
         viewModal.login(params: body) { status,message in
             if !status {
-                AlertHelper.showAlert(in: self, title: "Hata", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .error, message: message, primaryButtonTitle: .ok)
             }
             self.activity.stopAnimating()
             let vc = MainTabBarController()
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
-    
-    
-//    private func showAlert(message: String) {
-//        let alert = UIAlertController(title: "Üzgünüz", message: message, preferredStyle: .alert)
-//        
-//            let action = UIAlertAction(title: "Tamam", style: .default, handler: nil)
-//            alert.addAction(action)
-//            present(alert, animated: true, completion: nil)
-//        
-//    }
     
     private func setupView() {
         view.backgroundColor = Color.systemGreen.chooseColor

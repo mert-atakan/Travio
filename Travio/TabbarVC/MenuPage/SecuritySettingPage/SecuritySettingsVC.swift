@@ -88,7 +88,7 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
             guard let password = passwords[1] else {return}
             viewModal.changePassword(password: ["new_password": password]) { status, message in
                 if !status {
-                    AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                    AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
                 }
             }
         } else {

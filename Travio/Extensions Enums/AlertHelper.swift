@@ -12,23 +12,23 @@ class AlertHelper {
    
         static func showAlert(
             in viewController: UIViewController,
-            title: String?,
+            title: AlertTitle?,
             message: String?,
-            primaryButtonTitle: String,
+            primaryButtonTitle: AlertButton,
             primaryButtonAction: (() -> Void)? = nil,
-            secondaryButtonTitle: String? = nil,
+            secondaryButtonTitle: AlertButton? = nil,
             secondaryButtonAction: (() -> Void)? = nil
         ) {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let alertController = UIAlertController(title: title?.rawValue, message: message, preferredStyle: .alert)
             
-            let primaryAction = UIAlertAction(title: primaryButtonTitle, style: .default) { _ in
+            let primaryAction = UIAlertAction(title: primaryButtonTitle.rawValue, style: .default) { _ in
                 primaryButtonAction?()
             }
             
             alertController.addAction(primaryAction)
             
             if let secondaryTitle = secondaryButtonTitle {
-                let secondaryAction = UIAlertAction(title: secondaryTitle, style: .default) { _ in
+                let secondaryAction = UIAlertAction(title: secondaryTitle.rawValue, style: .default) { _ in
                     secondaryButtonAction?()
                 }
                 alertController.addAction(secondaryAction)
@@ -36,4 +36,18 @@ class AlertHelper {
             
             viewController.present(alertController, animated: true, completion: nil)
         }
+}
+
+enum AlertTitle: String {
+    case congrats = "Congrats!"
+    case sorry = "We are sorry."
+    case error = "An error occurred."
+    case information = "Information"
+}
+
+enum AlertButton: String {
+    case ok = "Ok"
+    case no = "No"
+    case yes = "Yes"
+    case goToLogin = "Go To Login Page"
 }

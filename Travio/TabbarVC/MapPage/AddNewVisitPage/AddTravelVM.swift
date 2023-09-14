@@ -29,7 +29,7 @@ class AddTravelVM {
 
                 self.body?["cover_image_url"] = urlArrays.first
                 self.addTravel(body: self.body ?? ["":""]) { status, message in
-                    AlertHelper.showAlert(in: AddTravelVC(), title: "Üzgünüz", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                    AlertHelper.showAlert(in: AddTravelVC(), title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
                 }
                 callback(true,nil)
             case .failure(let failure):
@@ -53,7 +53,7 @@ class AddTravelVM {
                     body["place_id"] = id
                     body["image_url"] = url
                     self.addGallery(body: body) { status,message in
-                        AlertHelper.showAlert(in: AddTravelVC(), title: "Üzgünüz", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                        AlertHelper.showAlert(in: AddTravelVC(), title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
                     }
                 }
                 

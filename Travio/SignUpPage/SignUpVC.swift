@@ -101,17 +101,20 @@ class SignUpVC: UIViewController {
     
     
     @objc func textFieldDidChange() {
-       if viewModal.updateLoginButtonState(isEmail: emailView.isEmail,
-                                                     isUsername: usernameView.isUsername,
-                                                     isPassword: pass1View.isPassword,
-                                                     isPassword2: pass2View.isPassword,
-                                                     password1Text: pass1View.textField.text ?? "",
-                                                     password2Text: pass2View.textField.text ?? ""
+        if viewModal.updateLoginButtonState(isEmail: emailView.isEmail,
+                                            isUsername: usernameView.isUsername,
+                                            isPassword: pass1View.isPassword,
+                                            isPassword2: pass2View.isPassword,
+                                            password1Text: pass1View.textField.text ?? "",
+                                            password2Text: pass2View.textField.text ?? ""
         ) {
             lgnBtn.isEnabled = true
             lgnBtn.backgroundColor = Color.systemGreen.chooseColor
+        } else {
+            lgnBtn.isEnabled = false
+            lgnBtn.backgroundColor = Color.systemgray.chooseColor
         }
-      }
+    }
     
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
@@ -124,16 +127,16 @@ class SignUpVC: UIViewController {
         
         viewModal.register(params: body) { status,message in
             if status {
-                AlertHelper.showAlert(in: self, title: "Tebrikler", message: message, primaryButtonTitle: "Go To Login Page", primaryButtonAction: {
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .goToLogin, primaryButtonAction: {
                     self.navigationController?.popViewController(animated: true)
                 }, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             } else {
-                AlertHelper.showAlert(in: self, title: "Hata", message: """
-                                                Username alanına sadece harf girmelisiniz.
-                                                Email alanına email formatı girmelisiniz.
-                                                Şifreniz en az 1 harf ve 1 sayı ve en az 6 karakterden oluşmalıdır.
+                AlertHelper.showAlert(in: self, title: .error, message: """
+                                                You must enter only letters in the Username field.
+                                                You must enter the email format in the Email field.
+                                                Your password must consist of at least 1 letter and 1 number and at least 6 characters.
                                              """
-                                      , primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                                      , primaryButtonTitle: .ok)
             }
         }
     }

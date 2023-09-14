@@ -98,7 +98,7 @@ class AddTravelVC: UIViewController{
         
         viewModal.uploadImage(images: imageData) { status,message in
             if !status {
-                AlertHelper.showAlert(in: self, title: "Üzgünüz", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok)
             }
             
         }

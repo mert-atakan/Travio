@@ -132,9 +132,9 @@ class EditProfileVC: UIViewController {
         let body = ["full_name":name, "email": email, "pp_url": imageUrl]
         viewModal.editProfile(body: body) { status, message in
             if status {
-                AlertHelper.showAlert(in: self, title: "Profile Information Updated", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .congrats, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             } else {
-                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             }
         }
     }
@@ -142,23 +142,23 @@ class EditProfileVC: UIViewController {
         self.dismiss(animated: true)
     }
     
-    func statusAlert(status:String) {
-        var alert = UIAlertController()
-        var action = UIAlertAction()
-        if status == "success" {
-            alert = UIAlertController(title: "Tebrikler", message: "Bilgileriniz başarıyla değiştirildi.", preferredStyle: .alert)
-             action = UIAlertAction(title: "Tamam", style: .default) {action in
-                 self.delegate?.reloadMap()
-                self.dismiss(animated: true, completion: nil)
-            }
-        } else {
-            alert = UIAlertController(title: "Üzgünüz", message: "Bilgileriniz değiştirilemedi.", preferredStyle: .alert)
-             action = UIAlertAction(title: "Tamam", style: .default)
-        }
-       
-        alert.addAction(action)
-        present(alert, animated: true)
-    }
+//    func statusAlert(status:String) {
+//        var alert = UIAlertController()
+//        var action = UIAlertAction()
+//        if status == "success" {
+//            alert = UIAlertController(title: "Tebrikler", message: "Bilgileriniz başarıyla değiştirildi.", preferredStyle: .alert)
+//             action = UIAlertAction(title: "Tamam", style: .default) {action in
+//                 self.delegate?.reloadMap()
+//                self.dismiss(animated: true, completion: nil)
+//            }
+//        } else {
+//            alert = UIAlertController(title: "Üzgünüz", message: "Bilgileriniz değiştirilemedi.", preferredStyle: .alert)
+//             action = UIAlertAction(title: "Tamam", style: .default)
+//        }
+//       
+//        alert.addAction(action)
+//        present(alert, animated: true)
+//    }
     
     func initVM() {
         viewModal.onDataFetch = { [weak self] isLoading in
@@ -177,7 +177,7 @@ class EditProfileVC: UIViewController {
                 guard let user = user else {return}
                 self.configure(data:user)
             } else {
-                AlertHelper.showAlert(in: self, title: "We are sorry", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok)
             }
            
         }
@@ -281,7 +281,7 @@ extension EditProfileVC: UIImagePickerControllerDelegate & UINavigationControlle
             
             viewModal.uploadPhoto(images: dataArray) { status, message in
                 if !status {
-                    AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                    AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok)
                 }
             }
         }

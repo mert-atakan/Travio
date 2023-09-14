@@ -113,7 +113,7 @@ class VisitVC: UIViewController {
             if status {
                 self.tableView.reloadData()
             } else {
-                AlertHelper.showAlert(in: self, title: "Information", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .information, message: message, primaryButtonTitle: .ok)
             }
         }
     }

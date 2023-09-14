@@ -117,7 +117,7 @@ class MenuVC: UIViewController {
                 guard let user = user else {return}
                 self.configure(data: user)
             } else {
-                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok)
             }
             
         }
@@ -252,7 +252,7 @@ extension MenuVC:Reloader {
                 guard let user = user else {return}
                 self.configure(data: user)
             } else {
-                AlertHelper.showAlert(in: self, title: "We are sorry.", message: message, primaryButtonTitle: "Ok", primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok)
             }
            
         }
