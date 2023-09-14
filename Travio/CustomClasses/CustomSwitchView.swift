@@ -11,7 +11,7 @@ class CustomSwitchView: UIView {
     
      lazy var titleLabel: UILabel = {
         let l = UILabel()
-        l.font = Font.semibold14.chooseFont
+         l.font = Font.poppins(fontType: .semibold, size: 14).font
         l.textColor = Color.systemblack.chooseColor
         return l
     }()

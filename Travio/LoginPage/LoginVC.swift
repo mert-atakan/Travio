@@ -32,7 +32,7 @@ class LoginVC: UIViewController {
         l.layer.cornerRadius = 3
         l.text = "Welcome to Travio"
         l.textAlignment = .center
-        l.font = Font.semibold24.chooseFont
+        l.font = Font.poppins(fontType: .semibold, size: 24).font
         return l
     }()
     
@@ -69,7 +69,7 @@ class LoginVC: UIViewController {
     private lazy var signLbl: UILabel = {
         let l = UILabel()
         l.text = "Don’t have  any account? Sign Up"
-        l.font = Font.bold14.chooseFont
+        l.font = Font.poppins(fontType: .bold, size: 14).font
         l.textColor = Color.systemblack.chooseColor
         l.textAlignment = .center
         return l
@@ -82,6 +82,9 @@ class LoginVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         view1.roundCorners(corners: .topLeft, radius: 80)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     @objc func signLblTapped(_ sender: UITapGestureRecognizer) {

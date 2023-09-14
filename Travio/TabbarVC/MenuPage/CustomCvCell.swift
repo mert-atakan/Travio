@@ -31,7 +31,7 @@ class CustomCvCell:UICollectionViewCell {
     
     private lazy var cellsLabel:UILabel = {
       let cellLabel = UILabel()
-        cellLabel.font = Font.light14.chooseFont
+        cellLabel.font = Font.poppins(fontType: .light, size: 14).font
         cellLabel.textColor = Color.systemblack.chooseColor
         return cellLabel
     }()

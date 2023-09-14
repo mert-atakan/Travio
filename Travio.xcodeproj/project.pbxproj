@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		792B68812AB08DB900DD7834 /* TermsOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B68802AB08DB900DD7834 /* TermsOfUseVC.swift */; };
+		A3A23D592AB2F78F00F9F366 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A3A23D582AB2F78F00F9F366 /* IQKeyboardManagerSwift */; };
 		A3A54B3D2AAF388E0015F767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54B3C2AAF388E0015F767 /* AppDelegate.swift */; };
 		A3A54B3F2AAF388E0015F767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54B3E2AAF388E0015F767 /* SceneDelegate.swift */; };
 		A3A54B542AAF392F0015F767 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54B512AAF392F0015F767 /* LoginVC.swift */; };
@@ -51,7 +52,6 @@
 		A3A54CFA2AAF3ADA0015F767 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54CF52AAF3ADA0015F767 /* CustomButton.swift */; };
 		A3A54CFB2AAF3ADA0015F767 /* InfoCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54CF62AAF3ADA0015F767 /* InfoCustomView.swift */; };
 		A3A54CFC2AAF3ADA0015F767 /* CustomSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54CF72AAF3ADA0015F767 /* CustomSwitchView.swift */; };
-		A3A54CFD2AAF3ADA0015F767 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54CF82AAF3ADA0015F767 /* CustomLabel.swift */; };
 		A3A54D132AAF3AE10015F767 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3A54D002AAF3AE10015F767 /* Poppins-ExtraLight.ttf */; };
 		A3A54D142AAF3AE10015F767 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3A54D012AAF3AE10015F767 /* Poppins-ThinItalic.ttf */; };
 		A3A54D152AAF3AE10015F767 /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3A54D022AAF3AE10015F767 /* Poppins-ExtraLightItalic.ttf */; };
@@ -146,7 +146,6 @@
 		A3A54CF52AAF3ADA0015F767 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		A3A54CF62AAF3ADA0015F767 /* InfoCustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoCustomView.swift; sourceTree = "<group>"; };
 		A3A54CF72AAF3ADA0015F767 /* CustomSwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSwitchView.swift; sourceTree = "<group>"; };
-		A3A54CF82AAF3ADA0015F767 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		A3A54D002AAF3AE10015F767 /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
 		A3A54D012AAF3AE10015F767 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
 		A3A54D022AAF3AE10015F767 /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
@@ -199,6 +198,7 @@
 				A3A54D5E2AAF3EC00015F767 /* Alamofire in Frameworks */,
 				A3A54D6A2AAF40BC0015F767 /* JWTDecode in Frameworks */,
 				A3A54D642AAF400C0015F767 /* NVActivityIndicatorView in Frameworks */,
+				A3A23D592AB2F78F00F9F366 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,7 +380,6 @@
 				A3A54CF52AAF3ADA0015F767 /* CustomButton.swift */,
 				A3A54CF62AAF3ADA0015F767 /* InfoCustomView.swift */,
 				A3A54CF72AAF3ADA0015F767 /* CustomSwitchView.swift */,
-				A3A54CF82AAF3ADA0015F767 /* CustomLabel.swift */,
 			);
 			path = CustomClasses;
 			sourceTree = "<group>";
@@ -488,6 +487,7 @@
 				A3A54D632AAF400C0015F767 /* NVActivityIndicatorView */,
 				A3A54D662AAF40210015F767 /* Kingfisher */,
 				A3A54D692AAF40BC0015F767 /* JWTDecode */,
+				A3A23D582AB2F78F00F9F366 /* IQKeyboardManagerSwift */,
 			);
 			productName = Travio;
 			productReference = A3A54B392AAF388E0015F767 /* Travio.app */;
@@ -523,6 +523,7 @@
 				A3A54D622AAF400C0015F767 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 				A3A54D652AAF40210015F767 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				A3A54D682AAF40BC0015F767 /* XCRemoteSwiftPackageReference "JWTDecode" */,
+				A3A23D572AB2F78F00F9F366 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = A3A54B3A2AAF388E0015F767 /* Products */;
 			projectDirPath = "";
@@ -621,7 +622,6 @@
 				A3A54CDD2AAF3AC10015F767 /* AddTravelCollectionCell.swift in Sources */,
 				A3A54D3A2AAF3BD00015F767 /* EditProfileVM.swift in Sources */,
 				792B68812AB08DB900DD7834 /* TermsOfUseVC.swift in Sources */,
-				A3A54CFD2AAF3ADA0015F767 /* CustomLabel.swift in Sources */,
 				A3A54CB82AAF3A750015F767 /* SeeAllPlacesVC.swift in Sources */,
 				A3A54CB62AAF3A750015F767 /* HomeCollectionViewCell.swift in Sources */,
 				A3A54CDE2AAF3AC10015F767 /* UploadResponse.swift in Sources */,
@@ -843,6 +843,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A3A23D572AB2F78F00F9F366 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		A3A54D592AAF3EB10015F767 /* XCRemoteSwiftPackageReference "TinyConstraints" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/roberthein/TinyConstraints.git";
@@ -886,6 +894,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A3A23D582AB2F78F00F9F366 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A3A23D572AB2F78F00F9F366 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
 		A3A54D5A2AAF3EB10015F767 /* TinyConstraints */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A3A54D592AAF3EB10015F767 /* XCRemoteSwiftPackageReference "TinyConstraints" */;

@@ -78,20 +78,20 @@ class DetailVC: UIViewController {
     
     private lazy var cityLabel: UILabel = {
         let label = UILabel()
-        label.font = Font.bold30.chooseFont
+        label.font = Font.poppins(fontType: .bold, size: 30).font
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.font = Font.medium14.chooseFont
+        label.font = Font.poppins(fontType: .medium, size: 14).font
         return label
     }()
     
     private lazy var creatorLabel: UILabel = {
         let label = UILabel()
-        label.font = Font.regular12.chooseFont
+        label.font = Font.poppins(fontType: .regular, size: 12).font
         return label
     }()
     
@@ -107,7 +107,7 @@ class DetailVC: UIViewController {
         let descriptionLabel = UILabel()
         descriptionLabel.backgroundColor = Color.systemWhite.chooseColor
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = Font.regular12.chooseFont
+        descriptionLabel.font = Font.poppins(fontType: .regular, size: 12).font
         descriptionLabel.text = " "
         guard let text = descriptionLabel.text else { return descriptionLabel}
         let attributedText = NSMutableAttributedString(string: text)
@@ -198,17 +198,20 @@ class DetailVC: UIViewController {
         
         detailViewModal.checkVisit { check in
             if check {
-                self.detailViewModal.deleteVisitItem { 
-                    
                     AlertHelper.showAlert(in: self, title: .information, message: "Are you sure you delete your visit ?", primaryButtonTitle: .no, primaryButtonAction: {
                         self.dismiss(animated: true)
                     }, secondaryButtonTitle: .yes) {
-                        
-                        self.visitedButton.setImage(UIImage(named: "unvisited"), for: .normal)
-                        NotificationCenterManager.shared.postNotification(name: Notification.Name("visitChanged"))
-                        
+                        self.detailViewModal.deleteVisitItem { status, message in
+                            if status {
+                                self.visitedButton.setImage(UIImage(named: "unvisited"), for: .normal)
+                                NotificationCenterManager.shared.postNotification(name: Notification.Name("visitChanged"))
+                            } else {
+                                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok)
+                            }
+                        }
                     }
-                }
+                    
+                
             } else {
                 self.detailViewModal.postVisit { status, message in
                     if status {

@@ -16,19 +16,19 @@ class CustomView: UIView {
     
     let attributes: [NSAttributedString.Key: Any] = [
         .foregroundColor: Color.systemgray.chooseColor,
-        .font: Font.regular12.chooseFont
+        .font: Font.poppins(fontType: .regular, size: 12).font as Any
     ]
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.layer.cornerRadius = 3
-        label.font = Font.medium14.chooseFont
+        label.font = Font.poppins(fontType: .medium, size: 14).font
         return label
     }()
     
     lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.font = Font.light12.chooseFont
+        textField.font = Font.poppins(fontType: .light, size: 12).font
         textField.backgroundColor = .white
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
@@ -62,6 +62,7 @@ class CustomView: UIView {
         
         textField.topToBottom(of: titleLabel,offset: 8)
         textField.leadingToSuperview(offset:12)
+        textField.trailingToSuperview(offset:12)
     }
     
     func isValidEmail(_ email: String) -> Bool {

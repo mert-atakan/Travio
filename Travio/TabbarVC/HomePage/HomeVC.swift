@@ -45,6 +45,8 @@ class HomeVC: UIViewController,GoToDetail {
         tv.backgroundColor = Color.systemWhite.chooseColor
         tv.delegate = self
         tv.dataSource = self
+        tv.showsVerticalScrollIndicator = false
+        tv.showsHorizontalScrollIndicator = false
         tv.register(HomeTableCell.self, forCellReuseIdentifier: "tableCell")
         return tv
     }()
@@ -71,7 +73,7 @@ class HomeVC: UIViewController,GoToDetail {
         } else if button.tag == 1 {
             seeAllVC.fromWhere = "newPlaces"
         } else if button.tag == 2 {
-            seeAllVC.fromWhere == "myVisits"
+            seeAllVC.fromWhere = "myVisits"
         }
         navigationController?.pushViewController(seeAllVC, animated: true)
     }
@@ -151,28 +153,30 @@ class HomeVC: UIViewController,GoToDetail {
         view1.edgesToSuperview(excluding: [.top])
         
         tableView.top(to: view1,offset: 15)
-        tableView.edgesToSuperview(excluding: [.top], insets: .left(24))
+        tableView.edgesToSuperview()
         
         activity.centerInSuperview()
         activity.height(50)
         activity.width(50)
+        
+        topImageview.layoutSubviews()
     }
     
     private func headerButton() -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle("See All", for: .normal)
         button.setTitleColor(Color.systemBlue.chooseColor, for: .normal)
-        button.titleLabel?.font = Font.semibold14.chooseFont
-        button.frame = CGRect(x: 303, y: 28, width: 47, height: 21)
+        button.titleLabel?.font = Font.poppins(fontType: .semibold, size: 14).font
+        button.frame = CGRect(x: 327, y: 28, width: 47, height: 21)
         button.addTarget(self, action: #selector(showDetail(_:)), for: .touchUpInside)
         return button
     }
     
     private func headerLabel(section:Int, headerView:UIView) -> UILabel {
         let label = UILabel()
-        label.frame = CGRect.init(x: 0, y: 20, width: headerView.frame.width-10, height: 30)
+        label.frame = CGRect.init(x: 24, y: 20, width: headerView.frame.width-10, height: 30)
         label.text = viewModal.getHeaderNameForSection(section: section)
-        label.font = Font.semibold20.chooseFont
+        label.font = Font.poppins(fontType: .semibold, size: 20).font
         label.textColor = Color.systemblack.chooseColor
         return label
     }
@@ -198,6 +202,8 @@ extension HomeVC: UITableViewDelegate {
         
         return headerView
     }
+    
+    
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 52

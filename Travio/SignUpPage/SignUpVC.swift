@@ -27,7 +27,7 @@ class SignUpVC: UIViewController {
     
     private lazy var titleLbl: UILabel = {
         let l = UILabel()
-        l.font = Font.bold36.chooseFont
+        l.font = Font.poppins(fontType: .bold, size: 36).font
         l.textColor = Color.white.chooseColor
         l.text = "Sign Up"
         return l

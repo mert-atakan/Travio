@@ -24,7 +24,7 @@ class SeeAllPlacesVC: UIViewController {
     
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
-        label.font = Font.semibold32.chooseFont
+        label.font = Font.poppins(fontType: .semibold, size: 32).font
         label.textColor = Color.white.chooseColor
         return label
     }()
@@ -126,10 +126,10 @@ class SeeAllPlacesVC: UIViewController {
     private func getData() {
 
         seeAllPlacesVM.place = fromWhere
+        self.headerLabel.text = self.seeAllPlacesVM.setTitle()
         
         seeAllPlacesVM.getPlaces() { status, message in
             if status {
-                self.headerLabel.text = self.seeAllPlacesVM.setTitle()
                 self.collectionView.reloadData()
             } else  {
                 AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)

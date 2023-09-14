@@ -11,14 +11,19 @@ class NavigationHelper: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        
         let token = getTokenFromChain()
         let status = isTokenExpired(jwtToken: token)
+        
         if status {
             navigationController?.pushViewController(LoginVC(), animated: true)
         } else {
             navigationController?.pushViewController(MainTabBarController(), animated: true)
         }
+        
+        
     }
     
     func isTokenExpired(jwtToken: String) -> Bool {

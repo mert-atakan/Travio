@@ -20,7 +20,7 @@ class TermsOfUseVC: UIViewController {
     
     private lazy var headerLabel:UILabel = {
         let termsLabel = UILabel()
-        termsLabel.font = Font.semibold32.chooseFont
+        termsLabel.font = Font.poppins(fontType: .semibold, size: 32).font
         termsLabel.textColor = Color.white.chooseColor
         termsLabel.text = "Terms Of Use"
         

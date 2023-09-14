@@ -18,11 +18,14 @@ class HomeTableCell: UITableViewCell {
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 16
         flowLayout.minimumInteritemSpacing = 16
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         let cv = UICollectionView(frame: .zero,collectionViewLayout: flowLayout)
         cv.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")
         cv.delegate = self
         cv.dataSource = self
         cv.isPagingEnabled = false
+        cv.showsVerticalScrollIndicator = false
+        cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = Color.systemWhite.chooseColor
         return cv
     }()

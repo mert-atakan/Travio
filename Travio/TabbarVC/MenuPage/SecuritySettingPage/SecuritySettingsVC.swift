@@ -35,7 +35,7 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
     
     private lazy var titleLbl: UILabel = {
         let l = UILabel()
-        l.font = Font.bold32.chooseFont
+        l.font = Font.poppins(fontType: .bold, size: 32).font
         l.textColor = Color.white.chooseColor
         l.text = "Security Settings"
         return l
@@ -160,7 +160,7 @@ extension SecuritySettingsVC: UITableViewDelegate {
         headerView.backgroundColor = .clear
         
         let label = UILabel(frame: CGRect(x: 24, y: 5, width: tableView.frame.size.width - 20, height: 20))
-        label.font = Font.bold16.chooseFont
+        label.font = Font.poppins(fontType: .bold, size: 16).font
         label.textColor = Color.systemGreen.chooseColor
         if section == 0 {
             label.text = "Change Password"

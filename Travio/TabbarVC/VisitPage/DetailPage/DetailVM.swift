@@ -51,15 +51,15 @@ class DetailVM {
         
     }
     
-    func deleteVisitItem(callback: @escaping ()->Void) {
+    func deleteVisitItem(callback: @escaping (Bool,String?)->Void) {
         guard let placeId = placeId else { return }
         
         self.apiService.makeRequest(urlConvertible: Router.deletePlace(placeId: placeId)) { (result:Result<DefaultResponse,ErrorResponse>) in
             switch result {
             case .success(_):
-                callback()
+                callback(true, nil)
             case .failure(let failure):
-                print(failure)
+                callback(false, failure.message)
             }
         }
     }
@@ -67,7 +67,6 @@ class DetailVM {
     
     func checkVisit(callback: @escaping (Bool)->Void) {
         guard let placeId = placeId else { return }
-        print(placeId)
         self.apiService.makeRequest(urlConvertible: Router.checkVisit(placeId: placeId)) { (result:Result<DefaultResponse,ErrorResponse>) in
             switch result {
             case .success(let data):

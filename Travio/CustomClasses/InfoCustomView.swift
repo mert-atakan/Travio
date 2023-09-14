@@ -12,7 +12,7 @@ class InfoCustomView: UIView {
     
      lazy var label: UILabel = {
         let label = UILabel()
-        label.font = Font.medium12.chooseFont
+        label.font = Font.poppins(fontType: .medium, size: 12).font
         label.textColor = Color.systemblack.chooseColor
         return label
     }()

@@ -26,7 +26,7 @@ class AboutUsVC: UIViewController, WKUIDelegate {
     
     private lazy var titleLbl: UILabel = {
         let l = UILabel()
-        l.font = Font.bold32.chooseFont
+        l.font = Font.poppins(fontType: .bold, size: 32).font
         l.textColor = Color.white.chooseColor
         l.text = "About Us"
         return l

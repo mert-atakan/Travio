@@ -6,6 +6,7 @@ import Foundation
 class SeeAllPlacesVM {
     
     private var placeArray = [PlaceItem]()
+   
     var place:String?
     
     let apiService: ApiServiceProtocol
@@ -31,15 +32,34 @@ func getPlaces (callback: @escaping (Bool,String?)->Void) {
             fatalError("Invalid place value")
         }
         
-        apiService.makeRequest(urlConvertible: router) { (result:Result<PlacesData,ErrorResponse>) in
-            switch result {
-            case .success(let data):
-                self.placeArray = data.data.places
+        if self.place == "myVisits" {
+            apiService.makeRequest(urlConvertible: router) { (result:Result<TravelData,ErrorResponse>) in
+                switch result {
+                case .success(let data):
+                    for visit in data.data.visits {
+                        self.placeArray.append(visit.place)
+                    }
+                        callback(true,nil)
+                case .failure(let failure):
+                    callback(false,failure.message)
+                }
+            }
+        } else {
+            
+            apiService.makeRequest(urlConvertible: router) { (result:Result<PlacesData,ErrorResponse>) in
+                switch result {
+                case .success(let data):
+                    self.placeArray = data.data.places
                     callback(true,nil)
-            case .failure(let failure):
-                callback(false,failure.message)
+                case .failure(let failure):
+                    callback(false,failure.message)
+                }
             }
         }
+        
+        
+       
+        
     }
 }
 

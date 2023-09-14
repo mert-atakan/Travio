@@ -30,7 +30,7 @@ class EditProfileVC: UIViewController {
     
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
-        label.font = Font.semibold32.chooseFont
+        label.font = Font.poppins(fontType: .semibold, size: 32).font
         label.textColor = Color.white.chooseColor
         label.text = "Edit Profile"
         return label
@@ -54,14 +54,14 @@ class EditProfileVC: UIViewController {
         let button = UIButton()
         button.setTitle("Change Photo", for: .normal)
         button.setTitleColor(Color.systemBlue.chooseColor, for: .normal)
-        button.titleLabel?.font = Font.regular12.chooseFont
+        button.titleLabel?.font = Font.poppins(fontType: .regular, size: 12).font
         button.addTarget(self, action: #selector(changePhotoButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var fullNameLabel: UILabel = {
         let label = UILabel()
-        label.font = Font.semibold24.chooseFont
+        label.font = Font.poppins(fontType: .semibold, size: 24).font
         label.textColor = Color.systemblack.chooseColor
         label.textAlignment = .center
         return label
@@ -137,7 +137,10 @@ class EditProfileVC: UIViewController {
         let body = ["full_name":name, "email": email, "pp_url": imageUrl]
         viewModal.editProfile(body: body) { status, message in
             if status {
-                AlertHelper.showAlert(in: self, title: .congrats, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                AlertHelper.showAlert(in: self, title: .congrats, message: message, primaryButtonTitle: .ok, primaryButtonAction: {
+                    self.delegate?.reloadMap()
+                    self.dismiss(animated: true)
+                })
             } else {
                 AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             }
@@ -165,6 +168,7 @@ class EditProfileVC: UIViewController {
 //        present(alert, animated: true)
 //    }
     
+    
     func initVM() {
         viewModal.onDataFetch = { [weak self] isLoading in
             DispatchQueue.main.async {
@@ -190,16 +194,16 @@ class EditProfileVC: UIViewController {
     }
     
     func configure(data: User) {
-        self.nameLbl.text = data.full_name
-        self.positionView.Lbl.text = data.role
-       self.dateView.Lbl.text = self.dateFormat(date: data.created_at)
-        self.nameView.textField.text = data.full_name
+        self.fullNameLabel.text = data.full_name
+        self.roleView.label.text = data.role
+       self.dateView.label.text = self.dateFormat(date: data.created_at)
+        self.fullNameView.textField.text = data.full_name
         self.emailView.textField.text = data.email
         if data.pp_url != "" {
             let url = URL(string: data.pp_url)
-            self.imageview.kf.setImage(with: url)
+            self.profileImage.kf.setImage(with: url)
         } else {
-            self.imageview.image = UIImage(systemName: "person.fill")
+            self.profileImage.image = UIImage(systemName: "person.fill")
         }
     }
     

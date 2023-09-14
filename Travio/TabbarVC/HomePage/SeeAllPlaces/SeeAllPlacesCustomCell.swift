@@ -14,14 +14,14 @@ class SeeAllPlacesCustomCell:UICollectionViewCell {
     
     private lazy var nameLabel:UILabel = {
         let label = UILabel()
-        label.font = Font.semibold24.chooseFont
+        label.font = Font.poppins(fontType: .semibold, size: 24).font
         label.textColor = .black
         return label
     }()
     
     private lazy var cityNameLabel:UILabel = {
         let label = UILabel()
-        label.font = Font.regular14.chooseFont
+        label.font = Font.poppins(fontType: .regular, size: 14).font
         label.textColor = .black
         return label
     }()

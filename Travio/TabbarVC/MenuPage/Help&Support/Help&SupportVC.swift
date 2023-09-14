@@ -21,10 +21,10 @@ class HelpAndSupportVC: UIViewController {
         return backButton
     }()
     
-    private lazy var titleLbl:CustomLabel = {
-        let topTitle = CustomLabel()
+    private lazy var titleLbl:UILabel = {
+        let topTitle = UILabel()
         topTitle.text = "Help&Support"
-        topTitle.font = Font.semibold32.chooseFont
+        topTitle.font = Font.poppins(fontType: .semibold, size: 32).font
         topTitle.textColor = Color.white.chooseColor
         
         return topTitle
@@ -86,7 +86,7 @@ class HelpAndSupportVC: UIViewController {
         let label = UILabel()
         label.frame = CGRect.init(x: 24, y: 0, width: headerView.frame.width-10, height: 21)
         label.text = "FAQ"
-        label.font = Font.semibold24.chooseFont
+        label.font = Font.poppins(fontType: .semibold, size: 24).font
         label.textColor = Color.systemGreen.chooseColor
         return label
     }

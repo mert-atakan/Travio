@@ -25,14 +25,14 @@ class VisitCell: UITableViewCell {
     
     private lazy var cityLbl: UILabel = {
         let l = UILabel()
-        l.font = Font.regular16.chooseFont
+        l.font = Font.poppins(fontType: .regular, size: 16).font
         l.textColor = Color.white.chooseColor
         return l
     }()
     
     private lazy var titleLbl: UILabel = {
         let l = UILabel()
-        l.font = Font.bold24.chooseFont
+        l.font = Font.poppins(fontType: .bold, size: 24).font
         l.textColor = Color.white.chooseColor
         l.text = "Amsterdam"
         return l
@@ -75,7 +75,7 @@ class VisitCell: UITableViewCell {
     }
     
     private func setupLayout() {
-        imageview.edgesToSuperview(insets: .bottom(16) + .right(22) + .left(22))
+        imageview.edgesToSuperview(insets: .bottom(16))
         
         iconView.edgesToSuperview(excluding: [.top,.right], insets: .bottom(8) + .left(10))
         iconView.height(20)

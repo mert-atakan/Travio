@@ -28,7 +28,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private lazy var titleLbl: UILabel = {
         let l = UILabel()
-        l.font = Font.bold24.chooseFont
+        l.font = Font.poppins(fontType: .bold, size: 24).font
         l.textColor = Color.white.chooseColor
         l.text = "Amsterdam"
         return l
@@ -36,7 +36,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private lazy var cityLbl: UILabel = {
         let l = UILabel()
-        l.font = Font.regular16.chooseFont
+        l.font = Font.poppins(fontType: .regular, size: 16).font
         l.textColor = Color.white.chooseColor
         l.text = "Amsterdam"
         return l

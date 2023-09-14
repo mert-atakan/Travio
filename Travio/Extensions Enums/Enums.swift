@@ -4,85 +4,10 @@
 //
 //  Created by Kullanici on 18.08.2023.
 //
-//300 -> regular
-//400 -> medium
-//500 -> semibold
-//600 -> bold
-//Regular -> 400
-//Medium -> 500
-//SemiBold -> 600
-//Bold -> 700
 
 import UIKit
 import Alamofire
 
-
-enum Font {
-    case light12
-    case light14
-    case regular10
-    case regular12
-    case regular14
-    case regular16
-    case semibold24
-    case semibold20
-    case semibold16
-    case semibold14
-    case semibold12
-    case semibold32
-    case bold36
-    case bold32
-    case bold30
-    case bold24
-    case bold16
-    case bold14
-    case medium12
-    case medium14
-    var chooseFont: UIFont {
-        switch self {
-        case .light12:
-            return UIFont(name: "Poppins-Light", size: 12)!
-        case .light14:
-            return UIFont(name: "Poppins-Light", size: 14)!
-        case .regular10:
-            return UIFont(name: "Poppins-Regular", size: 10)!
-        case .regular12:
-            return UIFont(name: "Poppins-Regular", size: 12)!
-        case .regular14:
-            return UIFont(name: "Poppins-Regular", size: 14)!
-        case .regular16:
-            return UIFont(name: "Poppins-Regular", size: 16)!
-        case .bold14:
-            return UIFont(name: "Poppins-Bold", size: 14)!
-        case .semibold32:
-            return UIFont(name: "Poppins-SemiBold", size: 32)!
-        case .semibold24:
-            return UIFont(name: "Poppins-SemiBold", size: 24)!
-        case .semibold20:
-            return UIFont(name: "Poppins-SemiBold", size: 20)!
-        case .semibold16:
-            return UIFont(name: "Poppins-SemiBold", size: 16)!
-        case .semibold14:
-            return UIFont(name: "Poppins-SemiBold", size: 14)!
-        case .semibold12:
-            return UIFont(name: "Poppins-SemiBold", size: 12)!
-        case .bold36:
-            return UIFont(name: "Poppins-Bold", size: 36)!
-        case .bold30:
-            return UIFont(name: "Poppins-Bold", size: 30)!
-        case .medium12:
-            return UIFont(name: "Poppins-Medium", size: 12)!
-        case .medium14:
-            return UIFont(name: "Poppins-Medium", size: 14)!
-        case .bold24:
-            return UIFont(name: "Poppins-Bold", size: 24)!
-        case .bold16:
-            return UIFont(name: "Poppins-Bold", size: 16)!
-        case .bold32:
-            return UIFont(name: "Poppins-Bold", size: 32)!
-        }
-    }
-}
 
 enum Color {
     case systemGreen
@@ -109,6 +34,28 @@ enum Color {
             return #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
         case .systemBlue:
             return #colorLiteral(red: 0.09019607843, green: 0.7529411765, blue: 0.9215686275, alpha: 1)
+        }
+    }
+}
+
+
+
+enum FontType:String {
+    case semibold = "SemiBold"
+    case bold    = "Bold"
+    case medium = "Medium"
+    case regular = "Regular"
+    case light = "Light"
+}
+
+enum Font {
+    
+    case poppins(fontType:FontType,size:CGFloat)
+    
+    var font:UIFont? {
+        switch self {
+        case .poppins(let type, let size):
+            return UIFont(name: "Poppins-\(type.rawValue)", size: size)
         }
     }
 }

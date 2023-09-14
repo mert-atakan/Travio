@@ -20,9 +20,8 @@ class VisitVC: UIViewController {
     
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
-        label.layer.cornerRadius = 3
         label.text = "My Visits"
-        label.font = Font.semibold24.chooseFont
+        label.font = Font.poppins(fontType: .semibold, size: 36).font
         label.textColor = Color.white.chooseColor
         return label
     }()
@@ -84,7 +83,8 @@ class VisitVC: UIViewController {
         activity.height(40)
         activity.width(40)
         
-        containerView.edgesToSuperview( insets: .top(129))
+        containerView.topToBottom(of:headerLabel, offset: 52)
+        containerView.edgesToSuperview(excluding: [.top])
         
         tableView.edgesToSuperview( insets: .top(45) + .right(22) + .left(22) + .bottom(0), usingSafeArea: true)
     }
@@ -103,7 +103,11 @@ class VisitVC: UIViewController {
         }
 
         visitViewModal.fetchTravels { status, message in
-          
+            if status {
+                self.tableView.reloadData()
+            } else {
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok)
+            }
                 
         }
     }

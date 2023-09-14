@@ -23,7 +23,7 @@ class MenuVC: UIViewController {
         let label = UILabel()
         label.text = "Settings"
         label.textColor = .white
-        label.font = UIFont(name: Font.semibold32.chooseFont.fontName, size: Font.semibold32.chooseFont.pointSize)
+        label.font = Font.poppins(fontType: .semibold, size: 32).font
         return label
     }()
     
@@ -49,9 +49,10 @@ class MenuVC: UIViewController {
         return profileImage
     }()
     
-    private lazy var fullNameLabel:CustomLabel = {
-        let fullName = CustomLabel()
-        fullName.font = Font.semibold16.chooseFont
+    private lazy var fullNameLabel:UILabel = {
+        let fullName = UILabel()
+        fullName.font = Font.poppins(fontType: .semibold, size: 16).font
+        fullName.textAlignment = .center
         return fullName
     }()
     
@@ -59,7 +60,7 @@ class MenuVC: UIViewController {
         let button = UIButton()
         button.setTitleColor(#colorLiteral(red: 0, green: 0.7960889935, blue: 0.9382097721, alpha: 1), for: .normal)
         button.setTitle("Edit Profile", for: .normal)
-        button.titleLabel?.font = Font.regular12.chooseFont
+        button.titleLabel?.font = Font.poppins(fontType: .regular, size: 12).font
         button.addTarget(self, action: #selector(editProfilePage), for: .touchUpInside)
         return button
     }()
