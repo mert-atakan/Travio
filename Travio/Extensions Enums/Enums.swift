@@ -18,6 +18,7 @@ import Alamofire
 
 
 enum Font {
+    case light12
     case light14
     case regular10
     case regular12
@@ -35,9 +36,12 @@ enum Font {
     case bold24
     case bold16
     case bold14
+    case medium12
     case medium14
     var chooseFont: UIFont {
         switch self {
+        case .light12:
+            return UIFont(name: "Poppins-Light", size: 12)!
         case .light14:
             return UIFont(name: "Poppins-Light", size: 14)!
         case .regular10:
@@ -66,6 +70,8 @@ enum Font {
             return UIFont(name: "Poppins-Bold", size: 36)!
         case .bold30:
             return UIFont(name: "Poppins-Bold", size: 30)!
+        case .medium12:
+            return UIFont(name: "Poppins-Medium", size: 12)!
         case .medium14:
             return UIFont(name: "Poppins-Medium", size: 14)!
         case .bold24:

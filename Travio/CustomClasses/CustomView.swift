@@ -20,18 +20,20 @@ class CustomView: UIView {
     ]
     
     lazy var titleLabel: UILabel = {
-        let l = UILabel()
-        l.layer.cornerRadius = 3
-        l.font = Font.semibold14.chooseFont
-        return l
+        let label = UILabel()
+        label.layer.cornerRadius = 3
+        label.font = Font.medium14.chooseFont
+        return label
     }()
     
     lazy var textField: UITextField = {
-        let tf = UITextField()
-        tf.layer.cornerRadius = 3
-        tf.backgroundColor = .white
-        tf.delegate = self
-        return tf
+        let textField = UITextField()
+        textField.font = Font.light12.chooseFont
+        textField.backgroundColor = .white
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        textField.delegate = self
+        return textField
     }()
     
     override init(frame: CGRect) {
@@ -56,13 +58,10 @@ class CustomView: UIView {
     }
     private func setupLayout() {
         
-        titleLabel.edgesToSuperview(excluding: [.bottom], insets: .left(12) + .top(8) + .right(12))
-        titleLabel.height(21)
+        titleLabel.edgesToSuperview(excluding: [.bottom], insets: .left(12) + .top(8))
         
         textField.topToBottom(of: titleLabel,offset: 8)
-        textField.edgesToSuperview(excluding: [.bottom,.top], insets: .left(12) + .right(12))
-        textField.height(18)
-        
+        textField.leadingToSuperview(offset:12)
     }
     
     func isValidEmail(_ email: String) -> Bool {
