@@ -26,7 +26,7 @@ class AddTravelVM {
             case .success(let success):
                 self.urlArrays = success.urls
                 guard let urlArrays = self.urlArrays else { return}
-
+                
                 self.body?["cover_image_url"] = urlArrays.first
                 self.addTravel(body: self.body ?? ["":""]) { status, message in
                     AlertHelper.showAlert(in: AddTravelVC(), title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
@@ -42,7 +42,7 @@ class AddTravelVM {
     func addTravel(body: [String:Any], callback: @escaping ((Bool,String?)->Void)) {
         apiService.makeRequest(urlConvertible: Router.postPlace(params: body)) {
             (result:Result<AddTravelResponse,ErrorResponse>) in
-          
+            
             switch result {
             case .success(let success):
                 let id = success.message
@@ -78,5 +78,5 @@ class AddTravelVM {
             }
         }
     }
-   
+    
 }

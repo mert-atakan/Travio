@@ -10,18 +10,19 @@ import MapKit
 import TinyConstraints
 import CoreLocation
 import NVActivityIndicatorView
+
 protocol Reloader: AnyObject {
     func reload()
 }
 
 class MapVC: UIViewController, CLLocationManagerDelegate{
-   
+    
     let viewModal = MapVM()
-
+    
     let addTravelVC = AddTravelVC()
     
     let locationManager = CLLocationManager()
-
+    
     private lazy var activity: NVActivityIndicatorView = {
         let activity = NVActivityIndicatorView(frame: .zero, type: .pacman, color: Color.systemGreen.chooseColor, padding: 0)
         return activity
@@ -72,18 +73,18 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
         
         if sender.state == .began {
-                   let touchPoint = sender.location(in: mapView)
-                   let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-
-                   let vc = AddTravelVC()
-                   vc.latitude = touchCoordinate.latitude
-                   vc.longitude = touchCoordinate.longitude
-                   vc.delegate = self
-                   present(vc, animated: true)
-               }
+            let touchPoint = sender.location(in: mapView)
+            let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            
+            let vc = AddTravelVC()
+            vc.latitude = touchCoordinate.latitude
+            vc.longitude = touchCoordinate.longitude
+            vc.delegate = self
+            present(vc, animated: true)
+        }
         
     }
-
+    
     
     func locationAdjustment() {
         locationManager.delegate = self

@@ -31,7 +31,7 @@ class MapVM {
             case .success(let success):
                 self.placeItems = success.data.places
                 
-               guard let placeItems = self.placeItems else { return }
+                guard let placeItems = self.placeItems else { return }
                 guard let fillMapp = self.fillMapp else { return }
                 fillMapp(placeItems)
                 callback(true,nil)
@@ -51,9 +51,9 @@ class MapVM {
     
     func getObjectForRow(indexpath: IndexPath) -> PlaceItem? {
         guard let placeItems = placeItems else { return nil }
-
+        
         return placeItems[indexpath.row]
-
+        
     }
     
     func getAllArray() -> [String]? {

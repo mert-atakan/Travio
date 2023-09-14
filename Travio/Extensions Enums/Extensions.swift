@@ -7,7 +7,7 @@
 
 
 import UIKit
-
+import Kingfisher
 extension Date {
 
     var stringDate: String {
@@ -353,3 +353,24 @@ extension UIApplication {
         return base
     }
 }
+
+extension UIImageView {
+    func setImage(withURL url: URL?) {
+        let processor =  DownsamplingImageProcessor(size: CGSize(width: 100, height: 100))
+
+        self.kf.indicatorType = .activity
+
+        self.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "imagePlaceholder"),
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(0.2)),
+                .cacheMemoryOnly
+            ])
+    }
+}
+
+
+

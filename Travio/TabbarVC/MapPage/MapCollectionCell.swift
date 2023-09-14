@@ -55,7 +55,7 @@ class MapCollectionCell: UICollectionViewCell {
     func configure(item: PlaceItem) {
         guard let itemUrl = item.cover_image_url else {return}
         let url = URL(string: itemUrl)
-        imageview.kf.setImage(with: url)
+        imageview.setImage(withURL: url)
         
         cityLbl.text = item.place
         titleLbl.text = item.title
@@ -71,7 +71,7 @@ class MapCollectionCell: UICollectionViewCell {
     }
     private func setupLayout() {
         imageview.edgesToSuperview()
-    
+        
         iconView.edgesToSuperview(excluding: [.top, .right], insets: .left(22) + .bottom(14))
         iconView.height(12)
         iconView.width(9)
