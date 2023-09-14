@@ -36,7 +36,6 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
         return mv
     }()
     
-    
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -71,38 +70,18 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
     }
     
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
-//        if sender.state == .began {
-//            let touchPoint = sender.location(in: mapView)
-//            let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-//
-//            let userLocation = mapView.userLocation.coordinate
-//            //MARK: - Print'i sil
-//            print(userLocation)
-//
-//            let location1 = CLLocation(latitude: touchCoordinate.latitude, longitude: touchCoordinate.longitude)
-//            let location2 = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
-//
-//            let distance = location1.distance(from: location2)
-//
-//            if distance < 500 {
-//                let vc = AddTravelVC()
-//                vc.latitude = touchCoordinate.latitude
-//                vc.longitude = touchCoordinate.longitude
-//                vc.delegate = self
-//                present(vc, animated: true)
-//            }
-//        }
         
         if sender.state == .began {
                    let touchPoint = sender.location(in: mapView)
                    let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-                   
+
                    let vc = AddTravelVC()
                    vc.latitude = touchCoordinate.latitude
                    vc.longitude = touchCoordinate.longitude
                    vc.delegate = self
                    present(vc, animated: true)
                }
+        
     }
 
     
@@ -110,6 +89,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
+        locationManager.startMonitoringVisits()
     }
     
     func longPress() {
@@ -175,6 +155,7 @@ class MapVC: UIViewController, CLLocationManagerDelegate{
 
 
 extension MapVC: MKMapViewDelegate {
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let customAnnotation = view.annotation as? MKPointAnnotation {
             let region = MKCoordinateRegion(center: customAnnotation.coordinate, latitudinalMeters: 3000, longitudinalMeters: 3000)
@@ -186,6 +167,7 @@ extension MapVC: MKMapViewDelegate {
             }
         }
     }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? MKAnnotation else {
             return nil
@@ -200,18 +182,16 @@ extension MapVC: MKMapViewDelegate {
         } else {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView.canShowCallout = true
-            
             annotationView.image = UIImage(named: "mapIcon")
         }
-        
         return annotationView
     }
-    
     
 }
 
 
 extension MapVC: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: 309, height: (collectionView.frame.height))
         return size
@@ -221,27 +201,28 @@ extension MapVC: UICollectionViewDelegateFlowLayout {
         guard let item = viewModal.getObjectForRow(indexpath: indexPath) else {return}
         pushNav(item: item)
     }
+    
 }
 
 extension MapVC: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModal.NumberOfRows()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "map", for: indexPath) as? MapCollectionCell else {return UICollectionViewCell()}
-        
         guard let object = viewModal.getObjectForRow(indexpath: indexPath) else { return cell}
         cell.configure(item: object)
-        
         return cell
     }
-    
     
 }
 
 extension MapVC: Reloader {
+    
     func reload() {
         initVM()
     }
+    
 }

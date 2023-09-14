@@ -49,12 +49,14 @@ class AddTravelVM {
                 guard let urlArrays = self.urlArrays else {return}
                 
                 for url in urlArrays {
+                    
                     var body = [String:Any]()
                     body["place_id"] = id
                     body["image_url"] = url
                     self.addGallery(body: body) { status,message in
-                        AlertHelper.showAlert(in: AddTravelVC(), title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                        AlertHelper.showAlert(in: AddTravelVC(), title: .sorry, message: message, primaryButtonTitle: .ok)
                     }
+                    
                 }
                 
                 guard let dismiss = self.dismiss else {return}

@@ -28,7 +28,6 @@ class MapCollectionCell: UICollectionViewCell {
         let l = UILabel()
         l.font = Font.poppins(fontType: .bold, size: 24).font
         l.textColor = Color.white.chooseColor
-        l.text = "Amsterdam"
         return l
     }()
     
@@ -36,7 +35,6 @@ class MapCollectionCell: UICollectionViewCell {
         let l = UILabel()
         l.font = Font.poppins(fontType: .regular, size: 16).font
         l.textColor = Color.white.chooseColor
-        l.text = "Amsterdam"
         return l
     }()
     
@@ -78,17 +76,14 @@ class MapCollectionCell: UICollectionViewCell {
         iconView.height(12)
         iconView.width(9)
         
-        titleLbl.edgesToSuperview(excluding: [.bottom], insets: .left(22) + .top(113) + .right(22))
+        titleLbl.edgesToSuperview(excluding: [.bottom, .top], insets: .left(22) + .right(22))
         titleLbl.height(36)
+        titleLbl.bottomToTop(of: cityLbl, offset: -6)
         
-        iconView.edgesToSuperview(excluding: [.top, .right], insets: .left(22) + .bottom(14))
-        iconView.height(12)
-        iconView.width(9)
-        
-        cityLbl.topToBottom(of: titleLbl)
         cityLbl.leftToRight(of: iconView,offset: 6)
+        cityLbl.centerY(to: iconView)
         cityLbl.height(21)
-        cityLbl.width(200)
+        cityLbl.rightToSuperview(offset: -22)
         
     }
 }

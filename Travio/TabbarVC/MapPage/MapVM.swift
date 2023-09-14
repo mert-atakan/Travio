@@ -47,7 +47,6 @@ class MapVM {
     //MARK: - DataSource Functions
     func NumberOfRows()-> Int {
         return placeItems.ifNil([]).count
-        
     }
     
     func getObjectForRow(indexpath: IndexPath) -> PlaceItem? {
