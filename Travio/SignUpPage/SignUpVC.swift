@@ -79,7 +79,7 @@ class SignUpVC: UIViewController {
     
     private lazy var lgnBtn: CustomButton = {
         let btn = CustomButton()
-        btn.setTitle("Register", for: .normal)
+        btn.setTitle("Sign Up", for: .normal)
         btn.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
         btn.backgroundColor = Color.systemgray.chooseColor
         btn.isEnabled = false
@@ -153,21 +153,22 @@ class SignUpVC: UIViewController {
     }
     
     private func setupLayout() {
-        backButton.edgesToSuperview(excluding: [.bottom,.right], insets: .top(32) + .left(23),usingSafeArea: true)
+        backButton.edgesToSuperview(excluding: [.bottom], insets: .top(32) + .left(24) + .right(342), usingSafeArea: true)
+        backButton.trailingToLeading(of: titleLbl, offset: -72)
         backButton.height(21)
-        backButton.width(24)
         
-        titleLbl.edgesToSuperview(excluding: [.bottom, .left], insets: .top(19) + .right(24),usingSafeArea: true)
-        titleLbl.leftToRight(of: backButton, offset: 77)
-        titleLbl.height(48)
+        titleLbl.edgesToSuperview(excluding: [.bottom, .left], insets: .top(16) + .right(120),usingSafeArea: true)
+        titleLbl.height(52)
         
         view1.edgesToSuperview(excluding: [.top])
-        view1.topToBottom(of: titleLbl, offset: 58)
+        view1.topToBottom(of: titleLbl, offset: 56)
         
-        stackView.edgesToSuperview( insets: .top(72) + .left(24) + .right(24) + .bottom(279))
+        stackView.edgesToSuperview(excluding: .bottom, insets: .top(72) + .left(24) + .right(24))
+//        stackView.height(368)
         
-        lgnBtn.topToBottom(of: stackView, offset: 202)
-        lgnBtn.edgesToSuperview( excluding: [.top],insets: .left(24) + .right(24) + .bottom(23))
+        lgnBtn.topToBottom(of: stackView, offset: 141)
+        lgnBtn.edgesToSuperview( excluding: [.top],insets: .left(24) + .right(24) + .bottom(35))
+        lgnBtn.height(54)
     }
     
     

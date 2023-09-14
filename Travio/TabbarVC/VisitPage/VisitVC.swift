@@ -41,6 +41,7 @@ class VisitVC: UIViewController {
         tableView.dataSource = self
         tableView.register(VisitCell.self, forCellReuseIdentifier: "VisitCell")
         tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -75,9 +76,8 @@ class VisitVC: UIViewController {
     }
     
     private func setupLayout() {
-        headerLabel.edgesToSuperview(excluding:[.bottom,.right], insets: .left(24) + .top(24),usingSafeArea: true)
+        headerLabel.edgesToSuperview(excluding:[.bottom], insets: .left(24) + .top(24) + .right(201),usingSafeArea: true)
         headerLabel.height(52)
-        headerLabel.width(165)
         
         activity.centerInSuperview()
         activity.height(40)
@@ -86,7 +86,7 @@ class VisitVC: UIViewController {
         containerView.topToBottom(of:headerLabel, offset: 52)
         containerView.edgesToSuperview(excluding: [.top])
         
-        tableView.edgesToSuperview( insets: .top(45) + .right(22) + .left(22) + .bottom(0), usingSafeArea: true)
+        tableView.edgesToSuperview( insets: .top(45) + .right(22) + .left(24) + .bottom(0), usingSafeArea: true)
     }
     
     func initVM() {

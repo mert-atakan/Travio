@@ -80,9 +80,10 @@ class LoginVC: UIViewController {
         setupView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidLayoutSubviews() {
         view1.roundCorners(corners: .topLeft, radius: 80)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }
@@ -115,22 +116,31 @@ class LoginVC: UIViewController {
     }
     
     private func setupLayout() {
-        imageview.edgesToSuperview( insets: .top(44) + .right(121) + .left(120) + .bottom(622))
+        imageview.edgesToSuperview(excluding: [.bottom], insets: .top(44) + .left(120) + .right(121), usingSafeArea: true)
+        imageview.height(178)
         
         view1.topToBottom(of: imageview ,offset: 24)
         view1.edgesToSuperview(excluding: [.top])
         
-        welcomeLbl.edgesToSuperview( insets: .top(64) + .right(30) + .left(30) + .bottom(498))
+        welcomeLbl.edgesToSuperview(excluding: [.top, .bottom], insets: .left(82) + .right(82))
+        welcomeLbl.top(to: view1, offset: 64)
+        welcomeLbl.height(36)
         
-        emailView.edgesToSuperview( insets: .top(141) + .right(24) + .left(24) + .bottom(383))
+        emailView.edgesToSuperview(excluding: [.top, .bottom], insets: .left(24) + .right(24))
+        emailView.topToBottom(of: welcomeLbl, offset: 41)
+        emailView.height(74)
         
-        passwordView.edgesToSuperview( insets: .top(239) + .right(24) + .left(24) + .bottom(285))
+        passwordView.edgesToSuperview(excluding: [.top,.bottom], insets: .right(24) + .left(24))
+        passwordView.topToBottom(of: emailView, offset: 24)
+        passwordView.height(74)
         
+        lgnBtn.edgesToSuperview(excluding: [.top, .bottom], insets: .left(24) + .right(24))
         lgnBtn.topToBottom(of: passwordView, offset: 48)
-        lgnBtn.edgesToSuperview(excluding:[.top], insets: .right(24) + .left(24) + .bottom(183))
+        lgnBtn.height(54)
         
-        signLbl.topToBottom(of: lgnBtn,offset: 141)
-        signLbl.edgesToSuperview(excluding:[.top], insets: .right(30) + .left(30) + .bottom(21))
+        signLbl.topToBottom(of: lgnBtn,offset: 80)
+        signLbl.height(21)
+        signLbl.edgesToSuperview(excluding:[.top,.bottom], insets: .right(74) + .left(78))
         
         activity.centerInSuperview()
         activity.height(50)
