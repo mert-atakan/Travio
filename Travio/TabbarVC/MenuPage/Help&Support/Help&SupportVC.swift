@@ -12,41 +12,40 @@ class HelpAndSupportVC: UIViewController {
     
     let viewModel = HelpAndSupportVM()
     
-    private lazy var backBtn:UIButton = {
+    private lazy var backButton:UIButton = {
         let backButton = UIButton()
         let backButtonImage = UIImage(named: "vector.png")
         backButton.setImage(backButtonImage, for: .normal)
-        backButton.addTarget(self, action: #selector(backToSettings), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         
         return backButton
     }()
     
-    private lazy var titleLbl:UILabel = {
-        let topTitle = UILabel()
-        topTitle.text = "Help&Support"
-        topTitle.font = Font.poppins(fontType: .semibold, size: 32).font
-        topTitle.textColor = Color.white.chooseColor
+    private lazy var titleLabel:UILabel = {
+        let label = UILabel()
+        label.text = "Help&Support"
+        label.font = Font.poppins(fontType: .semibold, size: 32).font
+        label.textColor = Color.white.chooseColor
         
-        return topTitle
+        return label
     }()
     
-    private lazy var whiteView:UIView = {
-        let whiteView = UIView()
-        whiteView.backgroundColor = Color.systemWhite.chooseColor
-        
-        return whiteView
+    private lazy var containerView:UIView = {
+        let view = UIView()
+        view.backgroundColor = Color.systemWhite.chooseColor
+        return view
     }()
     
     private lazy var faqTableView:UITableView = {
-        let faqTableView = UITableView(frame: .zero, style: .plain)
-        faqTableView.dataSource = self
-        faqTableView.delegate = self
-        faqTableView.register(HelpSupportTableCell.self, forCellReuseIdentifier: "customCell")
-        faqTableView.isScrollEnabled = true
-        faqTableView.separatorStyle = .none
-        faqTableView.backgroundColor = .clear
-        faqTableView.translatesAutoresizingMaskIntoConstraints = false
-        return faqTableView
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(HelpSupportTableCell.self, forCellReuseIdentifier: "customCell")
+        tableView.isScrollEnabled = true
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
     
     override func viewDidLoad() {
@@ -55,31 +54,11 @@ class HelpAndSupportVC: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        whiteView.roundCorners(corners: .topLeft, radius: 80)
+        containerView.roundCorners(corners: .topLeft, radius: 80)
     }
     
-    @objc func backToSettings() {
+    @objc func backButtonTapped() {
         self.dismiss(animated: true)
-    }
-    
-    func setupView() {
-        view.backgroundColor = Color.systemGreen.chooseColor
-        view.addSubviews(backBtn, titleLbl, whiteView)
-        whiteView.addSubviews(faqTableView)
-        setupLayout()
-    }
-    
-    func setupLayout() {
-        backBtn.edgesToSuperview(excluding: [.right, .bottom], insets: .top(32) + .left(24), usingSafeArea: true)
-        
-        titleLbl.leadingToTrailing(of: backBtn, offset: 24)
-        titleLbl.topToSuperview(offset:19, usingSafeArea: true)
-        
-        whiteView.topToBottom(of: titleLbl, offset: 58)
-        whiteView.edgesToSuperview(excluding: [.top])
-        
-        faqTableView.topToSuperview(offset: 44)
-        faqTableView.edgesToSuperview(excluding: [.top])
     }
     
     private func headerLabel(section:Int, headerView:UIView) -> UILabel {
@@ -89,6 +68,28 @@ class HelpAndSupportVC: UIViewController {
         label.font = Font.poppins(fontType: .semibold, size: 24).font
         label.textColor = Color.systemGreen.chooseColor
         return label
+    }
+    
+    func setupView() {
+        view.backgroundColor = Color.systemGreen.chooseColor
+        view.addSubviews(backButton, titleLabel, containerView)
+        containerView.addSubviews(faqTableView)
+        setupLayout()
+    }
+    
+    func setupLayout() {
+        backButton.edgesToSuperview(excluding: [.right, .bottom], insets: .top(32) + .left(24), usingSafeArea: true)
+        backButton.height(22)
+        backButton.width(24)
+        
+        titleLabel.leadingToTrailing(of: backButton, offset: 24)
+        titleLabel.centerY(to: backButton)
+        
+        containerView.topToBottom(of: titleLabel, offset: 58)
+        containerView.edgesToSuperview(excluding: [.top])
+        
+        faqTableView.topToSuperview(offset: 44)
+        faqTableView.edgesToSuperview(excluding: [.top])
     }
     
 }
