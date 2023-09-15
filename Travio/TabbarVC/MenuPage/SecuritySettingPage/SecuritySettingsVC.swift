@@ -19,56 +19,55 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
     let viewModal = SecuritySettingsVM()
     var passwords = [1:"",2:""]
     
-    private lazy var view1: UIView = {
-        let v = UIView()
-        v.backgroundColor = Color.systemWhite.chooseColor
-        return v
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = Font.poppins(fontType: .bold, size: 32).font
+        label.textColor = Color.white.chooseColor
+        label.text = "Security Settings"
+        return label
     }()
     
     private lazy var backButton: UIButton = {
-        let btn = UIButton()
-        btn.contentMode = .scaleAspectFit
-        btn.setImage(UIImage(named: "vector"), for: .normal)
-        btn.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return btn
+        let button = UIButton()
+        button.contentMode = .scaleAspectFit
+        button.setImage(UIImage(named: "vector"), for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
     }()
     
-    private lazy var titleLbl: UILabel = {
-        let l = UILabel()
-        l.font = Font.poppins(fontType: .bold, size: 32).font
-        l.textColor = Color.white.chooseColor
-        l.text = "Security Settings"
-        return l
-    }()
-    
-    
-    private lazy var saveBtn: CustomButton = {
-        let btn = CustomButton()
-        btn.layer.cornerRadius = 3
-        btn.setTitle("Save", for: .normal)
-        btn.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
-        return btn
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = Color.systemWhite.chooseColor
+        return view
     }()
     
     private lazy var tableView : UITableView = {
-        let tv = UITableView()
-        tv.delegate = self
-        tv.dataSource = self
-        tv.register(SecurityCell.self, forCellReuseIdentifier: "cell")
-        tv.separatorStyle = .none
-        tv.backgroundColor = .clear
-        return tv
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(SecurityCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        return tableView
     }()
+    
+    private lazy var saveButton: CustomButton = {
+        let button = CustomButton()
+        button.layer.cornerRadius = 3
+        button.setTitle("Save", for: .normal)
+        button.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
+        return button
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
-        
     }
     
     override func viewDidLayoutSubviews() {
-        view1.roundCorners(corners: [.topLeft], radius: 80)
+        containerView.roundCorners(corners: [.topLeft], radius: 80)
     }
     
     @objc func saveTapped() {
@@ -84,68 +83,51 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
     }
     
     func checkForEqual() {
-        if passwords[1] == passwords[2] && passwords[1] != "" || passwords[2] != "" {
-            guard let password = passwords[1] else {return}
-            viewModal.changePassword(password: ["new_password": password]) { status, message in
+        guard let newPass = passwords[1], let rePass = passwords[2] else { return }
+        
+        if newPass.count < 6{
+            AlertHelper.showAlert(in: self, title: .error, message: "Your password must be more than 6 character!", primaryButtonTitle: .ok)
+        } else if (newPass == rePass){
+            viewModal.changePassword(password: ["new_password": newPass]) { status, message in
                 if !status {
                     AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+                } else {
+                    AlertHelper.showAlert(in: self, title: .congrats, message: "Your password have changed successfuly!", primaryButtonTitle: .ok)
                 }
             }
         } else {
-            showAlert()
+            AlertHelper.showAlert(in: self, title: .error, message: "Your passwords did not match!", primaryButtonTitle: .ok)
         }
     }
     
-    func showAlert() {
-        let alert = UIAlertController(title: "Hata", message: "Girdiğiniz şifreler aynı değildir.", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Tamam", style: .default)
-        alert.addAction(action)
-        present(alert, animated: true)
-    }
-    
-    func statusAlert(status:String) {
-        var alert = UIAlertController()
-        var action = UIAlertAction()
-        if status == "success" {
-            alert = UIAlertController(title: "Tebrikler", message: "Şifreniz başarıyla değiştirildi.", preferredStyle: .alert)
-             action = UIAlertAction(title: "Tamam", style: .default) {action in
-                self.dismiss(animated: true, completion: nil)
-            }
-        } else {
-            alert = UIAlertController(title: "Üzgünüz", message: "Şifreniz değiştirilemedi.", preferredStyle: .alert)
-             action = UIAlertAction(title: "Tamam", style: .default)
-        }
-       
-        alert.addAction(action)
-        present(alert, animated: true)
-    }
 
     private func setupView() {
         self.navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = Color.systemGreen.chooseColor
-        view.addSubViews(view1,tableView,backButton,titleLbl,saveBtn)
+        self.view.backgroundColor = Color.systemGreen.chooseColor
+        self.view.addSubViews( backButton, titleLabel, containerView)
+        containerView.addSubviews(tableView, saveButton)
         setupLayout()
     }
+    
     private func setupLayout() {
         
         
-        backButton.edgesToSuperview(excluding: [.bottom,.right], insets: .top(32) + .left(23),usingSafeArea: true)
-        backButton.height(21)
+        backButton.edgesToSuperview(excluding: [.bottom,.right], insets: .top(32) + .left(24),usingSafeArea: true)
+        backButton.height(22)
         backButton.width(24)
         
-        titleLbl.edgesToSuperview(excluding: [.bottom, .left], insets: .top(19) + .right(24),usingSafeArea: true)
-        titleLbl.leftToRight(of: backButton, offset: 24)
-        titleLbl.height(48)
+        titleLabel.centerY(to: backButton)
+        titleLabel.leadingToTrailing(of: backButton, offset: 24)
         
-        view1.edgesToSuperview(excluding: [.top])
-        view1.topToBottom(of: titleLbl, offset: 58)
+        containerView.topToBottom(of: titleLabel, offset: 58)
+        containerView.edgesToSuperview(excluding: [.top])
         
-        tableView.edgesToSuperview(excluding:[.bottom,.top])
-        tableView.bottomToTop(of: saveBtn, offset: -20)
-        tableView.top(to: view1, offset: 20)
+        saveButton.edgesToSuperview(excluding: [.top], insets: .left(24) + .right(24) + .bottom(24))
+        saveButton.height(54)
         
-        saveBtn.edgesToSuperview(excluding: [.top], insets: .left(24) + .right(24) + .bottom(18))
-        saveBtn.height(54)
+        tableView.edgesToSuperview(excluding: [.top])
+        tableView.bottomToTop(of: saveButton, offset: 78)
+        tableView.topToSuperview(offset:20)
         
     }
     
@@ -153,13 +135,13 @@ class SecuritySettingsVC: UIViewController, CellFunctions {
 
 extension SecuritySettingsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 82
+        return 74
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20))
         headerView.backgroundColor = .clear
         
-        let label = UILabel(frame: CGRect(x: 24, y: 5, width: tableView.frame.size.width - 20, height: 20))
+        let label = UILabel(frame: CGRect(x: 24, y: 20, width: tableView.frame.size.width - 20, height: 20))
         label.font = Font.poppins(fontType: .bold, size: 16).font
         label.textColor = Color.systemGreen.chooseColor
         if section == 0 {
@@ -171,8 +153,9 @@ extension SecuritySettingsVC: UITableViewDelegate {
         headerView.addSubview(label)
         return headerView
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30.0
+        return 44
     }
 }
 
