@@ -25,14 +25,7 @@ class ApiService:ApiServiceProtocol {
                     let decodedData = try JSONDecoder().decode(T.self, from: data)
                     callback(.success(decodedData))
                 } catch {
-                    if let data = response.data {
-                        do {
-                            let decodedData = try JSONDecoder().decode(ErrorResponse.self, from: data)
-                            callback(.failure(decodedData))
-                        } catch {
-                            print("Error: \(error)")
-                        }
-                    }
+                    callback(.failure(error as! ErrorResponse))
                 }
             case .failure(_):
                 if let data = response.data {
@@ -40,7 +33,7 @@ class ApiService:ApiServiceProtocol {
                         let decodedData = try JSONDecoder().decode(ErrorResponse.self, from: data)
                         callback(.failure(decodedData))
                     } catch {
-                        print("Error: \(error)")
+                        callback(.failure(error as! ErrorResponse))
                     }
                 }
             }
@@ -59,7 +52,7 @@ class ApiService:ApiServiceProtocol {
                                 handler(.success(decodedData))
                             }
                         } catch {
-                            print("Error: \(error)")
+                            handler(.failure(error as! ErrorResponse))
                         }
                     }
                 case .failure( _):
@@ -68,7 +61,7 @@ class ApiService:ApiServiceProtocol {
                             let decodedData = try JSONDecoder().decode(ErrorResponse.self, from: data)
                             handler(.failure(decodedData))
                         } catch {
-                            print("Error: \(error)")
+                            handler(.failure(error as! ErrorResponse))
                         }
                     }
                 }

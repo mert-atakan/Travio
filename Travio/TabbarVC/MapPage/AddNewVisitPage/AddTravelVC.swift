@@ -91,24 +91,25 @@ class AddTravelVC: UIViewController{
     override func viewDidLayoutSubviews() {
         collectionView.roundCornersWithShadow([.topLeft, .bottomLeft], radius: 16)
     }
-
+    
     
     @objc func addTapped() {
+        
         let imageData = tempImage.compactMap { $0.jpegData(compressionQuality:0.5)}
         
         viewModal.uploadImage(images: imageData) { status,message in
             if !status {
                 AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok)
             }
-            
         }
+        
         var body = [String:Any]()
+        
         guard let place = countryView.textField.text, let title = placeView.textField.text, let desc = descView.textField.text else {return}
         
         body["place"] = place
         body["title"] = title
         body["description"] = desc
-        //body["cover_image_url"] = "https://i2.milimaj.com/i/milliyet/75/0x0/5c8e330a45d2a097ac0f94ae.jpg"
         body["latitude"] = latitude
         body["longitude"] = longitude
         
@@ -117,11 +118,13 @@ class AddTravelVC: UIViewController{
     }
     
     func iniVM() {
+        
         viewModal.dismiss = {
             self.dismiss(animated: true) {
                 self.delegate?.reload()
             }
         }
+        
     }
     
     func getCityAndCountryName(latitude: Double, longitude: Double) {
@@ -139,9 +142,11 @@ class AddTravelVC: UIViewController{
             } else {
             }
         }
+        
     }
     
     private func setupView() {
+        
         view.backgroundColor = Color.systemWhite.chooseColor
         view.addSubViews(placeView,descView,countryView,addBtn,collectionView)
         setupLayout()
@@ -149,6 +154,7 @@ class AddTravelVC: UIViewController{
     }
     
     private func setupLayout() {
+        
         placeView.edgesToSuperview(excluding: [.bottom], insets: .top(40) + .left(23) + .right(23))
         placeView.height(74)
         
@@ -166,38 +172,40 @@ class AddTravelVC: UIViewController{
         
         addBtn.edgesToSuperview(excluding: [.top], insets: .bottom(24) + .right(24) + .left(24))
         addBtn.height(54)
+        
     }
     
     func showAlert() {
+        
         let alert = UIAlertController(title: "Attention", message: "You can upload up to 3 pictures to gallery.", preferredStyle: .alert)
         let action = UIAlertAction(title: "Okay", style: .default)
         
         alert.addAction(action)
         
         present(alert, animated: true)
+        
     }
     
     func requestPermission() {
+        
         requestLibraryPermission()
         requestCameraPermission()
+        
     }
     
     func requestCameraPermission() {
-          AVCaptureDevice.requestAccess(for: .video) { (granted) in }
-      }
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in }
+    }
     
     func requestLibraryPermission() {
-          PHPhotoLibrary.requestAuthorization { (status) in }
-      }
-    
-    
-    
-    
+        PHPhotoLibrary.requestAuthorization { (status) in }
+    }
     
 }
 
 
 extension AddTravelVC: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
@@ -210,38 +218,35 @@ extension AddTravelVC: UICollectionViewDelegateFlowLayout {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {// size vermemiz gereikyor çünkkü ve genişlik ve yükseklik değerlerinie ihiyacımız var.
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: 342, height: (collectionView.frame.height))
         return size
     }
+    
 }
 
 extension AddTravelVC: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addTravel", for: indexPath) as? AddTravelCollectionCell else {return UICollectionViewCell()}
-        
         return cell
     }
+    
 }
 
 
 extension AddTravelVC: UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-//        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage?  {
-//            guard let image = image else {return}
-//           // let data = image.jpegData(compressionQuality: 0.5)
-//            tempImage.append(image)
-            if let image = info[.originalImage] as? UIImage {
-                   tempImage.append(image)
-            
+        if let image = info[.originalImage] as? UIImage {
+            tempImage.append(image)
             guard let cell = collectionView.cellForItem(at: currentIndex!) as? AddTravelCollectionCell else { return }
             cell.configure(image: tempImage.last!)
-            
         }
         
         picker.dismiss(animated: true, completion: nil)
@@ -251,4 +256,5 @@ extension AddTravelVC: UIImagePickerControllerDelegate & UINavigationControllerD
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
 }

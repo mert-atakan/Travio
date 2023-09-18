@@ -27,7 +27,6 @@ class AddTravelCollectionCell: UICollectionViewCell {
         super.init(frame: .zero)
         setupView()
         layoutIfNeeded()
-       
     }
     
     required init?(coder: NSCoder) {
@@ -51,7 +50,7 @@ class AddTravelCollectionCell: UICollectionViewCell {
         defaultImageview.centerInSuperview()
         defaultImageview.width(62)
         defaultImageview.height(58)
-
+        
         choosenImageview.edgesToSuperview()
     }
     
