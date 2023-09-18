@@ -36,7 +36,6 @@ class SignUpVC: UIViewController {
     private lazy var usernameView: CustomView = {
         let v = CustomView()
         v.titleLabel.text = "Username"
-        //v.textField.delegate = self
         v.textField.attributedPlaceholder = NSAttributedString(string: "bilge_adam", attributes: v.attributes)
         v.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return v
@@ -53,7 +52,6 @@ class SignUpVC: UIViewController {
     private lazy var pass1View: CustomView = {
         let v = CustomView()
         v.titleLabel.text = "Password"
-        //v.textField.delegate = self
         v.textField.attributedPlaceholder = NSAttributedString(string: "******", attributes: v.attributes)
         v.textField.isSecureTextEntry = true
         v.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -164,7 +162,6 @@ class SignUpVC: UIViewController {
         view1.topToBottom(of: titleLbl, offset: 56)
         
         stackView.edgesToSuperview(excluding: .bottom, insets: .top(72) + .left(24) + .right(24))
-//        stackView.height(368)
         
         lgnBtn.topToBottom(of: stackView, offset: 141)
         lgnBtn.edgesToSuperview( excluding: [.top],insets: .left(24) + .right(24) + .bottom(35))

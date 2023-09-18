@@ -112,7 +112,7 @@ extension CustomView: UITextFieldDelegate {
         return true
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder() // Klavyeyi kapat
+        textField.resignFirstResponder() 
         return true
     }
 }

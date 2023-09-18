@@ -100,10 +100,3 @@ class SecurityCell: UITableViewCell {
     }
     
 }
-
-
-//extension SecurityCell: UITextFieldDelegate {
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//
-//    }
-//}

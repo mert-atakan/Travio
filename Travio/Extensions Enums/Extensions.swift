@@ -355,7 +355,7 @@ extension UIApplication {
 }
 
 extension UIImageView {
-    func setImage(withURL url: URL?) {
+    func setImage(with url: URL?) {
         let processor =  DownsamplingImageProcessor(size: CGSize(width: 100, height: 100))
 
         self.kf.indicatorType = .activity

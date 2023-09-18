@@ -80,7 +80,7 @@ class SeeAllPlacesCustomCell:UICollectionViewCell {
         nameLabel.text = item.title
         cityNameLabel.text = item.place
         guard let url = item.cover_image_url else {return}
-        cellImage.kf.setImage(with: URL(string: url ))
+        cellImage.setImage(with: URL(string: url ))
     }
     
     

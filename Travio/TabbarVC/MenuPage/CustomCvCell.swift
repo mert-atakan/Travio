@@ -15,9 +15,9 @@ class CustomCvCell:UICollectionViewCell {
         let shadowView = UIView()
         shadowView.backgroundColor = .white
         shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowOffset = CGSize(width: 0, height: 0) // Gölge yönü ve boyutu
-        shadowView.layer.shadowOpacity = 0.15 // Gölge opaklığı
-        shadowView.layer.shadowRadius = 3 // Gölge yarıçapı
+        shadowView.layer.shadowOffset = CGSize(width: 0, height: 0) 
+        shadowView.layer.shadowOpacity = 0.15
+        shadowView.layer.shadowRadius = 3
         shadowView.layer.cornerRadius = 16
         shadowView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
         return shadowView

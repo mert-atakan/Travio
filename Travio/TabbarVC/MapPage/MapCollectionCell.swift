@@ -55,7 +55,7 @@ class MapCollectionCell: UICollectionViewCell {
     func configure(item: PlaceItem) {
         guard let itemUrl = item.cover_image_url else {return}
         let url = URL(string: itemUrl)
-        imageview.setImage(withURL: url)
+        imageview.setImage(with: url)
         
         cityLbl.text = item.place
         titleLbl.text = item.title

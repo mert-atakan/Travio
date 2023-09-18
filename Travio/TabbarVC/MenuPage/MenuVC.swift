@@ -129,7 +129,7 @@ class MenuVC: UIViewController {
         self.fullNameLabel.text = data.full_name
         if data.pp_url != "" {
             let url = URL(string: data.pp_url)
-            self.profileImage.kf.setImage(with: url)
+            self.profileImage.setImage(with: url)
         } else {
             self.profileImage.image = UIImage(systemName: "person.fill")
         }

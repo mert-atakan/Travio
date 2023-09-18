@@ -61,8 +61,7 @@ class VisitCell: UITableViewCell {
         cityLbl.text = item.place
         guard let safeUrl = item.cover_image_url else {return}
         let url = URL(string: safeUrl)
-        imageview.kf.setImage(with: url)
-        imageview.kf.indicatorType = .activity
+        imageview.setImage(with: url)
         
     }
     

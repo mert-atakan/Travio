@@ -41,16 +41,5 @@ class LoginVM {
         KeychainHelper.shared.save(data, service: "access-token", account: "api.Iosclass")
     }
     
-//    func readToken() {
-//        guard let token = KeychainHelper.shared.read(service: "access-token", account: "api.Iosclass") else {return}
-//        let tokenstr = String(data: token, encoding: .utf8)
-//    }
-    
-//    func getTokenFromChain()->String {
-//        guard let token = KeychainHelper.shared.read(service: "access-token", account: "api.Iosclass") else {return""}
-//        guard let tokenstr = String(data: token, encoding: .utf8) else {return""}
-//        return tokenstr
-//    }
-    
 }
     

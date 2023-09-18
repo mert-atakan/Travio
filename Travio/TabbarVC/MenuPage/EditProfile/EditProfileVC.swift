@@ -146,28 +146,10 @@ class EditProfileVC: UIViewController {
             }
         }
     }
+    
     @objc func backTapped() {
         self.dismiss(animated: true)
     }
-    
-//    func statusAlert(status:String) {
-//        var alert = UIAlertController()
-//        var action = UIAlertAction()
-//        if status == "success" {
-//            alert = UIAlertController(title: "Tebrikler", message: "Bilgileriniz başarıyla değiştirildi.", preferredStyle: .alert)
-//             action = UIAlertAction(title: "Tamam", style: .default) {action in
-//                 self.delegate?.reloadMap()
-//                self.dismiss(animated: true, completion: nil)
-//            }
-//        } else {
-//            alert = UIAlertController(title: "Üzgünüz", message: "Bilgileriniz değiştirilemedi.", preferredStyle: .alert)
-//             action = UIAlertAction(title: "Tamam", style: .default)
-//        }
-//       
-//        alert.addAction(action)
-//        present(alert, animated: true)
-//    }
-    
     
     func initVM() {
         viewModal.onDataFetch = { [weak self] isLoading in
@@ -201,7 +183,7 @@ class EditProfileVC: UIViewController {
         self.emailView.textField.text = data.email
         if data.pp_url != "" {
             let url = URL(string: data.pp_url)
-            self.profileImage.kf.setImage(with: url)
+            self.profileImage.setImage(with: url)
         } else {
             self.profileImage.image = UIImage(systemName: "person.fill")
         }

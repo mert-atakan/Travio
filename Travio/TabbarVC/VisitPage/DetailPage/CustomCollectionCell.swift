@@ -35,7 +35,7 @@ class CustomCollectionCell: UICollectionViewCell {
     
     func configure(imageUrl: String) {
         let url = URL(string: imageUrl)
-        imageview.kf.setImage(with: url)
+        imageview.setImage(with: url)
     }
     
     private func setupView() {

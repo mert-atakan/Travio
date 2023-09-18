@@ -9,12 +9,6 @@ import UIKit
 
 class CustomButton: UIButton {
     
-//    var status: Bool = false {
-//        didSet {
-//            self.backgroundColor = Color.systemGreen.chooseColor
-//        }
-//    }
-    
     override init(frame: CGRect) {
 
         super.init(frame: .zero)
