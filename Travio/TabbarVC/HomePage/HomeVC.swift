@@ -59,7 +59,14 @@ class HomeVC: UIViewController,GoToDetail {
         super.viewDidLoad()
         setupView()
         initVM()
+        
+        NotificationCenterManager.shared.addObserver(self, name: Notification.Name("visitChanged"), selector: #selector(visitChanged))
     }
+    
+    deinit {
+        NotificationCenterManager.shared.removeObserver(self)
+    }
+    
     
     override func viewDidLayoutSubviews() {
         view1.roundCorners(corners: [.topLeft], radius: 80)
@@ -76,6 +83,16 @@ class HomeVC: UIViewController,GoToDetail {
             seeAllVC.fromWhere = "myVisits"
         }
         navigationController?.pushViewController(seeAllVC, animated: true)
+    }
+    
+    @objc func visitChanged() {
+        viewModal.getMyVisits {status, message in
+            if status {
+                self.tableView.reloadData()
+            } else {
+                AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
+            }
+        }
     }
     
     func initVM() {
