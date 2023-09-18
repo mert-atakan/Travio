@@ -18,9 +18,9 @@ class NavigationHelper: UIViewController {
         let status = isTokenExpired(jwtToken: token)
         
         if status {
-            navigationController?.pushViewController(LoginVC(), animated: true)
-        } else {
             navigationController?.pushViewController(MainTabBarController(), animated: true)
+        } else {
+            navigationController?.pushViewController(LoginVC(), animated: true)
         }
         
         
