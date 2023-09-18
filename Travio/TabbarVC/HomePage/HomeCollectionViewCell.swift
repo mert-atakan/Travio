@@ -15,7 +15,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private lazy var imageview: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.image = UIImage(named:"stockholm")
         return iv
     }()
     
@@ -30,7 +29,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
         let l = UILabel()
         l.font = Font.poppins(fontType: .bold, size: 24).font
         l.textColor = Color.white.chooseColor
-        l.text = "Amsterdam"
         return l
     }()
     
@@ -38,7 +36,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
         let l = UILabel()
         l.font = Font.poppins(fontType: .regular, size: 16).font
         l.textColor = Color.white.chooseColor
-        l.text = "Amsterdam"
         return l
     }()
 

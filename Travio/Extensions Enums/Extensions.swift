@@ -38,6 +38,11 @@ extension UIStackView {
 }
 
 extension UIView {
+    func addSubViews(_ view: UIView...) {
+        view.forEach{self.addSubview($0)}
+}
+}
+extension UIView {
     
     /// Add multiple subview to a view.
     /// - Parameter view: It is a subviews array which add to parent view
@@ -46,6 +51,7 @@ extension UIView {
             self.addSubview(v)
         })
     }
+   
     
     func roundCorners(corners: UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))

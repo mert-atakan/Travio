@@ -74,7 +74,6 @@
 		A3A54D272AAF3AF70015F767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3A54D262AAF3AF70015F767 /* LaunchScreen.storyboard */; };
 		A3A54D292AAF3B0A0015F767 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3A54D282AAF3B0A0015F767 /* Assets.xcassets */; };
 		A3A54D2B2AAF3B120015F767 /* NavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54D2A2AAF3B120015F767 /* NavigationHelper.swift */; };
-		A3A54D2D2AAF3B170015F767 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54D2C2AAF3B170015F767 /* Extension.swift */; };
 		A3A54D302AAF3B6E0015F767 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54D2F2AAF3B6E0015F767 /* MenuVC.swift */; };
 		A3A54D322AAF3B810015F767 /* MenuVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54D312AAF3B810015F767 /* MenuVM.swift */; };
 		A3A54D342AAF3B950015F767 /* CustomCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A54D332AAF3B950015F767 /* CustomCvCell.swift */; };
@@ -168,7 +167,6 @@
 		A3A54D262AAF3AF70015F767 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A3A54D282AAF3B0A0015F767 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3A54D2A2AAF3B120015F767 /* NavigationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationHelper.swift; sourceTree = "<group>"; };
-		A3A54D2C2AAF3B170015F767 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		A3A54D2F2AAF3B6E0015F767 /* MenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		A3A54D312AAF3B810015F767 /* MenuVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVM.swift; sourceTree = "<group>"; };
 		A3A54D332AAF3B950015F767 /* CustomCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCvCell.swift; sourceTree = "<group>"; };
@@ -205,6 +203,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		215102822AB8654C005FAF6E /* AboutVC */ = {
+			isa = PBXGroup;
+			children = (
+				A3A54D572AAF3D0F0015F767 /* AboutUsVC.swift */,
+			);
+			path = AboutVC;
+			sourceTree = "<group>";
+		};
 		792B687F2AB08D9600DD7834 /* TermsOfUse */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,8 +249,6 @@
 				A3A54CFE2AAF3AE10015F767 /* Resources */,
 				A3A54D262AAF3AF70015F767 /* LaunchScreen.storyboard */,
 				A3A54D282AAF3B0A0015F767 /* Assets.xcassets */,
-				A3A54D2A2AAF3B120015F767 /* NavigationHelper.swift */,
-				A3A54D2C2AAF3B170015F767 /* Extension.swift */,
 				A3A54B4A2AAF388F0015F767 /* Info.plist */,
 			);
 			path = Travio;
@@ -277,8 +281,6 @@
 				A3A54CAD2AAF3A750015F767 /* HomePage */,
 				A3A54CBD2AAF3A960015F767 /* VisitPage */,
 				A3A54D2E2AAF3B570015F767 /* MenuPage */,
-				792B687F2AB08D9600DD7834 /* TermsOfUse */,
-				A3A54D572AAF3D0F0015F767 /* AboutUsVC.swift */,
 			);
 			path = TabbarVC;
 			sourceTree = "<group>";
@@ -367,6 +369,7 @@
 			children = (
 				A3A54CEC2AAF3AD40015F767 /* Enums.swift */,
 				A3A54CED2AAF3AD40015F767 /* Extensions.swift */,
+				A3A54D2A2AAF3B120015F767 /* NavigationHelper.swift */,
 				A3A54CEB2AAF3AD40015F767 /* AlertHelper.swift */,
 				A3A54CEE2AAF3AD40015F767 /* NotificationCenterHelper.swift */,
 			);
@@ -424,6 +427,8 @@
 				A3A54D2F2AAF3B6E0015F767 /* MenuVC.swift */,
 				A3A54D312AAF3B810015F767 /* MenuVM.swift */,
 				A3A54D332AAF3B950015F767 /* CustomCvCell.swift */,
+				215102822AB8654C005FAF6E /* AboutVC */,
+				792B687F2AB08D9600DD7834 /* TermsOfUse */,
 				A3A54D4C2AAF3D020015F767 /* SecuritySettingPage */,
 				A3A54D432AAF3C640015F767 /* Help&Support */,
 				A3A54D352AAF3B9A0015F767 /* EditProfile */,
@@ -605,7 +610,6 @@
 				A3A54D542AAF3D030015F767 /* SecuritySettingsVC.swift in Sources */,
 				A3A54CFB2AAF3ADA0015F767 /* InfoCustomView.swift in Sources */,
 				A3A54D3C2AAF3BD90015F767 /* EditModel.swift in Sources */,
-				A3A54D2D2AAF3B170015F767 /* Extension.swift in Sources */,
 				A3A54CE72AAF3ACC0015F767 /* KeychainHelper.swift in Sources */,
 				A3A54CCB2AAF3A960015F767 /* TravelID.swift in Sources */,
 				A3A54CE22AAF3AC10015F767 /* PlacesModal.swift in Sources */,

@@ -34,7 +34,6 @@ class VisitCell: UITableViewCell {
         let l = UILabel()
         l.font = Font.poppins(fontType: .bold, size: 24).font
         l.textColor = Color.white.chooseColor
-        l.text = "Amsterdam"
         return l
     }()
     
