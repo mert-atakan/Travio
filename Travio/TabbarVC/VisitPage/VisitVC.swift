@@ -86,7 +86,7 @@ class VisitVC: UIViewController {
         containerView.topToBottom(of:headerLabel, offset: 52)
         containerView.edgesToSuperview(excluding: [.top])
         
-        tableView.edgesToSuperview( insets: .top(45) + .right(22) + .left(24) + .bottom(0), usingSafeArea: true)
+        tableView.edgesToSuperview( insets: .top(45) + .right(22) + .left(24) + .bottom(101), usingSafeArea: true)
     }
     
     func initVM() {

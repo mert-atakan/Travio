@@ -136,60 +136,6 @@ class DetailVC: UIViewController {
         visitedButton.roundCorners(corners: [.topLeft, .topRight ,.bottomLeft], radius: 16)
     }
     
-    private func setupView() {
-        view.backgroundColor = Color.systemWhite.chooseColor
-        view.addSubViews(collectionView,pageControl,visitedButton, scrollView,backButton)
-        scrollView.addSubViews(contentView)
-        
-        contentView.addSubViews(cityLabel,dateLabel,creatorLabel,mapView,descriptionLabel)
-        setupLayout()
-    }
-    
-    private func setupLayout() {
-        
-        collectionView.edgesToSuperview(excluding: [.bottom],usingSafeArea: false)
-        collectionView.height(249)
-        
-        backButton.edgesToSuperview(excluding: [.bottom, .right], insets: .left(24) + .top(55))
-        backButton.width(40)
-        backButton.height(40)
-        
-        visitedButton.edgesToSuperview(excluding: [.left, .bottom], insets: .top(50) + .right(24), usingSafeArea: false)
-        visitedButton.height(50)
-        visitedButton.width(50)
-        
-        pageControl.bottom(to: collectionView)
-        pageControl.centerXToSuperview()
-        pageControl.height(44)
-        
-        scrollView.topToBottom(of: collectionView)
-        scrollView.leftToSuperview()
-        scrollView.rightToSuperview()
-        scrollView.bottomToSuperview()
-        
-        contentView.edgesToSuperview()
-        contentView.widthToSuperview()
-        
-        cityLabel.edgesToSuperview(excluding: [.bottom], insets: .top(24) + .left(24) + .right(24))
-        
-        dateLabel.topToBottom(of: cityLabel)
-        dateLabel.left(to: cityLabel)
-        
-        creatorLabel.topToBottom(of: dateLabel)
-        creatorLabel.left(to: cityLabel)
-        
-        
-        mapView.topToBottom(of: creatorLabel, offset: 9)
-        mapView.edgesToSuperview(excluding: [.top,.bottom], insets: .left(16) + .right(16))
-        mapView.height(227)
-        
-        descriptionLabel.topToBottom(of: mapView, offset: 24)
-        descriptionLabel.edgesToSuperview(excluding: [.top,.bottom], insets: .left(16) + .right(16))
-        descriptionLabel.bottomToSuperview()
-        
-        contentView.layoutSubviews()
-    }
-    
     @objc func backBtnTapped() {
             self.navigationController?.popViewController(animated: true)
     }
@@ -226,8 +172,59 @@ class DetailVC: UIViewController {
         }
     }
     
+    private func setupView() {
+        view.backgroundColor = Color.systemWhite.chooseColor
+        view.addSubViews(collectionView,pageControl,visitedButton, scrollView,backButton)
+        scrollView.addSubViews(contentView)
+        
+        contentView.addSubViews(cityLabel,dateLabel,creatorLabel,mapView,descriptionLabel)
+        setupLayout()
+    }
     
-
+    private func setupLayout() {
+        
+        collectionView.edgesToSuperview(excluding: [.bottom],usingSafeArea: false)
+        collectionView.height(249)
+        
+        backButton.edgesToSuperview(excluding: [.bottom, .right], insets: .left(24) + .top(55))
+        backButton.width(40)
+        backButton.height(40)
+        
+        visitedButton.edgesToSuperview(excluding: [.left, .bottom], insets: .top(50) + .right(24), usingSafeArea: false)
+        visitedButton.height(50)
+        visitedButton.width(50)
+        
+        pageControl.bottom(to: collectionView)
+        pageControl.centerXToSuperview()
+        pageControl.height(44)
+        
+        scrollView.topToBottom(of: collectionView)
+        scrollView.leftToSuperview()
+        scrollView.rightToSuperview()
+        scrollView.bottomToSuperview(offset: -101)
+        
+        contentView.edgesToSuperview()
+        contentView.widthToSuperview()
+        
+        cityLabel.edgesToSuperview(excluding: [.bottom], insets: .top(24) + .left(24) + .right(24))
+        
+        dateLabel.topToBottom(of: cityLabel)
+        dateLabel.left(to: cityLabel)
+        
+        creatorLabel.topToBottom(of: dateLabel)
+        creatorLabel.left(to: cityLabel)
+        
+        
+        mapView.topToBottom(of: creatorLabel, offset: 9)
+        mapView.edgesToSuperview(excluding: [.top,.bottom], insets: .left(16) + .right(16))
+        mapView.height(227)
+        
+        descriptionLabel.topToBottom(of: mapView, offset: 24)
+        descriptionLabel.edgesToSuperview(excluding: [.top,.bottom], insets: .left(16) + .right(16))
+        descriptionLabel.bottomToSuperview()
+        
+        contentView.layoutSubviews()
+    }
    
     func initVM() {
         guard let placeId = placeId else { return }
@@ -306,7 +303,7 @@ class DetailVC: UIViewController {
 
 
 extension DetailVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {// size vermemiz gereikyor çünkkü ve genişlik ve yükseklik değerlerinie ihiyacımız var.
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: (collectionView.frame.width), height: 249)
         return size
     }

@@ -170,7 +170,7 @@ class HomeVC: UIViewController,GoToDetail {
         view1.edgesToSuperview(excluding: [.top])
         
         tableView.top(to: view1,offset: 15)
-        tableView.edgesToSuperview()
+        tableView.edgesToSuperview(insets: .bottom(101))
         
         activity.centerInSuperview()
         activity.height(50)
