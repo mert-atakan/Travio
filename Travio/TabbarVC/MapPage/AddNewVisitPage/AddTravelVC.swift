@@ -30,6 +30,13 @@ class AddTravelVC: UIViewController{
     
     var reloadMapVC: (()->())?
     
+    private lazy var grayLine: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.image = UIImage(named: "grayLine")
+        return iv
+    }()
+    
     private lazy var placeView: CustomView = {
         let v = CustomView()
         v.textField.attributedPlaceholder = NSAttributedString(string: "date", attributes: v.attributes)
@@ -148,14 +155,18 @@ class AddTravelVC: UIViewController{
     private func setupView() {
         
         view.backgroundColor = Color.systemWhite.chooseColor
-        view.addSubViews(placeView,descView,countryView,addBtn,collectionView)
+        view.addSubViews(grayLine,placeView,descView,countryView,addBtn,collectionView)
         setupLayout()
         
     }
     
     private func setupLayout() {
         
-        placeView.edgesToSuperview(excluding: [.bottom], insets: .top(40) + .left(23) + .right(23))
+        grayLine.edgesToSuperview(excluding: [.bottom], insets: .top(10) + .right(160) + .left(160))
+        grayLine.height(8)
+        
+        placeView.topToBottom(of: grayLine, offset: 40)
+        placeView.edgesToSuperview(excluding: [.bottom,.top], insets: .left(23) + .right(23))
         placeView.height(74)
         
         descView.topToBottom(of: placeView, offset: 16)
