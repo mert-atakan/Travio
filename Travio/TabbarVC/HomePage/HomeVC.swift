@@ -162,21 +162,20 @@ class HomeVC: UIViewController,GoToDetail {
     }
     
     private func setupLayout() {
-        topImageview.edgesToSuperview(excluding: [.bottom,.right], insets: .top(28) + .left(16),usingSafeArea: true)
+        topImageview.edgesToSuperview(excluding: [.bottom], insets: .top(28) + .left(16) + .right(202),usingSafeArea: true)
         topImageview.height(62)
-        topImageview.width(172)
+//        topImageview.width(172)
         
         view1.topToBottom(of: topImageview, offset: 35)
         view1.edgesToSuperview(excluding: [.top])
         
         tableView.top(to: view1,offset: 15)
-        tableView.edgesToSuperview(insets: .bottom(101))
-        
+        tableView.edgesToSuperview(excluding: [.top], insets: .bottom(101) + .left(0) + .right(0))
+
         activity.centerInSuperview()
         activity.height(50)
         activity.width(50)
         
-        topImageview.layoutSubviews()
     }
     
     private func headerButton() -> UIButton {
