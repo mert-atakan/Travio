@@ -82,7 +82,7 @@ class ApiService:ApiServiceProtocol {
                         let decodedData = try JSONDecoder().decode(T.self, from: data)
                         handler(.success(decodedData))
                     } catch {
-                        print("Error: \(error)")
+                        handler(.failure(error as! ErrorResponse))
                     }
                 }
             case .failure(_):
@@ -91,7 +91,7 @@ class ApiService:ApiServiceProtocol {
                         let decodedData = try JSONDecoder().decode(ErrorResponse.self, from: data)
                         handler(.failure(decodedData))
                     } catch {
-                        print("Error: \(error)")
+                        handler(.failure(error as! ErrorResponse))
                     }
                 }
             }

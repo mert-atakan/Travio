@@ -48,7 +48,7 @@ class VisitVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         setupView()
         initVM()
         
@@ -66,6 +66,16 @@ class VisitVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    @objc func visitChanged() {
+        visitViewModal.fetchTravels { status, message in
+            if status {
+                self.tableView.reloadData()
+            } else {
+                AlertHelper.showAlert(in: self, title: .information, message: message, primaryButtonTitle: .ok)
+            }
+        }
     }
     
     private func setupView() {
@@ -94,46 +104,29 @@ class VisitVC: UIViewController {
             DispatchQueue.main.async {
                 if isLoading {
                     self?.activity.startAnimating()
-                   
                 } else {
                     self?.activity.stopAnimating()
-                    
                 }
             }
         }
-
+        
         visitViewModal.fetchTravels { status, message in
             if status {
                 self.tableView.reloadData()
             } else {
                 AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok)
             }
-                
+            
         }
     }
     
-    @objc func visitChanged() {
-        visitViewModal.fetchTravels { status, message in
-            if status {
-                self.tableView.reloadData()
-            } else {
-                AlertHelper.showAlert(in: self, title: .information, message: message, primaryButtonTitle: .ok)
-            }
-        }
+    func pushNav(visitId:String, placeId: String) {
+        let detailVC = DetailVC()
+        detailVC.placeId = placeId
+        navigationController?.pushViewController(detailVC, animated: true)
     }
-        func pushNav(visitId:String, placeId: String) {
-            let detailVC = DetailVC()
-            detailVC.placeId = placeId
-            navigationController?.pushViewController(detailVC, animated: true)
-        }
     
-  
 }
-
-
-
-
-
 
 extension VisitVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

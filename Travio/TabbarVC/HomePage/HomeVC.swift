@@ -63,11 +63,6 @@ class HomeVC: UIViewController,GoToDetail {
         NotificationCenterManager.shared.addObserver(self, name: Notification.Name("visitChanged"), selector: #selector(visitChanged))
     }
     
-    deinit {
-        NotificationCenterManager.shared.removeObserver(self)
-    }
-    
-    
     override func viewDidLayoutSubviews() {
         view1.roundCorners(corners: [.topLeft], radius: 80)
     }
@@ -98,9 +93,9 @@ class HomeVC: UIViewController,GoToDetail {
     func initVM() {
         
         activity.startAnimating()
-
+        
         let dispatchGroup = DispatchGroup()
-
+        
         dispatchGroup.enter()
         viewModal.getPopularPlaces { status, message in
             if status {
@@ -108,9 +103,9 @@ class HomeVC: UIViewController,GoToDetail {
             } else {
                 AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             }
-           
+            
         }
-
+        
         dispatchGroup.enter()
         viewModal.getLastPlaces {status, message in
             if status {
@@ -119,7 +114,7 @@ class HomeVC: UIViewController,GoToDetail {
                 AlertHelper.showAlert(in: self, title: .sorry, message: message, primaryButtonTitle: .ok, primaryButtonAction: nil, secondaryButtonTitle: nil, secondaryButtonAction: nil)
             }
         }
-
+        
         dispatchGroup.enter()
         viewModal.getMyVisits {status, message in
             if status {
@@ -135,19 +130,23 @@ class HomeVC: UIViewController,GoToDetail {
                     guard let popularPlaces = self.viewModal.popularPlaces,
                           let newPlaces = self.viewModal.newPlaces
                     else {return}
-
+                    
                     self.popularArray = popularPlaces
                     self.newPlaces = newPlaces
                     self.myVisits = array
                     self.activity.stopAnimating()
-
+                    
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
                 }
             }
+        }
+        
     }
-       
+    
+    deinit {
+        NotificationCenterManager.shared.removeObserver(self)
     }
     
     func pushVC(vc: UIViewController) {
@@ -218,8 +217,6 @@ extension HomeVC: UITableViewDelegate {
         
         return headerView
     }
-    
-    
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 52

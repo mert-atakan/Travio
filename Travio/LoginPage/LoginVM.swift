@@ -36,7 +36,6 @@ class LoginVM {
         }
     }
     
-
     func saveToken(data:Data) {
         KeychainHelper.shared.save(data, service: "access-token", account: "api.Iosclass")
     }

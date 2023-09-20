@@ -100,7 +100,11 @@ class MenuVC: UIViewController {
     }
     
     @objc func logoutTapped() {
-        showAlert()
+        AlertHelper.showAlert(in: self, title: .information, message: "Do you want to logout of your account?", primaryButtonTitle: .yes, primaryButtonAction: {
+            KeychainHelper.shared.delete("access-token", account: "api.Iosclass")
+            let token = self.getTokenFromChain()
+            self.navigationController?.pushViewController(LoginVC(), animated: true)
+        }, secondaryButtonTitle: .no, secondaryButtonAction: nil)
     }
     
     func initVM() {
@@ -135,19 +139,10 @@ class MenuVC: UIViewController {
         }
     }
     
-    func showAlert() {
-        
-        let alert = UIAlertController(title: "UYARI!", message: "Uygulamadan çıkış yapmak istiyor musunuz?", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "Evet", style: .destructive) { action in
-            KeychainHelper.shared.delete("access-token", account: "api.Iosclass")
-            self.navigationController?.pushViewController(LoginVC(), animated: true)
-        }
-        let cancelAction = UIAlertAction(title: "Hayır", style: .cancel)
-        
-        alert.addAction(confirmAction)
-        alert.addAction(cancelAction)
-        
-        self.present(alert, animated: true)
+    func getTokenFromChain()->String {
+        guard let token = KeychainHelper.shared.read(service: "access-token", account: "api.Iosclass") else {return""}
+        guard let tokenstr = String(data: token, encoding: .utf8) else {return""}
+        return tokenstr
     }
     
     func setupView() {
