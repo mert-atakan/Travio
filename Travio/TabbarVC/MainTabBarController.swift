@@ -15,24 +15,19 @@ class MainTabBarController: UITabBarController {
         setupTab()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        self.navigationController?.isNavigationBarHidden = true
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
     
     func setupTab() {
         
-        self.navigationController?.isNavigationBarHidden = true
-        
         let home = UINavigationController(rootViewController: HomeVC())
-//        home.navigationController?.isNavigationBarHidden = true
         home.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "home"), tag: 0)
         
         let visit = UINavigationController(rootViewController: VisitVC())
-        visit.navigationController?.isNavigationBarHidden = true
         visit.tabBarItem = UITabBarItem(title: "Visit", image: UIImage(named: "visit"), tag: 1)
         
         let map = UINavigationController(rootViewController: MapVC())
-        map.navigationController?.isNavigationBarHidden = true
         map.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "map"), tag: 2)
         
         let menu = MenuVC()

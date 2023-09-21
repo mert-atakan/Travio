@@ -7,23 +7,18 @@
 
 import UIKit
 import JWTDecode
-class NavigationHelper: UIViewController {
+class NavigationHelper {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func goToVC() -> UIViewController {
         let token = getTokenFromChain()
         let status = isTokenExpired(jwtToken: token)
         
         if status {
-            navigationController?.pushViewController(LoginVC(), animated: true)
+            return LoginVC()
         } else {
-            navigationController?.pushViewController(MainTabBarController(), animated: true)
+            return MainTabBarController()
         }
-        
-        
     }
-    
     func isTokenExpired(jwtToken: String) -> Bool {
         if jwtToken == "" {
             return true

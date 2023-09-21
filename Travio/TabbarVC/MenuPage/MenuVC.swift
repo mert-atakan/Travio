@@ -82,8 +82,6 @@ class MenuVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
-        self.view.backgroundColor = Color.systemGreen.chooseColor
         setupView()
         initVM()
     }
@@ -146,7 +144,8 @@ class MenuVC: UIViewController {
     }
     
     func setupView() {
-        
+        self.navigationController?.isNavigationBarHidden = true
+        self.view.backgroundColor = Color.systemGreen.chooseColor
         self.view.addSubviews(logoutButton,contentView,headerLabel,activity)
         contentView.addSubviews(profileImage, fullNameLabel, editProfileButton, collectionView)
         setupLayout()

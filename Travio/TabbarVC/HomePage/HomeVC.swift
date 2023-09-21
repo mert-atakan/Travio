@@ -154,6 +154,7 @@ class HomeVC: UIViewController,GoToDetail {
     }
     
     private func setupView() {
+        self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Color.systemGreen.chooseColor
         self.view.addSubviews(view1,topImageview,activity)
         view1.addSubviews(tableView)
@@ -161,9 +162,8 @@ class HomeVC: UIViewController,GoToDetail {
     }
     
     private func setupLayout() {
-        topImageview.edgesToSuperview(excluding: [.bottom], insets: .top(28) + .left(16) + .right(202),usingSafeArea: true)
+        topImageview.edgesToSuperview(excluding: [.bottom], insets: .top(80) + .left(16) + .right(202),usingSafeArea: false)
         topImageview.height(62)
-//        topImageview.width(172)
         
         view1.topToBottom(of: topImageview, offset: 35)
         view1.edgesToSuperview(excluding: [.top])
